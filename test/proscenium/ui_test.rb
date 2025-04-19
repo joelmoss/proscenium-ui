@@ -1,7 +1,7 @@
 require "test_helper"
 
-class Proscenium::UiTest < ActiveSupport::TestCase
+class Proscenium::UITest < ActiveSupport::TestCase
   test "it has a version number" do
-    assert Proscenium::Ui::VERSION
+    assert Proscenium::UI::VERSION
   end
 end

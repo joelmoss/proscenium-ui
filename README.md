@@ -1,4 +1,4 @@
-# Proscenium::Ui
+# Proscenium::UI
 Short description and motivation.
 
 ## Usage

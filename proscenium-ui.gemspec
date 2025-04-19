@@ -2,12 +2,12 @@ require_relative "lib/proscenium/ui/version"
 
 Gem::Specification.new do |spec|
   spec.name        = "proscenium-ui"
-  spec.version     = Proscenium::Ui::VERSION
+  spec.version     = Proscenium::UI::VERSION
   spec.authors     = [ "Joel Moss" ]
   spec.email       = [ "joel@developwithstyle.com" ]
   spec.homepage    = "TODO"
-  spec.summary     = "TODO: Summary of Proscenium::Ui."
-  spec.description = "TODO: Description of Proscenium::Ui."
+  spec.summary     = "TODO: Summary of Proscenium::UI."
+  spec.description = "TODO: Description of Proscenium::UI."
   spec.license     = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the "allowed_push_host"
