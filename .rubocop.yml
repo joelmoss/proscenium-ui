@@ -1,8 +1,42 @@
-# Omakase Ruby styling for Rails
-inherit_gem: { rubocop-rails-omakase: rubocop.yml }
+plugins:
+  - rubocop-rails
+  - rubocop-minitest
+  - rubocop-disable_syntax
 
-# Overwrite or add rules to create your own house style
-#
-# # Use `[a, [b, c]]` not `[ a, [ b, c ] ]`
-# Layout/SpaceInsideArrayLiteralBrackets:
-#   Enabled: false
+AllCops:
+  TargetRubyVersion: 3.2
+  NewCops: enable
+  SuggestExtensions: false
+  Exclude:
+    - "vendor/**/*"
+    - "gemfiles/**/*"
+
+Layout/LineLength:
+  Max: 100
+
+Lint/ConstantDefinitionInBlock:
+  Exclude:
+    - "test/**/*"
+
+Metrics:
+  Enabled: false
+
+Style/DisableSyntax:
+  DisableSyntax:
+    - unless
+    - and_or_not
+    - numbered_parameters
+
+Style/CaseEquality:
+  Enabled: false
+Style/Documentation:
+  Enabled: false
+Style/ClassAndModuleChildren:
+  Enabled: false
+Style/NegatedIf:
+  Enabled: false
+
+Minitest/EmptyLineBeforeAssertionMethods:
+  Enabled: false
+Minitest/MultipleAssertions:
+  Enabled: false
