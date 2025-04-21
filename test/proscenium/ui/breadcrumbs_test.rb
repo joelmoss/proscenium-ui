@@ -11,7 +11,7 @@ class Proscenium::UI::BreadcrumbsTest < ActiveSupport::TestCase
     view
     imports = Proscenium::Importer.imported.keys
 
-    assert_equal ["#{COMPONENTS_PATH}/breadcrumbs.module.css"], imports
+    assert_equal ["#{COMPONENTS_PATH}/breadcrumbs/index.module.css"], imports
   end
 
   context '@hide_breadcrumbs = true' do

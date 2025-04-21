@@ -57,6 +57,8 @@ module Proscenium::UI
     # Assign false to hide the home segment.
     prop :with_home, _Boolean, default: -> { true }
 
+    def self.css_module_path = source_path.sub_ext('').join('index.module.css')
+
     def view_template
       div class: :@base do
         ol do

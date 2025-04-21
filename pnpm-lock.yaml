@@ -1,0 +1,32 @@
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+
+  .:
+    dependencies:
+      dom-mutations:
+        specifier: ^1.0.0
+        version: 1.0.0
+      sourdough-toast:
+        specifier: github:mikker/sourdough-toast#1973598
+        version: https://codeload.github.com/mikker/sourdough-toast/tar.gz/1973598
+
+packages:
+
+  dom-mutations@1.0.0:
+    resolution: {integrity: sha512-qr4ufk/qu+JKwtz7NPbu6TxpTM/7nqburohI07J+mKSM20USvhcUjEb8hWY6g2a3QYp3LtlGpi+mAZLPuxTi7g==}
+    engines: {node: '>=18'}
+
+  sourdough-toast@https://codeload.github.com/mikker/sourdough-toast/tar.gz/1973598:
+    resolution: {tarball: https://codeload.github.com/mikker/sourdough-toast/tar.gz/1973598}
+    version: 0.1.0
+
+snapshots:
+
+  dom-mutations@1.0.0: {}
+
+  sourdough-toast@https://codeload.github.com/mikker/sourdough-toast/tar.gz/1973598: {}

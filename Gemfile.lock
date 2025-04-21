@@ -86,6 +86,7 @@ GEM
     base64 (0.2.0)
     benchmark (0.4.0)
     bigdecimal (3.1.9)
+    bindex (0.8.1)
     builder (3.3.0)
     capybara (3.40.0)
       addressable
@@ -294,6 +295,11 @@ GEM
       parser (>= 3.3.0)
     uri (1.0.3)
     useragent (0.16.11)
+    web-console (4.2.1)
+      actionview (>= 6.0.0)
+      activemodel (>= 6.0.0)
+      bindex (>= 0.4.0)
+      railties (>= 6.0.0)
     websocket-driver (0.7.7)
       base64
       websocket-extensions (>= 0.1.0)
@@ -321,6 +327,7 @@ DEPENDENCIES
   rubocop-performance
   rubocop-rails
   sqlite3
+  web-console
 
 BUNDLED WITH
    2.6.8

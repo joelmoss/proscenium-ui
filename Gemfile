@@ -10,6 +10,7 @@ gem 'sqlite3'
 
 gem 'amazing_print'
 gem 'debug', '>= 1.0.0'
+gem 'web-console', group: :development
 
 gem 'rubocop-capybara'
 gem 'rubocop-disable_syntax', require: false

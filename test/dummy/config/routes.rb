@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
   get 'form' => 'forms#index'
   get 'breadcrumbs' => 'breadcrumbs#index'
+  get 'flash' => 'flash#index'
 
   # Tests ---
   resources :users

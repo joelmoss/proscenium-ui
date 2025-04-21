@@ -14,7 +14,7 @@ class Proscenium::UI::Form::Fields::TextareaTest < ActiveSupport::TestCase
   it 'side loads the form and date css modules' do
     view
 
-    assert_equal ["#{COMPONENTS_PATH}/form.css"], Proscenium::Importer.imported.keys
+    assert_equal ["#{COMPONENTS_PATH}/form/index.css"], Proscenium::Importer.imported.keys
   end
 
   it 'has a label' do

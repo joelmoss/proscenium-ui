@@ -17,7 +17,7 @@ class Proscenium::UI::Form::Fields::SelectTest < ActiveSupport::TestCase
       view
 
       imports = Proscenium::Importer.imported.keys
-      assert_equal ["#{COMPONENTS_PATH}/form.css",
+      assert_equal ["#{COMPONENTS_PATH}/form/index.css",
                     "#{COMPONENTS_PATH}/form/fields/select.jsx",
                     "#{COMPONENTS_PATH}/form/fields/select.module.css"], imports
     end

@@ -68,6 +68,8 @@ module Proscenium::UI
 
     prop :attributes, Hash, :**
 
+    def self.source_path = super / '../form/index.rb'
+
     # Use the given `field_class` to render a custom field. This allows you to create a custom
     # form field on an as-needed basis. The `field_class` must be a subclass of
     # `Proscenium::UI::Form::Fields::Base`.

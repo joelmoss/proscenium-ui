@@ -9,6 +9,6 @@
    */
 
   .base {
-    @mixin breadcrumbs from url("./breadcrumbs/mixins.css");
+    @mixin breadcrumbs from url("./mixins.css");
   }
 }

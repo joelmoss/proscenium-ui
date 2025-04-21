@@ -20,7 +20,7 @@ class Proscenium::UI::Form::Fields::BasicInputsTest < ActiveSupport::TestCase
       it 'side loads only the form css modules' do
         view
 
-        assert_equal ["#{COMPONENTS_PATH}/form.css"], Proscenium::Importer.imported.keys
+        assert_equal ["#{COMPONENTS_PATH}/form/index.css"], Proscenium::Importer.imported.keys
       end
 
       it "has a #{type} field" do

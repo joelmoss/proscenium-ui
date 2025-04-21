@@ -9,7 +9,7 @@ class Proscenium::UI::FormTest < ActiveSupport::TestCase
   it 'side loads CSS' do
     view
 
-    assert_equal ["#{COMPONENTS_PATH}/form.css"], Proscenium::Importer.imported.keys
+    assert_equal ["#{COMPONENTS_PATH}/form/index.css"], Proscenium::Importer.imported.keys
   end
 
   it 'has an action attribute' do
