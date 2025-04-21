@@ -3,10 +3,12 @@
 require 'test_helper'
 
 class Proscenium::UI::Form::Fields::CheckboxTest < ActiveSupport::TestCase
-  let(:subject) { Proscenium::UI::Form }
+  def subject(...) = Proscenium::UI::Form.new(...)
   let(:user) { User.new }
-  view -> { subject.new(user) } do |f|
-    f.checkbox_field :active
+  view do
+    subject user do |f|
+      f.checkbox_field :active
+    end
   end
 
   it 'side loads only the form css modules' do
@@ -38,8 +40,10 @@ class Proscenium::UI::Form::Fields::CheckboxTest < ActiveSupport::TestCase
   end
 
   with ':label' do
-    view -> { subject.new(user) } do |f|
-      f.checkbox_field :active, label: 'Foobar'
+    view do
+      subject user do |f|
+        f.checkbox_field :active, label: 'Foobar'
+      end
     end
 
     it 'overrides label' do
@@ -48,8 +52,10 @@ class Proscenium::UI::Form::Fields::CheckboxTest < ActiveSupport::TestCase
   end
 
   with 'predicate? method' do
-    view -> { subject.new(user) } do |f|
-      f.checkbox_field :active?
+    view do
+      subject user do |f|
+        f.checkbox_field :active?
+      end
     end
 
     it 'overrides label' do
@@ -61,8 +67,10 @@ class Proscenium::UI::Form::Fields::CheckboxTest < ActiveSupport::TestCase
   end
 
   with ':checked' do
-    view -> { subject.new(user) } do |f|
-      f.checkbox_field :active?, checked: true
+    view do
+      subject user do |f|
+        f.checkbox_field :active?, checked: true
+      end
     end
 
     it 'overrides label' do
@@ -71,9 +79,11 @@ class Proscenium::UI::Form::Fields::CheckboxTest < ActiveSupport::TestCase
   end
 
   with ':checked_value and :unchecked_value' do
-    view -> { subject.new(user) } do |f|
-      f.checkbox_field :active, checked_value: 'yes'
-      f.checkbox_field :active, unchecked_value: 'no'
+    view do
+      subject user do |f|
+        f.checkbox_field :active, checked_value: 'yes'
+        f.checkbox_field :active, unchecked_value: 'no'
+      end
     end
 
     it 'overrides values' do

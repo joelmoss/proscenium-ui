@@ -3,12 +3,14 @@
 require 'test_helper'
 
 class Proscenium::UI::Form::Fields::SelectTest < ActiveSupport::TestCase
-  let(:subject) { Proscenium::UI::Form }
+  def subject(...) = Proscenium::UI::Form.new(...)
   let(:user) { User.new }
 
   describe 'assets' do
-    view -> { subject.new(user, url: '/') } do |f|
-      f.select_field :gender
+    view do
+      subject user, url: '/' do |f|
+        f.select_field :gender
+      end
     end
 
     it 'side loads the form and select css modules' do
@@ -22,8 +24,10 @@ class Proscenium::UI::Form::Fields::SelectTest < ActiveSupport::TestCase
   end
 
   with 'enum attribute' do
-    view -> { subject.new(user, url: '/') } do |f|
-      f.select_field :gender
+    view do
+      subject user, url: '/' do |f|
+        f.select_field :gender
+      end
     end
 
     it 'uses enum values for options' do
@@ -40,9 +44,11 @@ class Proscenium::UI::Form::Fields::SelectTest < ActiveSupport::TestCase
     end
 
     with 'default value' do
-      view -> { subject.new(user, url: '/') } do |f|
-        f.select_field :gender_with_db_default
-        f.select_field :gender_with_code_default
+      view do
+        subject user, url: '/' do |f|
+          f.select_field :gender_with_db_default
+          f.select_field :gender_with_code_default
+        end
       end
 
       it 'uses default enum value' do
@@ -60,8 +66,10 @@ class Proscenium::UI::Form::Fields::SelectTest < ActiveSupport::TestCase
     end
 
     let(:event) { Event.new }
-    view -> { subject.new(event) } do |f|
-      f.select_field :user
+    view do
+      subject event do |f|
+        f.select_field :user
+      end
     end
 
     it 'uses association values for options' do
@@ -87,24 +95,22 @@ class Proscenium::UI::Form::Fields::SelectTest < ActiveSupport::TestCase
   end
 
   with 'a block' do
-    let(:form) do
+    view do
       Class.new(Phlex::HTML) do
         def initialize(user) # rubocop:disable Lint/MissingSuper
           @user = user
         end
 
         def view_template
-          render Proscenium::UI::Form.new(@user) do |f|
+          Proscenium::UI::Form(@user) do |f|
             f.select_field :gender do
               option { 'Bloke' }
               option { 'Chick' }
             end
           end
         end
-      end
+      end.new(user)
     end
-
-    view -> { form.new user }
 
     it 'renders block in place of options' do
       assert view.has_select?('user[gender]', options: %w[Bloke Chick])
@@ -112,8 +118,10 @@ class Proscenium::UI::Form::Fields::SelectTest < ActiveSupport::TestCase
   end
 
   with 'options: Array<String>' do
-    view -> { subject.new(user) } do |f|
-      f.select_field :tags, options: %w[1tag 2tag]
+    view do
+      subject user do |f|
+        f.select_field :tags, options: %w[1tag 2tag]
+      end
     end
 
     it 'uses given options' do
@@ -123,8 +131,10 @@ class Proscenium::UI::Form::Fields::SelectTest < ActiveSupport::TestCase
   end
 
   with 'options: Array<Array>' do
-    view -> { subject.new(user) } do |f|
-      f.select_field :tags, options: [['Tag One', '1tag'], ['Tag two', '2tag']]
+    view do
+      subject user do |f|
+        f.select_field :tags, options: [['Tag One', '1tag'], ['Tag two', '2tag']]
+      end
     end
 
     it 'uses given options' do
@@ -134,8 +144,10 @@ class Proscenium::UI::Form::Fields::SelectTest < ActiveSupport::TestCase
   end
 
   with 'options: Enumerable' do
-    view -> { subject.new(user) } do |f|
-      f.select_field :tags, options: %w[1tag 2tag]
+    view do
+      subject user do |f|
+        f.select_field :tags, options: %w[1tag 2tag]
+      end
     end
 
     it 'uses given options' do
@@ -148,8 +160,10 @@ class Proscenium::UI::Form::Fields::SelectTest < ActiveSupport::TestCase
       Tag.create! [{ name: 'tag1' }, { name: 'tag2' }]
     end
 
-    view -> { subject.new(user) } do |f|
-      f.select_field :tags
+    view do
+      subject user do |f|
+        f.select_field :tags
+      end
     end
 
     it 'renders select of tags' do
@@ -174,8 +188,10 @@ class Proscenium::UI::Form::Fields::SelectTest < ActiveSupport::TestCase
 
   describe 'bang attributes' do
     with ':required!' do
-      view -> { subject.new(user) } do |f|
-        f.select_field :gender, :required!
+      view do
+        subject user do |f|
+          f.select_field :gender, :required!
+        end
       end
 
       it 'adds required attribute to input' do
@@ -184,8 +200,10 @@ class Proscenium::UI::Form::Fields::SelectTest < ActiveSupport::TestCase
     end
 
     with 'required: true' do
-      view -> { subject.new(user) } do |f|
-        f.select_field :gender, required: true
+      view do
+        subject user do |f|
+          f.select_field :gender, required: true
+        end
       end
 
       it 'adds required attribute to input' do
@@ -194,8 +212,10 @@ class Proscenium::UI::Form::Fields::SelectTest < ActiveSupport::TestCase
     end
 
     with ':required! and required: false' do
-      view -> { subject.new(user) } do |f|
-        f.select_field :gender, :required!, required: false
+      view do
+        subject user do |f|
+          f.select_field :gender, :required!, required: false
+        end
       end
 
       it 'expects required to be false' do
@@ -205,8 +225,10 @@ class Proscenium::UI::Form::Fields::SelectTest < ActiveSupport::TestCase
   end
 
   with ':required! and no value' do
-    view -> { subject.new(user) } do |f|
-      f.select_field :gender, :required!
+    view do
+      subject user do |f|
+        f.select_field :gender, :required!
+      end
     end
 
     it 'includes empty option' do
@@ -215,8 +237,10 @@ class Proscenium::UI::Form::Fields::SelectTest < ActiveSupport::TestCase
   end
 
   with 'include_blank: false' do
-    view -> { subject.new(user) } do |f|
-      f.select_field :gender, include_blank: false
+    view do
+      subject user do |f|
+        f.select_field :gender, include_blank: false
+      end
     end
 
     it 'does not include empty option' do
@@ -225,8 +249,10 @@ class Proscenium::UI::Form::Fields::SelectTest < ActiveSupport::TestCase
   end
 
   with 'include_blank: String' do
-    view -> { subject.new(user) } do |f|
-      f.select_field :gender, include_blank: 'Select'
+    view do
+      subject user do |f|
+        f.select_field :gender, include_blank: 'Select'
+      end
     end
 
     it 'includes empty option with text' do
@@ -235,8 +261,10 @@ class Proscenium::UI::Form::Fields::SelectTest < ActiveSupport::TestCase
   end
 
   with ':label' do
-    view -> { subject.new(user, url: '/') } do |f|
-      f.select_field :gender, label: 'Foobar'
+    view do
+      subject user, url: '/' do |f|
+        f.select_field :gender, label: 'Foobar'
+      end
     end
 
     it 'overrides label' do
@@ -245,12 +273,14 @@ class Proscenium::UI::Form::Fields::SelectTest < ActiveSupport::TestCase
   end
 
   with ':class' do
-    view -> { subject.new(user, url: '/') } do |f|
-      f.select_field :gender, class: 'my_class'
+    view do
+      subject user, url: '/' do |f|
+        f.select_field :gender, class: 'my_class'
+      end
     end
 
     it 'appends class value to field wrapper' do
-      assert_equal 'field-1be49d13 my_class', view.find('pui-field')[:class]
+      assert_equal 'field-f68c91b1 my_class', view.find('pui-field')[:class]
     end
   end
 
@@ -259,8 +289,10 @@ class Proscenium::UI::Form::Fields::SelectTest < ActiveSupport::TestCase
       Tag.create! [{ name: 'tag1' }, { name: 'tag2' }]
     end
 
-    view -> { subject.new(user) } do |f|
-      f.select_field :tags, :typeahead!
+    view do
+      subject user do |f|
+        f.select_field :tags, :typeahead!
+      end
     end
 
     it 'should render a component div' do

@@ -3,10 +3,12 @@
 require 'test_helper'
 
 class Proscenium::UI::Form::Fields::RichTextareaTest < ActiveSupport::TestCase
-  let(:subject) { Proscenium::UI::Form }
+  def subject(...) = Proscenium::UI::Form.new(...)
   let(:user) { User.new name: 'Joel Moss' }
-  view -> { subject.new(user) } do |f|
-    f.rich_textarea_field :name
+  view do
+    subject user do |f|
+      f.rich_textarea_field :name
+    end
   end
 
   it 'side loads the form and date css modules' do

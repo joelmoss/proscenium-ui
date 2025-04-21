@@ -18,42 +18,10 @@ if ActiveSupport::TestCase.respond_to?(:fixture_paths=)
   ActiveSupport::TestCase.fixtures :all
 end
 
-COMPONENTS_PATH = '/node_modules/@rubygems/proscenium-ui/app/components/proscenium/ui'
-
-module ViewHelper
-  def self.extended(parent)
-    parent.class_exec do
-      delegate :view_context, to: :controller
-
-      def controller
-        @controller ||= ActionView::TestCase::TestController.new
-      end
-    end
-  end
-
-  def view(obj, &blk)
-    let :instance do
-      instance_exec(&obj)
-    end
-
-    let :view do
-      result = if blk
-                 instance.call(view_context:) do
-                   instance.instance_exec(instance, &blk)
-                 end
-               else
-                 view_context.render(instance)
-               end
-
-      Capybara::Node::Simple.new result
-    end
-  end
-end
+COMPONENTS_PATH = '/node_modules/@rubygems/proscenium-ui/lib/proscenium/ui'
 
 module ActiveSupport
   class TestCase
-    extend ViewHelper
-
     before do
       Proscenium.config.side_load = true
       Proscenium::Importer.reset
@@ -62,6 +30,36 @@ module ActiveSupport
 
     class << self
       alias with context
+
+      def view(*args, **kwargs, &block)
+        define_method :view do
+          @view ||= Capybara::Node::Simple.new(if block
+                                                 view_context.render instance_eval(&block)
+                                               else
+                                                 render(*args, **kwargs)
+                                               end)
+        end
+      end
+    end
+
+    if !method_defined?(:view)
+      def view
+        @view ||= Capybara::Node::Simple.new(render)
+      end
+    end
+
+    delegate :view_context, to: :controller
+
+    def controller
+      @controller ||= ActionView::TestCase::TestController.new
+    end
+
+    def subject(...)
+      described_class.new(...)
+    end
+
+    def render(...)
+      view_context.render subject(...)
     end
   end
 end

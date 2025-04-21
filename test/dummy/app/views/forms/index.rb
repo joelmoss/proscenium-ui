@@ -3,7 +3,7 @@
 module Views
   class Forms::Index < Proscenium::Phlex
     def view_template
-      render Proscenium::UI::Form.new User.new do |f|
+      Proscenium::UI::Form(User.new) do |f|
         f.text_field :name
         f.textarea_field :address
         f.select_field :country, options: %w[USA Canada Mexico]

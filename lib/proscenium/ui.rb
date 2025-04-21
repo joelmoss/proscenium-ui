@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
-require 'proscenium/ui/version'
-require 'proscenium/ui/engine'
-require 'phlexible'
 require 'proscenium'
+require 'zeitwerk'
+require 'phlex'
 
-module Proscenium
-  module UI
-  end
+loader = Zeitwerk::Loader.for_gem_extension(Proscenium)
+loader.inflector.inflect('ui' => 'UI')
+loader.setup
+
+module Proscenium::UI
+  extend ::Phlex::Kit
 end

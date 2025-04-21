@@ -3,11 +3,13 @@
 require 'test_helper'
 
 class Proscenium::UI::Form::Fields::RadioInputTest < ActiveSupport::TestCase
-  let(:subject) { Proscenium::UI::Form }
+  def subject(...) = Proscenium::UI::Form.new(...)
   let(:user) { User.new }
 
-  view -> { subject.new(user) } do |f|
-    f.radio_field :role, value: :admin
+  view do
+    subject user do |f|
+      f.radio_field :role, value: :admin
+    end
   end
 
   it 'side loads only the form css modules' do
@@ -31,8 +33,10 @@ class Proscenium::UI::Form::Fields::RadioInputTest < ActiveSupport::TestCase
   end
 
   with 'label attribute' do
-    view -> { Proscenium::UI::Form.new(user) } do |f|
-      f.radio_field :role, value: :admin, label: 'Administrator'
+    view do
+      subject user do |f|
+        f.radio_field :role, value: :admin, label: 'Administrator'
+      end
     end
 
     it 'has a label with the value' do

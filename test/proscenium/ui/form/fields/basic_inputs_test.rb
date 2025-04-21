@@ -3,16 +3,18 @@
 require 'test_helper'
 
 class Proscenium::UI::Form::Fields::BasicInputsTest < ActiveSupport::TestCase
-  let(:subject) { Proscenium::UI::Form }
-
   def self.it_behaves_like_field(type)
     describe "##{type}_field" do
+      def subject(...) = Proscenium::UI::Form.new(...)
+
       input_type = type.to_s.dasherize
 
       let(:user) { User.new }
 
-      view -> { subject.new(user, action: '/') } do |f|
-        f.send :"#{type}_field", :name
+      view do
+        subject user, action: '/' do |f|
+          f.send :"#{type}_field", :name
+        end
       end
 
       it 'side loads only the form css modules' do
@@ -34,8 +36,10 @@ class Proscenium::UI::Form::Fields::BasicInputsTest < ActiveSupport::TestCase
       end
 
       with 'attribute name as a string' do
-        view -> { subject.new(user, action: '/') } do |f|
-          f.send :"#{type}_field", 'foo[]'
+        view do
+          subject user, action: '/' do |f|
+            f.send :"#{type}_field", 'foo[]'
+          end
         end
 
         it 'pass the name through as is' do
@@ -44,8 +48,10 @@ class Proscenium::UI::Form::Fields::BasicInputsTest < ActiveSupport::TestCase
       end
 
       with ':label' do
-        view -> { subject.new(user, action: '/') } do |f|
-          f.send :"#{type}_field", :name, label: 'Foobar'
+        view do
+          subject user, action: '/' do |f|
+            f.send :"#{type}_field", :name, label: 'Foobar'
+          end
         end
 
         it 'overrides label' do
@@ -54,8 +60,10 @@ class Proscenium::UI::Form::Fields::BasicInputsTest < ActiveSupport::TestCase
       end
 
       with ':class' do
-        view -> { subject.new(user, action: '/') } do |f|
-          f.send :"#{type}_field", :name, class: :my_class
+        view do
+          subject user, action: '/' do |f|
+            f.send :"#{type}_field", :name, class: :my_class
+          end
         end
 
         it 'appends class value to field wrapper' do
@@ -64,8 +72,10 @@ class Proscenium::UI::Form::Fields::BasicInputsTest < ActiveSupport::TestCase
       end
 
       with 'label: false' do
-        view -> { subject.new(user, action: '/') } do |f|
-          f.send :"#{type}_field", :name, label: false
+        view do
+          subject user, action: '/' do |f|
+            f.send :"#{type}_field", :name, label: false
+          end
         end
 
         it 'omits label' do
@@ -80,8 +90,10 @@ class Proscenium::UI::Form::Fields::BasicInputsTest < ActiveSupport::TestCase
           end
         end
 
-        view -> { subject.new(user, action: '/') } do |f|
-          f.send :"#{type}_field", :name
+        view do
+          subject user, action: '/' do |f|
+            f.send :"#{type}_field", :name
+          end
         end
 
         it 'has data-field-error on wrapping div' do
@@ -100,8 +112,10 @@ class Proscenium::UI::Form::Fields::BasicInputsTest < ActiveSupport::TestCase
           end
         end
 
-        view -> { subject.new(user, action: '/') } do |f|
-          f.send :"#{type}_field", :name, error: f.model.errors.where(:name).first
+        view do
+          subject user, action: '/' do |f|
+            f.send :"#{type}_field", :name, error: f.model.errors.where(:name).first
+          end
         end
 
         it 'shows error message' do
@@ -116,8 +130,10 @@ class Proscenium::UI::Form::Fields::BasicInputsTest < ActiveSupport::TestCase
           end
         end
 
-        view -> { subject.new(user, action: '/') } do |f|
-          f.send :"#{type}_field", :name, error: 'is foobar'
+        view do
+          subject user, action: '/' do |f|
+            f.send :"#{type}_field", :name, error: 'is foobar'
+          end
         end
 
         it 'shows error message' do
@@ -130,8 +146,10 @@ class Proscenium::UI::Form::Fields::BasicInputsTest < ActiveSupport::TestCase
           User.new address: Address.new(city: 'Chorley')
         end
 
-        view -> { subject.new(user, action: '/') } do |f|
-          f.send :"#{type}_field", :address, :city
+        view do
+          subject user, action: '/' do |f|
+            f.send :"#{type}_field", :address, :city
+          end
         end
 
         it 'translates label' do
@@ -148,8 +166,10 @@ class Proscenium::UI::Form::Fields::BasicInputsTest < ActiveSupport::TestCase
           Author.new address: Address.new(city: 'Chorley')
         end
 
-        view -> { subject.new(author, action: '/') } do |f|
-          f.send :"#{type}_field", :address, :city
+        view do
+          subject author, action: '/' do |f|
+            f.send :"#{type}_field", :address, :city
+          end
         end
 
         it 'translates label' do
@@ -163,8 +183,10 @@ class Proscenium::UI::Form::Fields::BasicInputsTest < ActiveSupport::TestCase
 
       describe 'bang attributes' do
         with ':required!' do
-          view -> { subject.new(user, action: '/') } do |f|
-            f.send :"#{type}_field", :name, :required!
+          view do
+            subject user, action: '/' do |f|
+              f.send :"#{type}_field", :name, :required!
+            end
           end
 
           it 'adds required attribute to input' do
@@ -173,8 +195,10 @@ class Proscenium::UI::Form::Fields::BasicInputsTest < ActiveSupport::TestCase
         end
 
         with 'required: true' do
-          view -> { subject.new(user, action: '/') } do |f|
-            f.send :"#{type}_field", :name, required: true
+          view do
+            subject user, action: '/' do |f|
+              f.send :"#{type}_field", :name, required: true
+            end
           end
 
           it 'adds required attribute to input' do
@@ -183,8 +207,10 @@ class Proscenium::UI::Form::Fields::BasicInputsTest < ActiveSupport::TestCase
         end
 
         with ':required! and required: false' do
-          view -> { subject.new(user, action: '/') } do |f|
-            f.send :"#{type}_field", :name, :required!, required: false
+          view do
+            subject user, action: '/' do |f|
+              f.send :"#{type}_field", :name, :required!, required: false
+            end
           end
 
           it 'expects required to be false' do
@@ -201,8 +227,10 @@ class Proscenium::UI::Form::Fields::BasicInputsTest < ActiveSupport::TestCase
 
   describe '#hidden_field' do
     let(:user) { User.new }
-    view -> { subject.new(user, url: '/') } do |f|
-      f.hidden_field :name
+    view do
+      subject user, url: '/' do |f|
+        f.hidden_field :name
+      end
     end
 
     it 'has a hidden field' do

@@ -3,10 +3,12 @@
 require 'test_helper'
 
 class Proscenium::UI::Form::Fields::TelTest < ActiveSupport::TestCase
-  let(:subject) { Proscenium::UI::Form }
+  def subject(...) = Proscenium::UI::Form.new(...)
   let(:user) { User.new name: 'Joel Moss' }
-  view -> { subject.new(user) } do |f|
-    f.tel_field :phone
+  view do
+    subject user do |f|
+      f.tel_field :phone
+    end
   end
 
   it 'has a select input' do
@@ -22,8 +24,10 @@ class Proscenium::UI::Form::Fields::TelTest < ActiveSupport::TestCase
   end
 
   with ':default_country' do
-    view -> { Proscenium::UI::Form.new(user) } do |f|
-      f.tel_field :phone, default_country: :gb
+    view do
+      subject user do |f|
+        f.tel_field :phone, default_country: :gb
+      end
     end
 
     it 'country == GB' do

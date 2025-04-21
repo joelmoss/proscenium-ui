@@ -21,3 +21,5 @@ gem 'capybara'
 gem 'maxitest'
 gem 'minitest-focus'
 gem 'minitest-spec-rails'
+
+gem 'phlexible'

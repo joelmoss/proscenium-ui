@@ -3,16 +3,13 @@
 require 'test_helper'
 
 class Proscenium::UI::FormTest < ActiveSupport::TestCase
-  let(:subject) { Proscenium::UI::Form }
   let(:user) { User.new }
-  view -> { subject.new user }
+  view { subject user }
 
   it 'side loads CSS' do
     view
 
-    imports = Proscenium::Importer.imported.keys
-    assert_equal ['/node_modules/@rubygems/proscenium-ui/app/components/proscenium/ui/form.css'],
-                 imports
+    assert_equal ["#{COMPONENTS_PATH}/form.css"], Proscenium::Importer.imported.keys
   end
 
   it 'has an action attribute' do
@@ -30,7 +27,7 @@ class Proscenium::UI::FormTest < ActiveSupport::TestCase
   end
 
   context 'method: :get' do
-    view -> { subject.new(user, method: :get) }
+    view { subject user, method: :get }
 
     it 'has a method attribute' do
       assert_equal 'get', view.find('form')[:method]
@@ -42,7 +39,7 @@ class Proscenium::UI::FormTest < ActiveSupport::TestCase
   end
 
   context 'method: :patch' do
-    view -> { subject.new(user, method: :patch) }
+    view { subject user, method: :patch }
 
     it 'form[method] == post' do
       assert_equal 'post', view.find('form')[:method]
@@ -55,7 +52,6 @@ class Proscenium::UI::FormTest < ActiveSupport::TestCase
 
   context 'persisted model record' do
     let(:user) { User.create! name: 'Joel' }
-    view -> { subject.new(user) }
 
     it 'has a hidden _method field' do
       assert_equal 'patch', view.find('input[name=_method]', visible: :hidden)[:value]
@@ -67,7 +63,7 @@ class Proscenium::UI::FormTest < ActiveSupport::TestCase
   end
 
   context ':action' do
-    view -> { subject.new(user, action: '/') }
+    view { subject user, action: '/' }
 
     it 'sets form action to URL' do
       assert_equal '/', view.find('form')[:action]
@@ -75,7 +71,7 @@ class Proscenium::UI::FormTest < ActiveSupport::TestCase
   end
 
   context '**attributes' do
-    view -> { subject.new(user, class: 'myform') }
+    view { subject user, class: 'myform' }
 
     it 'passes attributes to form' do
       assert view.has_css?('form.myform')
@@ -83,8 +79,10 @@ class Proscenium::UI::FormTest < ActiveSupport::TestCase
   end
 
   describe '#submit' do
-    view -> { subject.new(user) } do |f|
-      f.submit 'Save'
+    view do
+      subject user do |f|
+        f.submit 'Save'
+      end
     end
 
     it 'has a submit button' do

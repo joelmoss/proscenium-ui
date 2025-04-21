@@ -3,12 +3,14 @@
 require 'test_helper'
 
 class Proscenium::UI::Form::Fields::RadioGroupTest < ActiveSupport::TestCase
-  let(:subject) { Proscenium::UI::Form }
+  def subject(...) = Proscenium::UI::Form.new(...)
   let(:user) { User.new }
 
   with 'options as last argument' do
-    view -> { subject.new(user) } do |f|
-      f.radio_group :role, %i[admin manager]
+    view do
+      subject user do |f|
+        f.radio_group :role, %i[admin manager]
+      end
     end
 
     it 'renders a radio input for each provided value' do
@@ -18,8 +20,10 @@ class Proscenium::UI::Form::Fields::RadioGroupTest < ActiveSupport::TestCase
   end
 
   with ':options attribute' do
-    view -> { subject.new(user) } do |f|
-      f.radio_group :role, options: %i[admin manager]
+    view do
+      subject user do |f|
+        f.radio_group :role, options: %i[admin manager]
+      end
     end
 
     it 'renders a radio input for each provided value' do
@@ -29,8 +33,10 @@ class Proscenium::UI::Form::Fields::RadioGroupTest < ActiveSupport::TestCase
   end
 
   with 'selected value' do
-    view -> { subject.new(user) } do |f|
-      f.radio_group :role, %i[admin manager]
+    view do
+      subject user do |f|
+        f.radio_group :role, %i[admin manager]
+      end
     end
 
     it 'is checked' do
@@ -42,8 +48,10 @@ class Proscenium::UI::Form::Fields::RadioGroupTest < ActiveSupport::TestCase
   end
 
   with 'enum attribute' do
-    view -> { subject.new(user, url: '/') } do |f|
-      f.radio_group :gender
+    view do
+      subject user, url: '/' do |f|
+        f.radio_group :gender
+      end
     end
 
     it 'uses enum values for options' do
@@ -64,9 +72,11 @@ class Proscenium::UI::Form::Fields::RadioGroupTest < ActiveSupport::TestCase
     end
 
     with 'default value' do
-      view -> { subject.new(user, url: '/') } do |f|
-        f.radio_group :gender_with_db_default
-        f.radio_group :gender_with_code_default
+      view do
+        subject user, url: '/' do |f|
+          f.radio_group :gender_with_db_default
+          f.radio_group :gender_with_code_default
+        end
       end
 
       it 'uses default enum value' do
@@ -85,8 +95,10 @@ class Proscenium::UI::Form::Fields::RadioGroupTest < ActiveSupport::TestCase
     end
 
     let(:event) { Event.new }
-    view -> { subject.new(event) } do |f|
-      f.radio_group :user
+    view do
+      subject event do |f|
+        f.radio_group :user
+      end
     end
 
     it 'uses association values for options' do

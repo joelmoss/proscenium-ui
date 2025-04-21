@@ -40,7 +40,7 @@ module Proscenium::UI
   #   - `radio_group` - group of <input>'s with 'radio' type.
   #   - `select_field` - <select> input.
   #
-  class Form < Proscenium::Phlex
+  class Form < Component
     extend Literal::Properties
 
     include FieldMethods
