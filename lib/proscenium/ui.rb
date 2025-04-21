@@ -2,9 +2,10 @@
 
 require 'proscenium/ui/version'
 require 'proscenium/ui/engine'
+require 'phlexible'
+require 'proscenium'
 
 module Proscenium
   module UI
-    # Your code goes here...
   end
 end

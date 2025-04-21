@@ -2,6 +2,7 @@ plugins:
   - rubocop-rails
   - rubocop-minitest
   - rubocop-disable_syntax
+  - rubocop-capybara
 
 AllCops:
   TargetRubyVersion: 3.2

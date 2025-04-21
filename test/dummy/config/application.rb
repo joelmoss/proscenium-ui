@@ -13,16 +13,24 @@ require 'action_controller/railtie'
 # require "action_mailbox/engine"
 # require "action_text/engine"
 require 'action_view/railtie'
-require 'action_cable/engine'
-require 'rails/test_unit/railtie'
+# require 'action_cable/engine'
+# require 'rails/test_unit/railtie'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+module Views; end
+
 module Dummy
   class Application < Rails::Application
     config.load_defaults Rails::VERSION::STRING.to_f
+
+    initializer 'autoload_views', after: :bootstrap_hook do
+      Rails.autoloaders.main.push_dir("#{root}/app/views", namespace: Views)
+    end
+
+    # config.autoload_paths << "#{root}/app/views"
 
     # For compatibility with applications that use this config
     config.action_controller.include_all_helpers = false
@@ -30,7 +38,7 @@ module Dummy
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.
-    config.autoload_lib(ignore: %w[assets tasks])
+    # config.autoload_lib(ignore: %w[assets tasks])
 
     # Configuration for the application, engines, and railties goes here.
     #
