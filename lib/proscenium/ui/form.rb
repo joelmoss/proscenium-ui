@@ -186,9 +186,9 @@ module Proscenium::UI
 
     private
 
-    def merge_bang_attributes!(attrs, kw_attributes, additional_bang_attrs: [])
-      Proscenium::Utils.merge_bang_attributes! attrs, kw_attributes,
-                                               %i[required disabled].concat(additional_bang_attrs)
-    end
+      def merge_bang_attributes!(attrs, kw_attributes, additional_bang_attrs: [])
+        Proscenium::Utils.merge_bang_attributes! attrs, kw_attributes,
+                                                 %i[required disabled].concat(additional_bang_attrs)
+      end
   end
 end

@@ -86,10 +86,10 @@ class Proscenium::UI::Breadcrumbs
 
     private
 
-    def computed_breadcrumbs
-      @computed_breadcrumbs ||= breadcrumbs.map do |ele|
-        ComputedElement.new ele, helpers
+      def computed_breadcrumbs
+        @computed_breadcrumbs ||= breadcrumbs.map do |ele|
+          ComputedElement.new ele, helpers
+        end
       end
-    end
   end
 end

@@ -65,7 +65,7 @@ module Proscenium::UI::Form::Translation
 
   private
 
-  def i18n_scope
-    'form'
-  end
+    def i18n_scope
+      'form'
+    end
 end

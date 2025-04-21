@@ -50,9 +50,9 @@ class Proscenium::UI::BreadcrumbsTest < ActiveSupport::TestCase
 
         private
 
-        def home_template
-          super { 'Hello' }
-        end
+          def home_template
+            super { 'Hello' }
+          end
       end
     end
 

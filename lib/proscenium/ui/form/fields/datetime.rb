@@ -8,8 +8,8 @@ module Proscenium::UI::Form::Fields
 
     private
 
-    def value
-      super&.strftime('%Y-%m-%dT%H:%M')
-    end
+      def value
+        super&.strftime('%Y-%m-%dT%H:%M')
+      end
   end
 end

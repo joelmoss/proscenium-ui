@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def phlex_view_path(action_name)
-    "views/#{controller_path}/#{action_name}"
-  end
+    def phlex_view_path(action_name)
+      "views/#{controller_path}/#{action_name}"
+    end
 end

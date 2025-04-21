@@ -39,16 +39,16 @@ module Proscenium::UI::Form::Fields
 
     private
 
-    def country
-      @country ||= if value.blank?
-                     @default_country
-                   else
-                     Phonelib.parse(value, @default_country).country || @default_country
-                   end
-    end
+      def country
+        @country ||= if value.blank?
+                       @default_country
+                     else
+                       Phonelib.parse(value, @default_country).country || @default_country
+                     end
+      end
 
-    def countries
-      ISO3166::Country.all_names_with_codes.to_h
-    end
+      def countries
+        ISO3166::Country.all_names_with_codes.to_h
+      end
   end
 end

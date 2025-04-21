@@ -58,12 +58,12 @@ class Proscenium::UI::Breadcrumbs
 
     private
 
-    def get_instance_variable(element)
-      if !@context.instance_variable_defined?(element)
-        raise NameError, "undefined instance variable `#{element}' for breadcrumb", caller
-      end
+      def get_instance_variable(element)
+        if !@context.instance_variable_defined?(element)
+          raise NameError, "undefined instance variable `#{element}' for breadcrumb", caller
+        end
 
-      @context.instance_variable_get element
-    end
+        @context.instance_variable_get element
+      end
   end
 end

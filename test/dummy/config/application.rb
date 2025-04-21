@@ -32,6 +32,9 @@ module Dummy
 
     # config.autoload_paths << "#{root}/app/views"
 
+    # config.autoload_paths << "#{root}/../../lib/proscenium/ui"
+    # config.eager_load_paths << "#{root}/../../lib/proscenium/ui"
+
     # For compatibility with applications that use this config
     config.action_controller.include_all_helpers = false
 
