@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'proscenium/ui/engine'
 require 'proscenium'
 require 'zeitwerk'
 require 'phlex'

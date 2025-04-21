@@ -1,7 +1,7 @@
 @define-mixin breadcrumbs {
   /* Default properties */
   --_puiBreadcrumbs--separator-color: GrayText;
-  --_puiBreadcrumbs--separator: url("/proscenium/icons/angle-right-regular.svg");
+  --_puiBreadcrumbs--separator: url("/proscenium/ui/icons/angle-right-regular.svg");
 
   margin: 10px;
 

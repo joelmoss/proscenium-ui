@@ -5,7 +5,7 @@
    *   --puiBreadcrumbs--link-color: LinkText;
    *   --puiBreadcrumbs--link-hover-color: HighlightText;
    *   --puiBreadcrumbs--separator-color: GrayText;
-   *   --puiBreadcrumbs--separator: url("/proscenium/icons/angle-right-regular.svg");
+   *   --puiBreadcrumbs--separator: url("/proscenium/ui/icons/angle-right-regular.svg");
    */
 
   .base {
