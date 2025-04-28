@@ -12,7 +12,7 @@ gem 'amazing_print'
 gem 'debug', '>= 1.0.0'
 gem 'web-console', group: :development
 
-gem 'rubocop-capybara'
+gem 'rubocop-capybara', require: false
 gem 'rubocop-disable_syntax', require: false
 gem 'rubocop-minitest', require: false
 gem 'rubocop-performance', require: false

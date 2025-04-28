@@ -26,9 +26,19 @@ module Dummy
   class Application < Rails::Application
     config.load_defaults Rails::VERSION::STRING.to_f
 
-    initializer 'autoload_views', after: :bootstrap_hook do
-      Rails.autoloaders.main.push_dir("#{root}/app/views", namespace: Views)
-    end
+    # initializer 'autoload_views', after: :bootstrap_hook do
+    #   loader = Rails.autoloaders.main
+
+    #   loader.push_dir("#{root}/app/views", namespace: Views)
+    #   loader.push_dir(root.join('../../lib/proscenium/ui').to_s, namespace: Proscenium::UI)
+    #   loader.ignore(root.join('../../lib/proscenium/ui/version.rb'))
+    #   loader.ignore(root.join('../../lib/proscenium/ui/engine.rb'))
+    # end
+
+    # config.autoload_paths << root.join('../../app/components')
+    # config.autoload_paths << root.join('../../lib/proscenium/ui')
+    # config.eager_load_paths << root.join('../../lib/proscenium/ui')
+    # pp config.autoload_paths
 
     # config.autoload_paths << "#{root}/app/views"
 

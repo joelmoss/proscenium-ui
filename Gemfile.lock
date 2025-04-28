@@ -2,8 +2,11 @@ PATH
   remote: .
   specs:
     proscenium-ui (0.1.0)
-      proscenium (= 0.19.0.beta10)
-      rails (>= 8.0.2)
+      countries (~> 7.1.1)
+      literal (~> 1.7.1)
+      phonelib (~> 0.10.8)
+      proscenium (= 0.19.0.beta17)
+      rails (~> 8.0.2)
 
 GEM
   remote: https://rubygems.org/
@@ -110,7 +113,6 @@ GEM
     drb (2.2.1)
     erubi (1.13.1)
     ffi (1.17.2-arm64-darwin)
-    gems (1.3.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
     i18n (1.14.7)
@@ -169,18 +171,14 @@ GEM
     phlexible (2.2.0)
       phlex (>= 1.10.0, < 2.0.0)
       phlex-rails (>= 1.2.1, < 2.0.0)
-    phonelib (0.10.7)
+    phonelib (0.10.8)
     pp (0.6.2)
       prettyprint
     prettyprint (0.2.0)
     prism (1.4.0)
-    proscenium (0.19.0.beta10-arm64-darwin)
-      countries (~> 7.1.0)
+    proscenium (0.19.0.beta17-arm64-darwin)
       ffi (~> 1.17.0)
-      gems (~> 1.3.0)
-      literal (~> 1.0)
       phlex-rails (~> 1.2)
-      phonelib (~> 0.10.3)
       rails (>= 7.1.0, < 9.0)
       ruby-next (~> 1.1.1)
     psych (5.2.3)

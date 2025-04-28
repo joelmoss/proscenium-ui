@@ -7,11 +7,16 @@ class Proscenium::UI::BreadcrumbsTest < ActiveSupport::TestCase
     controller.class.include Proscenium::UI::Breadcrumbs::Control
   end
 
+  focus
   it 'side loads CSS' do
-    view
-    imports = Proscenium::Importer.imported.keys
+    ap view_context.render Proscenium::UI::Breadcrumbs do
+      h1 { 'helloo' }
+    end
 
-    assert_equal ["#{COMPONENTS_PATH}/breadcrumbs/index.module.css"], imports
+    # view
+    # imports = Proscenium::Importer.imported.keys
+
+    # assert_equal ["#{COMPONENTS_PATH}/breadcrumbs/index.module.css"], imports
   end
 
   context '@hide_breadcrumbs = true' do

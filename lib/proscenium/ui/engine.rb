@@ -3,7 +3,13 @@
 module Proscenium
   module UI
     class Engine < ::Rails::Engine
-      # isolate_namespace Proscenium::UI
+      isolate_namespace Proscenium::UI
+
+      # initializer 'proscenium-ui.paths' do |app|
+      # config.autoload_paths << "#{root}/app/components"
+      # config.autoload_paths << "#{root}/lib/proscenium/ui"
+      # pp config.autoload_paths
+      # end
 
       initializer 'proscenium-ui.public_path' do |app|
         if app.config.public_file_server.enabled

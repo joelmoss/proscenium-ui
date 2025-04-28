@@ -26,6 +26,9 @@ Gem::Specification.new do |spec|
     Dir['{app,config,db,lib}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.md']
   end
 
-  spec.add_dependency 'proscenium', '0.19.0.beta10'
-  spec.add_dependency 'rails', '>= 8.0.2'
+  spec.add_dependency 'countries', '~> 7.1.1'
+  spec.add_dependency 'literal', '~> 1.7.1'
+  spec.add_dependency 'phonelib', '~> 0.10.8'
+  spec.add_dependency 'proscenium', '0.19.0.beta17'
+  spec.add_dependency 'rails', '~> 8.0.2'
 end

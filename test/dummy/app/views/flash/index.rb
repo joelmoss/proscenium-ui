@@ -6,7 +6,7 @@ module Views
 
     def view_template
       flash.notice = 'Hello!'
-      Proscenium::UI::Flash()
+      render Proscenium::UI::Flash
     end
   end
 end

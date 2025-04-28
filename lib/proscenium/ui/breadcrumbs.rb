@@ -59,11 +59,13 @@ module Proscenium::UI
 
     def self.css_module_path = source_path.sub_ext('').join('index.module.css')
 
-    def view_template
+    def view_template(&block)
+      ap block
       div class: :@base do
         ol do
           if @with_home
             li do
+              yield if block_given?
               home_template
             end
           end
