@@ -97,7 +97,7 @@ class Proscenium::UI::Form::Fields::SelectTest < ActiveSupport::TestCase
   with 'a block' do
     view do
       Class.new(Phlex::HTML) do
-        def initialize(user) # rubocop:disable Lint/MissingSuper
+        def initialize(user)
           @user = user
         end
 

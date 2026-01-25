@@ -2,50 +2,50 @@
 
 require 'test_helper'
 
-class Proscenium::UI::FormTest < ActiveSupport::TestCase
+describe Proscenium::UI::Form do
   let(:user) { User.new }
-  view { subject user }
+  render_subject { [user, foo: :bar] }
 
   it 'side loads CSS' do
-    view
+    render_subject user
     assert_equal ["#{COMPONENTS_PATH}/form/index.css"], Proscenium::Importer.imported.keys
   end
 
   it 'has an action attribute' do
-    assert_equal '/users', view.find('form')[:action]
+    assert_equal '/users', find('form')[:action]
   end
 
   context 'default method' do
     it 'has a default method attribute' do
-      assert_equal 'post', view.find('form')[:method]
+      assert_equal 'post', find('form')[:method]
     end
 
     it 'does not have a hidden _method field' do
-      assert_not view.has_field?('_method', type: :hidden)
+      assert_no_field('_method', type: :hidden)
     end
   end
 
   context 'method: :get' do
-    view { subject user, method: :get }
+    render_subject { [user, method: :get] }
 
     it 'has a method attribute' do
-      assert_equal 'get', view.find('form')[:method]
+      assert_equal 'get', find('form')[:method]
     end
 
     it 'does not have a hidden _method field' do
-      assert_not view.has_field?('_method', type: :hidden)
+      assert_no_field('_method', type: :hidden)
     end
   end
 
   context 'method: :patch' do
-    view { subject user, method: :patch }
+    render_subject { [user, method: :patch] }
 
     it 'form[method] == post' do
-      assert_equal 'post', view.find('form')[:method]
+      assert_equal 'post', find('form')[:method]
     end
 
     it 'has a hidden _method field' do
-      assert_equal 'patch', view.find('input[name=_method]', visible: :hidden)[:value]
+      assert_equal 'patch', find('input[name=_method]', visible: :hidden)[:value]
     end
   end
 
@@ -53,39 +53,37 @@ class Proscenium::UI::FormTest < ActiveSupport::TestCase
     let(:user) { User.create! name: 'Joel' }
 
     it 'has a hidden _method field' do
-      assert_equal 'patch', view.find('input[name=_method]', visible: :hidden)[:value]
+      assert_equal 'patch', find('input[name=_method]', visible: :hidden)[:value]
     end
   end
 
   it 'has an authenticity_token field' do
-    assert view.has_field?('authenticity_token', type: :hidden)
+    assert_field('authenticity_token', type: :hidden)
   end
 
   context ':action' do
-    view { subject user, action: '/' }
+    render_subject { [user, action: '/'] }
 
     it 'sets form action to URL' do
-      assert_equal '/', view.find('form')[:action]
+      assert_equal '/', find('form')[:action]
     end
   end
 
   context '**attributes' do
-    view { subject user, class: 'myform' }
+    render_subject { [user, class: 'myform'] }
 
     it 'passes attributes to form' do
-      assert view.has_css?('form.myform')
+      assert_css 'form.myform'
     end
   end
 
   describe '#submit' do
-    view do
-      subject user do |f|
-        f.submit 'Save'
-      end
+    render_subject do
+      [user, { action: '/' }, ->(f) { f.submit 'Save' }]
     end
 
     it 'has a submit button' do
-      assert view.has_button?('Save')
+      assert_button 'Save'
     end
   end
 end

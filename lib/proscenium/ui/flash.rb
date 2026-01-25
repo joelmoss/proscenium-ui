@@ -9,7 +9,7 @@ module Proscenium::UI
     end
 
     def view_template
-      pui_flash data: { flash: helpers.flash.to_hash }
+      pui_flash data: { flash: view_context.flash.to_hash }
     end
   end
 end

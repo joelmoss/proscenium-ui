@@ -2,9 +2,11 @@
 
 require 'test_helper'
 
-class Proscenium::UI::FlashTest < ActiveSupport::TestCase
+describe Proscenium::UI::Flash do
+  render_subject
+
   it 'side loads CSS' do
-    view
+    render_subject
 
     assert_equal ["#{COMPONENTS_PATH}/flash/index.js",
                   "#{COMPONENTS_PATH}/flash/index.css"],
@@ -12,11 +14,12 @@ class Proscenium::UI::FlashTest < ActiveSupport::TestCase
   end
 
   it 'renders custom element' do
-    assert view.has_element?('pui-flash')
+    assert_element 'pui-flash'
   end
 
   it 'assigns data attribute' do
     controller.flash.now[:foo] = 'bar'
-    assert_equal 'bar', view.find('pui-flash')['data-flash-foo']
+
+    assert_equal 'bar', find('pui-flash')['data-flash-foo']
   end
 end

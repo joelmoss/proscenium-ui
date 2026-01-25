@@ -44,7 +44,7 @@ module Proscenium::UI::Form::Fields
           else
             names.prepend attribute.first
           end
-        elsif names.count == 1 && names.first.is_a?(String)
+        elsif names.one? && names.first.is_a?(String)
           return names.first
         end
 

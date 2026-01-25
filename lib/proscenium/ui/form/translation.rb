@@ -53,7 +53,7 @@ module Proscenium::UI::Form::Translation
     if !default
       model = @model.class
 
-      if @model.class.respond_to?(:reflect_on_association) && attribute.count > 1
+      if @model.class.respond_to?(:reflect_on_association) && attribute.many?
         model = @model.class.reflect_on_association(attribute.first).klass
       end
 

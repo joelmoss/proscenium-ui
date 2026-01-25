@@ -2,15 +2,21 @@ plugins:
   - rubocop-rails
   - rubocop-minitest
   - rubocop-disable_syntax
+  - rubocop-packaging
+  - rubocop-performance
   - rubocop-capybara
 
 AllCops:
-  TargetRubyVersion: 3.2
+  TargetRubyVersion: 3.1
   NewCops: enable
   SuggestExtensions: false
   Exclude:
-    - "vendor/**/*"
     - "gemfiles/**/*"
+    - "vendor/**/*"
+
+Naming/FileName:
+  Exclude:
+    - "lib/proscenium-phlex.rb"
 
 Layout/LineLength:
   Max: 100
@@ -20,6 +26,10 @@ Layout/IndentationConsistency:
 Lint/ConstantDefinitionInBlock:
   Exclude:
     - "test/**/*"
+Lint/ItWithoutArgumentsInBlock:
+  Enabled: false
+Lint/MissingSuper:
+  Enabled: false
 
 Metrics:
   Enabled: false
@@ -38,6 +48,8 @@ Style/ClassAndModuleChildren:
   Enabled: false
 Style/NegatedIf:
   Enabled: false
+Style/HashAsLastArrayItem:
+  EnforcedStyle: no_braces
 
 Minitest/EmptyLineBeforeAssertionMethods:
   Enabled: false

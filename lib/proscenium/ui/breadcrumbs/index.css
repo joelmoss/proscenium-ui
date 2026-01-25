@@ -1,0 +1,14 @@
+@layer proscenium-ui-component {
+  /*
+   * Properties:
+   *
+   *   --puiBreadcrumbs--link-color: LinkText;
+   *   --puiBreadcrumbs--link-hover-color: HighlightText;
+   *   --puiBreadcrumbs--separator-color: GrayText;
+   *   --puiBreadcrumbs--separator: url("/proscenium/ui/icons/angle-right-regular.svg");
+   */
+
+  pui-breadcrumbs {
+    @mixin breadcrumbs from url("./mixins.css");
+  }
+}

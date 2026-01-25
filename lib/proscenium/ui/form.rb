@@ -41,8 +41,6 @@ module Proscenium::UI
   #   - `select_field` - <select> input.
   #
   class Form < Component
-    extend Literal::Properties
-
     include FieldMethods
     include Translation
 
@@ -91,8 +89,8 @@ module Proscenium::UI
     # Returns a button with type of 'submit', using the `value` given.
     #
     # @param value [String] Value of the `value` attribute.
-    def submit(value = 'Save', **)
-      input(name: 'commit', type: :submit, value:, **)
+    def submit(value = 'Save', **kwargs)
+      input(name: 'commit', type: :submit, value:, **kwargs)
     end
 
     # Returns a <div> with the given `message` as its content. If `message` is not given, and
@@ -114,12 +112,12 @@ module Proscenium::UI
       end
     end
 
-    def view_template(&block)
+    def view_template(&)
       form action:, method:, **@attributes do
         method_field
         authenticity_token_field
         error_for_base
-        yield_content(&block)
+        yield if block_given?
       end
     end
 
@@ -137,12 +135,12 @@ module Proscenium::UI
       lname = names.pop.to_s
       names.append lname.delete_suffix('?').to_sym
 
-      @_view_context.field_name(ActiveModel::Naming.param_key(@model.class), *names,
-                                multiple:)
+      view_context.field_name(ActiveModel::Naming.param_key(@model.class), *names,
+                              multiple:)
     end
 
-    def field_id(*)
-      @_view_context.field_id(ActiveModel::Naming.param_key(@model.class), *)
+    def field_id(*args)
+      view_context.field_id(ActiveModel::Naming.param_key(@model.class), *args)
     end
 
     def authenticity_token_field
@@ -151,13 +149,13 @@ module Proscenium::UI
       input(
         name: 'authenticity_token',
         type: 'hidden',
-        value: @_view_context.form_authenticity_token(form_options: { action:,
-                                                                      method: @method })
+        value: view_context.form_authenticity_token(form_options: { action:,
+                                                                    method: @method })
       )
     end
 
     def action
-      @_view_context.url_for(@action || @model)
+      view_context.url_for(@action || @model)
     end
 
     def method_field

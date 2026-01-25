@@ -2,99 +2,112 @@
 
 require 'test_helper'
 
-class Proscenium::UI::BreadcrumbsTest < ActiveSupport::TestCase
+describe Proscenium::UI::Breadcrumbs do
   before do
     controller.class.include Proscenium::UI::Breadcrumbs::Control
   end
 
-  focus
-  it 'side loads CSS' do
-    ap view_context.render Proscenium::UI::Breadcrumbs do
-      h1 { 'helloo' }
-    end
-
-    # view
-    # imports = Proscenium::Importer.imported.keys
-
-    # assert_equal ["#{COMPONENTS_PATH}/breadcrumbs/index.module.css"], imports
-  end
+  render_subject
 
   context '@hide_breadcrumbs = true' do
-    it 'does not render' do
+    before do
       controller.instance_variable_set :@hide_breadcrumbs, true
+    end
 
-      assert_not view.has_selector?('ol')
+    it 'does not render' do
+      assert_empty html
     end
   end
 
-  it 'shows home element by default' do
-    assert_equal '/', view.find('ol li:first-child a')['href']
-    assert view.has_selector?('ol li:first-child a>svg')
-  end
-
-  context "home_path: '/foo'" do
-    view home_path: '/foo'
-
-    it 'uses custom home path' do
-      assert_equal '/foo', view.find('ol li:first-child a')['href']
+  context 'undefined @hide_breadcrumbs' do
+    it 'side loads CSS' do
+      render_subject
+      assert_equal ["#{COMPONENTS_PATH}/breadcrumbs/index.module.css"],
+                   Proscenium::Importer.imported.keys
     end
-  end
 
-  context 'with_home: false' do
-    view with_home: false
-
-    it 'does not show home element' do
-      assert_not view.has_selector?('ol li')
+    it 'shows home element by default' do
+      assert_equal '/', find('ol li:first-child a')['href']
+      assert_selector 'ol li:first-child a>svg'
     end
-  end
 
-  context 'redefined #home_template' do
-    let(:described_class) do
-      Class.new(Proscenium::UI::Breadcrumbs) do
-        def self.source_path = Proscenium::UI::Breadcrumbs.source_path
+    context "home_path: '/foo'" do
+      render_subject home_path: '/foo'
 
-        private
+      it 'uses custom home path' do
+        assert_equal '/foo', find('ol li:first-child a')['href']
+      end
+    end
 
-          def home_template
-            super { 'Hello' }
+    context 'with_home: false' do
+      render_subject with_home: false
+
+      it 'does not show home element' do
+        assert_no_selector 'ol li'
+      end
+    end
+
+    context 'redefined #home_template' do
+      let(:described_class) do
+        Class.new(Proscenium::UI::Breadcrumbs) do
+          def self.source_path = Proscenium::UI::Breadcrumbs.source_path
+
+          private
+
+            def home_template
+              super { 'Hello' }
+            end
+        end
+      end
+
+      it 'renders #home_template' do
+        assert_equal '/', find('ol li:first-child a')['href']
+        assert_equal 'Hello', find('ol li:first-child a').text
+      end
+    end
+
+    describe '#add_breadcrumb' do
+      render_subject with_home: false
+
+      context 'string name and path' do
+        it 'renders breadcrumb as link' do
+          controller.add_breadcrumb 'Foo', '/foo'
+
+          assert find('ol li:first-child a').has_content?('Foo')
+          assert_equal '/foo', find('ol li:first-child a')['href']
+        end
+      end
+
+      context 'name only; as string' do
+        it 'renders the name as-is, and does not render link' do
+          controller.add_breadcrumb 'Foo'
+
+          assert find('ol li:first-child').has_content?('Foo')
+          assert_no_selector 'ol li:first-child a'
+        end
+      end
+
+      context 'name as Symbol' do
+        it 'calls controller method of the same name' do
+          controller.class.define_method(:foo) { 'Foo' }
+          controller.add_breadcrumb :foo
+
+          assert find('ol li:first-child').has_content?('Foo')
+          assert_no_selector('ol li:first-child a')
+        end
+
+        context 'name responds to :for_breadcrumb' do
+          it 'calls method of the same name on the name object' do
+            foo = Class.new do
+              def for_breadcrumb = 'Foo'
+            end
+            controller.class.define_method(:foo) { foo.new }
+            controller.add_breadcrumb :foo
+
+            assert find('ol li:first-child').has_content?('Foo')
+            assert_no_selector('ol li:first-child a')
           end
-      end
-    end
-
-    it 'renders #home_template' do
-      assert_equal '/', view.find('ol li:first-child a')['href']
-      assert_equal 'Hello', view.find('ol li:first-child a').text
-    end
-  end
-
-  describe '#add_breadcrumb' do
-    view with_home: false
-
-    context 'string name and path' do
-      it 'renders breadcrumb as link' do
-        controller.add_breadcrumb 'Foo', '/foo'
-
-        assert view.find('ol li:first-child a').has_content?('Foo')
-        assert_equal '/foo', view.find('ol li:first-child a')['href']
-      end
-    end
-
-    context 'name only; as string' do
-      it 'renders the name as-is, and does not render link' do
-        controller.add_breadcrumb 'Foo'
-
-        assert view.find('ol li:first-child').has_content?('Foo')
-        assert_not view.has_selector?('ol li:first-child a')
-      end
-    end
-
-    context 'name as Symbol' do
-      it 'calls controller method of the same name' do
-        controller.class.define_method(:foo) { 'Foo' }
-        controller.add_breadcrumb :foo
-
-        assert view.find('ol li:first-child').has_content?('Foo')
-        assert_not view.has_selector?('ol li:first-child a')
+        end
       end
 
       context 'name responds to :for_breadcrumb' do
@@ -102,112 +115,99 @@ class Proscenium::UI::BreadcrumbsTest < ActiveSupport::TestCase
           foo = Class.new do
             def for_breadcrumb = 'Foo'
           end
-          controller.class.define_method(:foo) { foo.new }
-          controller.add_breadcrumb :foo
+          controller.add_breadcrumb foo.new
 
-          assert view.find('ol li:first-child').has_content?('Foo')
-          assert_not view.has_selector?('ol li:first-child a')
+          assert find('ol li:first-child').has_content?('Foo')
+          assert_no_selector('ol li:first-child a')
         end
       end
-    end
 
-    context 'name responds to :for_breadcrumb' do
-      it 'calls method of the same name on the name object' do
-        foo = Class.new do
-          def for_breadcrumb = 'Foo'
+      context 'name as Symbol with leading @' do
+        it 'calls controller instance variable of the same name' do
+          controller.instance_variable_set :@foo, 'Foo'
+          controller.add_breadcrumb :@foo
+
+          assert find('ol li:first-child').has_content?('Foo')
+          assert_no_selector('ol li:first-child a')
         end
-        controller.add_breadcrumb foo.new
-
-        assert view.find('ol li:first-child').has_content?('Foo')
-        assert_not view.has_selector?('ol li:first-child a')
       end
-    end
 
-    context 'name as Symbol with leading @' do
-      it 'calls controller instance variable of the same name' do
-        controller.instance_variable_set :@foo, 'Foo'
-        controller.add_breadcrumb :@foo
+      context 'name as Proc' do
+        it 'called with helpers as context' do
+          controller.instance_variable_set :@foo, 'Foo'
+          controller.add_breadcrumb -> { @foo }
 
-        assert view.find('ol li:first-child').has_content?('Foo')
-        assert_not view.has_selector?('ol li:first-child a')
+          assert find('ol li:first-child').has_content?('Foo')
+          assert_no_selector('ol li:first-child a')
+        end
       end
-    end
 
-    context 'name as Proc' do
-      it 'called with helpers as context' do
-        controller.instance_variable_set :@foo, 'Foo'
-        controller.add_breadcrumb -> { @foo }
+      context 'name as Proc; path as Symbol' do
+        it 'called with helpers as context' do
+          controller.instance_variable_set :@foo, 'Foo'
+          controller.add_breadcrumb -> { @foo }, :root
 
-        assert view.find('ol li:first-child').has_content?('Foo')
-        assert_not view.has_selector?('ol li:first-child a')
+          assert find('ol li:first-child').has_content?('Foo')
+          assert_equal '/', find('ol li:first-child a')['href']
+        end
       end
-    end
 
-    context 'name as Proc; path as Symbol' do
-      it 'called with helpers as context' do
-        controller.instance_variable_set :@foo, 'Foo'
-        controller.add_breadcrumb -> { @foo }, :root
+      context 'path as Symbol' do
+        it 'is passed to url_for' do
+          controller.add_breadcrumb 'Foo', :root
 
-        assert view.find('ol li:first-child').has_content?('Foo')
-        assert_equal '/', view.find('ol li:first-child a')['href']
+          assert find('ol li:first-child').has_content?('Foo')
+          assert_equal '/', find('ol li:first-child a')['href']
+        end
       end
-    end
 
-    context 'path as Symbol' do
-      it 'is passed to url_for' do
-        controller.add_breadcrumb 'Foo', :root
+      context 'path as Symbol which is a controller method' do
+        it 'calls controller method of the same name' do
+          controller.class.define_method(:foo) { '/foo' }
+          controller.add_breadcrumb 'Foo', :foo
 
-        assert view.find('ol li:first-child').has_content?('Foo')
-        assert_equal '/', view.find('ol li:first-child a')['href']
+          assert find('ol li:first-child').has_content?('Foo')
+          assert_equal '/foo', find('ol li:first-child a')['href']
+        end
       end
-    end
 
-    context 'path as Symbol which is a controller method' do
-      it 'calls controller method of the same name' do
-        controller.class.define_method(:foo) { '/foo' }
-        controller.add_breadcrumb 'Foo', :foo
+      context 'path as an Array' do
+        it 'is passed to url_for' do
+          controller.add_breadcrumb 'Foo', [:root]
 
-        assert view.find('ol li:first-child').has_content?('Foo')
-        assert_equal '/foo', view.find('ol li:first-child a')['href']
+          assert find('ol li:first-child').has_content?('Foo')
+          assert_equal '/', find('ol li:first-child a')['href']
+        end
       end
-    end
 
-    context 'path as an Array' do
-      it 'is passed to url_for' do
-        controller.add_breadcrumb 'Foo', [:root]
+      context 'path as Proc' do
+        it 'called with helpers as context' do
+          controller.instance_variable_set :@foo, '/'
+          controller.add_breadcrumb 'Foo', -> { @foo }
 
-        assert view.find('ol li:first-child').has_content?('Foo')
-        assert_equal '/', view.find('ol li:first-child a')['href']
+          assert find('ol li:first-child').has_content?('Foo')
+          assert_equal '/', find('ol li:first-child a')['href']
+        end
       end
-    end
 
-    context 'path as Proc' do
-      it 'called with helpers as context' do
-        controller.instance_variable_set :@foo, '/'
-        controller.add_breadcrumb 'Foo', -> { @foo }
+      context 'path as Symbol with leading @' do
+        it 'calls controller instance variable of the same name' do
+          controller.instance_variable_set :@foo, '/foo'
+          controller.add_breadcrumb 'Foo', :@foo
 
-        assert view.find('ol li:first-child').has_content?('Foo')
-        assert_equal '/', view.find('ol li:first-child a')['href']
+          assert find('ol li:first-child').has_content?('Foo')
+          assert_equal '/foo', find('ol li:first-child a')['href']
+        end
       end
-    end
 
-    context 'path as Symbol with leading @' do
-      it 'calls controller instance variable of the same name' do
-        controller.instance_variable_set :@foo, '/foo'
-        controller.add_breadcrumb 'Foo', :@foo
+      context 'path containing a Symbol with leading @' do
+        it 'calls controller instance variable of the same name' do
+          controller.instance_variable_set :@root_path, :root
+          controller.add_breadcrumb 'Foo', :@root_path
 
-        assert view.find('ol li:first-child').has_content?('Foo')
-        assert_equal '/foo', view.find('ol li:first-child a')['href']
-      end
-    end
-
-    context 'path containing a Symbol with leading @' do
-      it 'calls controller instance variable of the same name' do
-        controller.instance_variable_set :@root_path, :root
-        controller.add_breadcrumb 'Foo', :@root_path
-
-        assert view.find('ol li:first-child').has_content?('Foo')
-        assert_equal '/', view.find('ol li:first-child a')['href']
+          assert find('ol li:first-child').has_content?('Foo')
+          assert_equal '/', find('ol li:first-child a')['href']
+        end
       end
     end
   end

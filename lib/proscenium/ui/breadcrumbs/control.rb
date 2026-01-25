@@ -70,7 +70,7 @@ class Proscenium::UI::Breadcrumbs
       computed_breadcrumbs.map do |ele|
         path = ele.path
 
-        { name: ele.name, path: ele.path.nil? || helpers.current_page?(path) ? nil : path }
+        { name: ele.name, path: ele.path.nil? || view_context.current_page?(path) ? nil : path }
       end
     end
 
@@ -88,7 +88,7 @@ class Proscenium::UI::Breadcrumbs
 
       def computed_breadcrumbs
         @computed_breadcrumbs ||= breadcrumbs.map do |ele|
-          ComputedElement.new ele, helpers
+          ComputedElement.new ele, view_context
         end
       end
   end

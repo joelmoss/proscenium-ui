@@ -18,13 +18,14 @@ module Proscenium::UI
   #     add_breadcrumb 'Users', :users_path
   #   end
   #
-  # Display the breadcrumbs in your views with the breadcrumbs component.
-  # @see `Proscenium::UI::Breadcrumbs::Component`.
+  # Display the breadcrumbs in your view:
   #
-  # At it's simplest, you can add a breadcrumb with a name of "User", and a path of "/users" like
+  #   render Proscenium::UI::Breadcrumbs
+  #
+  # At it's simplest, you can add a breadcrumb with a name of "Users", and a path of "/users" like
   # this:
   #
-  #   add_breadcrumb 'Foo', '/foo'
+  #   add_breadcrumb 'Users', '/users'
   #
   # The value of the path is always passed to `url_for` before being rendered. It is also optional,
   # and if omitted, the breadcrumb will be rendered as plain text.
@@ -49,7 +50,8 @@ module Proscenium::UI
   #
   class Breadcrumbs < Component
     include Phlex::Rails::Helpers::URLFor
-    extend Literal::Properties
+
+    register_element :pui_breadcrumbs
 
     # The path (route) to use as the HREF for the home segment. Defaults to `:root`.
     prop :home_path, _Union(String, Symbol), default: -> { :root }
@@ -57,24 +59,23 @@ module Proscenium::UI
     # Assign false to hide the home segment.
     prop :with_home, _Boolean, default: -> { true }
 
-    def self.css_module_path = source_path.sub_ext('').join('index.module.css')
+    def self.source_path
+      super.sub_ext('').join('index.rb')
+    end
 
-    def view_template(&block)
-      ap block
-      div class: :@base do
-        ol do
-          if @with_home
-            li do
-              yield if block_given?
-              home_template
-            end
+    def view_template
+      pui_breadcrumbs do
+        if @with_home
+          div do
+            yield if block_given?
+            home_template
           end
+        end
 
-          breadcrumbs.each do |ce|
-            li do
-              path = ce.path
-              path.nil? ? ce.name : a(href: url_for(path)) { ce.name }
-            end
+        breadcrumbs.each do |ce|
+          div do
+            path = ce.path
+            path.nil? ? ce.name : a(href: url_for(path)) { ce.name }
           end
         end
       end
@@ -90,12 +91,12 @@ module Proscenium::UI
       #    super { 'hello' }
       #  end
       def home_template(&block)
-        a(href: url_for(@home_path)) do
+        a href: url_for(@home_path) do
           if block
             yield
           else
             svg role: 'img', xmlns: 'http://www.w3.org/2000/svg', viewBox: '0 0 576 512' do |s|
-              s.path fill: 'currentColor', d: <<~SVG.gsub("\n", '')
+              s.path fill: 'currentColor', d: <<~SVG.delete("\n")
                 M488 312.7V456c0 13.3-10.7 24-24 24H348c-6.6 0-12-5.4-12-12V356c0-6.6-5.4-
                 12-12-12h-72c-6.6 0-12 5.4-12 12v112c0 6.6-5.4 12-12 12H112c-13.3 0-24-10.
                 7-24-24V312.7c0-3.6 1.6-7 4.4-9.3l188-154.8c4.4-3.6 10.8-3.6 15.3 0l188 15
@@ -112,11 +113,13 @@ module Proscenium::UI
 
       # Don't render if @hide_breadcrumbs is true.
       def render?
-        helpers.assigns['hide_breadcrumbs'] != true
+        controller.instance_variable_get(:@hide_breadcrumbs) != true
       end
 
       def breadcrumbs
-        helpers.controller.breadcrumbs.map { |e| Breadcrumbs::ComputedElement.new e, helpers }
+        controller.breadcrumbs.map do |e|
+          Breadcrumbs::ComputedElement.new e, view_context
+        end
       end
   end
 end

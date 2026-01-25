@@ -24,7 +24,7 @@ module Proscenium::UI
       # @param type [Symbol] input type, eg. 'text', 'select'
       # @param error [ActiveModel::Error, String] error message for the attribute.
       # @param attributes [Hash] HTML attributes to pass to the input.
-      def initialize(attribute, model, form, type: nil, error: nil, **attributes) # rubocop:disable Lint/MissingSuper
+      def initialize(attribute, model, form, type: nil, error: nil, **attributes)
         if attribute.count > 2
           raise ArgumentError, 'attribute cannot be nested more than 2 levels deep'
         end
@@ -125,7 +125,7 @@ module Proscenium::UI
             else
               names.prepend attribute.first
             end
-          elsif names.count == 1 && names.first.is_a?(String)
+          elsif names.one? && names.first.is_a?(String)
             return names.first
           end
 
@@ -162,7 +162,7 @@ module Proscenium::UI
 
         # @return [Boolean] true if the attribute is nested, otherwise false.
         def nested?
-          attribute.count > 1
+          attribute.many?
         end
 
         def nested_attributes_association?

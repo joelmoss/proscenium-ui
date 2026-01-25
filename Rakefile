@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
-require 'bundler/setup'
+require_relative 'config/application'
 
-APP_RAKEFILE = File.expand_path('test/dummy/Rakefile', __dir__)
-load 'rails/tasks/engine.rake'
+Rails.application.load_tasks
 
-load 'rails/tasks/statistics.rake'
+# require 'bundler/setup'
 
-require 'bundler/gem_tasks'
+# APP_RAKEFILE = File.expand_path('test/dummy/Rakefile', __dir__)
+# load 'rails/tasks/engine.rake'
+
+# require 'bundler/gem_tasks'
