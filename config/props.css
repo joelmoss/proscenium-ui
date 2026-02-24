@@ -1,7 +1,80 @@
 :where(html) {
-  --pui-input-border: 1px solid gray;
+  --sans-font:
+    -apple-system, BlinkMacSystemFont, "Avenir Next", Avenir, "Nimbus Sans L",
+    Roboto, "Noto Sans", "Segoe UI", Arial, Helvetica, "Helvetica Neue",
+    sans-serif;
+  --serif-font: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --mono-font: Consolas, Menlo, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+
+  /* Sand */
+  --sand-950: #111110;
+  --sand-900: #1c1b19;
+  --sand-850: #272622;
+  --sand-800: #32302b;
+  --sand-750: #3d3b35;
+  --sand-700: #49463f;
+  --sand-650: #55524a;
+  --sand-600: #615e55;
+  --sand-550: #6e6a60;
+  --sand-500: #7b776b;
+  --sand-450: #888377;
+  --sand-400: #959082;
+  --sand-350: #a39e8f;
+  --sand-300: #b0ab9b;
+  --sand-250: #beb8a7;
+  --sand-200: #ccc6b4;
+  --sand-150: #dad4c2;
+  --sand-100: #e8e2d2;
+  --sand-50: #f2f0ec;
+  --sand: var(--sand-200);
+
+  /* Azure */
+  --azure-950: #04121d;
+  --azure-900: #061e2f;
+  --azure-850: #052940;
+  --azure-800: #033452;
+  --azure-750: #014063;
+  --azure-700: #014c75;
+  --azure-650: #015887;
+  --azure-600: #02659a;
+  --azure-550: #0172ad;
+  --azure-500: #017fc0;
+  --azure-450: #018cd4;
+  --azure-400: #029ae8;
+  --azure-350: #01aaff;
+  --azure-300: #51b4ff;
+  --azure-250: #79c0ff;
+  --azure-200: #9bccfd;
+  --azure-150: #b7d9fc;
+  --azure-100: #d1e5fb;
+  --azure-50: #e9f2fc;
+  --azure: var(--azure-550);
+
+  /* Grey */
+  --grey-950: #111111;
+  --grey-900: #1b1b1b;
+  --grey-850: #262626;
+  --grey-800: #303030;
+  --grey-750: #3b3b3b;
+  --grey-700: #474747;
+  --grey-650: #525252;
+  --grey-600: #5e5e5e;
+  --grey-550: #6a6a6a;
+  --grey-500: #777777;
+  --grey-450: #808080;
+  --grey-400: #919191;
+  --grey-350: #9e9e9e;
+  --grey-300: #ababab;
+  --grey-250: #b9b9b9;
+  --grey-200: #c6c6c6;
+  --grey-150: #d4d4d4;
+  --grey-100: #e2e2e2;
+  --grey-50: #f1f1f1;
+  --grey: var(--grey-300);
+
+  /* --pui-input-border: 1px solid gray;
   --pui-input-color: FieldText;
   --pui-input-accent-color: lightgray;
   --pui-input-border-radius: 2px;
-  --pui-input-background-color: Field;
+  --pui-input-background-color: Field; */
 }

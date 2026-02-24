@@ -58,16 +58,6 @@ module Views
       end
     end
 
-    # def icon(name, library: RailsIcons.configuration.default_library, from: library, variant: nil,
-    #          **arguments)
-    #   Icons::Icon.new(
-    #     name: name,
-    #     library: from || library,
-    #     variant: variant,
-    #     arguments: arguments
-    #   ).svg
-    # end
-
     private
 
       def iframe_src

@@ -1,14 +1,4 @@
 PATH
-  remote: ../proscenium
-  specs:
-    proscenium (0.23.0)
-      ffi (~> 1.17.0)
-      rails (>= 7.1.0, < 9.0)
-    proscenium (0.23.0-arm64-darwin)
-      ffi (~> 1.17.0)
-      rails (>= 7.1.0, < 9.0)
-
-PATH
   remote: .
   specs:
     proscenium-ui (0.1.0)
@@ -128,7 +118,7 @@ GEM
     dispersion (0.2.0)
       prism
     drb (2.2.3)
-    erb (6.0.1)
+    erb (6.0.2)
     erubi (1.13.1)
     ffi (1.17.3-arm64-darwin)
     globalid (1.3.0)
@@ -163,7 +153,8 @@ GEM
     maxitest (7.1.1)
       minitest (>= 6.0.0, < 6.1.0)
     mini_mime (1.1.5)
-    minitest (6.0.1)
+    minitest (6.0.2)
+      drb (~> 2.0)
       prism (~> 1.5)
     minitest-difftastic (0.2.1)
       difftastic (~> 0.6)
@@ -208,6 +199,12 @@ GEM
       dispersion (~> 0.2)
     prettyprint (0.2.0)
     prism (1.9.0)
+    proscenium (0.24.0)
+      ffi (~> 1.17.0)
+      rails (>= 7.1.0, < 9.0)
+    proscenium (0.24.0-arm64-darwin)
+      ffi (~> 1.17.0)
+      rails (>= 7.1.0, < 9.0)
     proscenium-phlex (0.6.0)
       phlex-rails (>= 1.2, < 3.0)
       phlexible (>= 3.1.0)
@@ -248,8 +245,8 @@ GEM
       activesupport (>= 5.0.0)
       minitest
       nokogiri (>= 1.6)
-    rails-html-sanitizer (1.6.2)
-      loofah (~> 2.21)
+    rails-html-sanitizer (1.7.0)
+      loofah (~> 2.25)
       nokogiri (>= 1.15.7, != 1.16.7, != 1.16.6, != 1.16.5, != 1.16.4, != 1.16.3, != 1.16.2, != 1.16.1, != 1.16.0.rc1, != 1.16.0)
     rails_caddy_dev (0.3.0)
       rails (>= 7.1.0, < 9.0)
@@ -298,7 +295,7 @@ GEM
     rubocop-disable_syntax (0.2.0)
       lint_roller
       rubocop (>= 1.72.0)
-    rubocop-minitest (0.38.2)
+    rubocop-minitest (0.39.1)
       lint_roller (~> 1.1)
       rubocop (>= 1.75.0, < 2.0)
       rubocop-ast (>= 1.38.0, < 2.0)
@@ -330,11 +327,10 @@ GEM
     unicode-emoji (4.2.0)
     uri (1.1.1)
     useragent (0.16.11)
-    web-console (4.2.1)
-      actionview (>= 6.0.0)
-      activemodel (>= 6.0.0)
+    web-console (4.3.0)
+      actionview (>= 8.0.0)
       bindex (>= 0.4.0)
-      railties (>= 6.0.0)
+      railties (>= 8.0.0)
     websocket-driver (0.8.0)
       base64
       websocket-extensions (>= 0.1.0)
@@ -357,7 +353,7 @@ DEPENDENCIES
   minitest-focus
   minitest-spec-rails
   phlexible
-  proscenium!
+  proscenium
   proscenium-ui!
   puma
   rails_caddy_dev
