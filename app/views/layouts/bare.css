@@ -1,12 +1,15 @@
-@import "/config/props.css";
+@import '/config/props.css';
 
-html[data-color-scheme="dark"] {
+html[data-color-scheme='dark'] {
   color-scheme: dark;
+  background: Canvas;
+  color: CanvasText;
 }
 
-html[data-color-scheme="light"] {
+html[data-color-scheme='light'] {
   color-scheme: light;
-  background-color: white;
+  background: Canvas;
+  color: CanvasText;
 }
 
 body {

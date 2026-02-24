@@ -41,13 +41,16 @@ module Views
             end
             main data: { viewport: controller.viewport } do
               div class: :@toolbar do
-                if controller.color_scheme == :light
-                  a href: color_scheme_path(:dark) do
-                    icon :moon, variant: :outline
+                div class: :@toggle_group, role: :group do
+                  button type: :button,
+                         aria_pressed: (controller.color_scheme == :light).to_s,
+                         data: { color_scheme_btn: :light } do
+                    icon :sun, variant: :outline
                   end
-                else
-                  a href: color_scheme_path(:light) do
-                    icon :moon, variant: :solid
+                  button type: :button,
+                         aria_pressed: (controller.color_scheme == :dark).to_s,
+                         data: { color_scheme_btn: :dark } do
+                    icon :moon, variant: :outline
                   end
                 end
 
@@ -80,10 +83,6 @@ module Views
 
       def iframe_src
         "/bare#{request.path}"
-      end
-
-      def color_scheme_path(scheme)
-        "#{request.path}?#{Rack::Utils.build_query(color_scheme: scheme)}"
       end
   end
 end
