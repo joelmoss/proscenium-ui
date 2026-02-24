@@ -63,6 +63,11 @@ module Views
                     icon :'device-phone-mobile', variant: :outline
                   end
                 end
+
+                a href: iframe_src, target: '_blank', title: 'Open in new tab',
+                  style: 'margin-left: auto' do
+                  icon :'arrow-top-right-on-square', variant: :outline
+                end
               end
               iframe src: iframe_src
             end
