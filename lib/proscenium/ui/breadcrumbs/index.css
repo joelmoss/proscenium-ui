@@ -27,7 +27,8 @@
     margin: 10px;
     display: flex;
 
-    > div {
+    pui-breadcrumbs-home,
+    pui-breadcrumbs-element {
       text-transform: uppercase;
       display: flex;
       align-items: center;
@@ -69,7 +70,9 @@
           color: var(--puiBreadcrumbs--link-hover-color, revert);
         }
       }
+    }
 
+    pui-breadcrumbs-home {
       svg {
         height: 1em;
         width: 1em;

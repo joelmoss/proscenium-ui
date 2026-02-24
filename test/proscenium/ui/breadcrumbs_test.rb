@@ -27,15 +27,15 @@ describe Proscenium::UI::Breadcrumbs do
     end
 
     it 'shows home element by default' do
-      assert_equal '/', find('pui-breadcrumbs div:first-child a')['href']
-      assert_selector 'pui-breadcrumbs div:first-child a>svg'
+      assert_equal '/', find('pui-breadcrumbs pui-breadcrumbs-home a')['href']
+      assert_selector 'pui-breadcrumbs pui-breadcrumbs-home a>svg'
     end
 
     context "home_path: '/foo'" do
       render_subject home_path: '/foo'
 
       it 'uses custom home path' do
-        assert_equal '/foo', find('pui-breadcrumbs div:first-child a')['href']
+        assert_equal '/foo', find('pui-breadcrumbs pui-breadcrumbs-home a')['href']
       end
     end
 
@@ -43,7 +43,7 @@ describe Proscenium::UI::Breadcrumbs do
       render_subject with_home: false
 
       it 'does not show home element' do
-        assert_no_selector 'pui-breadcrumbs div'
+        assert_no_selector 'pui-breadcrumbs pui-breadcrumbs-home'
       end
     end
 
@@ -61,8 +61,8 @@ describe Proscenium::UI::Breadcrumbs do
       end
 
       it 'renders #home_template' do
-        assert_equal '/', find('pui-breadcrumbs div:first-child a')['href']
-        assert_equal 'Hello', find('pui-breadcrumbs div:first-child a').text
+        assert_equal '/', find('pui-breadcrumbs pui-breadcrumbs-home a')['href']
+        assert_equal 'Hello', find('pui-breadcrumbs pui-breadcrumbs-home a').text
       end
     end
 
@@ -73,8 +73,8 @@ describe Proscenium::UI::Breadcrumbs do
         it 'renders breadcrumb as link' do
           controller.add_breadcrumb 'Foo', '/foo'
 
-          assert find('pui-breadcrumbs div:first-child a').has_content?('Foo')
-          assert_equal '/foo', find('pui-breadcrumbs div:first-child a')['href']
+          assert find('pui-breadcrumbs pui-breadcrumbs-element a').has_content?('Foo')
+          assert_equal '/foo', find('pui-breadcrumbs pui-breadcrumbs-element a')['href']
         end
       end
 
@@ -82,8 +82,8 @@ describe Proscenium::UI::Breadcrumbs do
         it 'renders the name as-is, and does not render link' do
           controller.add_breadcrumb 'Foo'
 
-          assert find('pui-breadcrumbs div:first-child').has_content?('Foo')
-          assert_no_selector 'ol li:first-child a'
+          assert find('pui-breadcrumbs pui-breadcrumbs-element').has_content?('Foo')
+          assert_no_selector 'pui-breadcrumbs pui-breadcrumbs-element a'
         end
       end
 
@@ -92,8 +92,8 @@ describe Proscenium::UI::Breadcrumbs do
           controller.class.define_method(:foo) { 'Foo' }
           controller.add_breadcrumb :foo
 
-          assert find('pui-breadcrumbs div:first-child').has_content?('Foo')
-          assert_no_selector('pui-breadcrumbs div:first-child a')
+          assert find('pui-breadcrumbs pui-breadcrumbs-element').has_content?('Foo')
+          assert_no_selector('pui-breadcrumbs pui-breadcrumbs-element a')
         end
 
         context 'name responds to :for_breadcrumb' do
@@ -104,8 +104,8 @@ describe Proscenium::UI::Breadcrumbs do
             controller.class.define_method(:foo) { foo.new }
             controller.add_breadcrumb :foo
 
-            assert find('pui-breadcrumbs div:first-child').has_content?('Foo')
-            assert_no_selector('pui-breadcrumbs div:first-child a')
+            assert find('pui-breadcrumbs pui-breadcrumbs-element').has_content?('Foo')
+            assert_no_selector('pui-breadcrumbs pui-breadcrumbs-element a')
           end
         end
       end
@@ -117,8 +117,8 @@ describe Proscenium::UI::Breadcrumbs do
           end
           controller.add_breadcrumb foo.new
 
-          assert find('pui-breadcrumbs div:first-child').has_content?('Foo')
-          assert_no_selector('pui-breadcrumbs div:first-child a')
+          assert find('pui-breadcrumbs pui-breadcrumbs-element').has_content?('Foo')
+          assert_no_selector('pui-breadcrumbs pui-breadcrumbs-element a')
         end
       end
 
@@ -127,8 +127,8 @@ describe Proscenium::UI::Breadcrumbs do
           controller.instance_variable_set :@foo, 'Foo'
           controller.add_breadcrumb :@foo
 
-          assert find('pui-breadcrumbs div:first-child').has_content?('Foo')
-          assert_no_selector('pui-breadcrumbs div:first-child a')
+          assert find('pui-breadcrumbs pui-breadcrumbs-element').has_content?('Foo')
+          assert_no_selector('pui-breadcrumbs pui-breadcrumbs-element a')
         end
       end
 
@@ -137,8 +137,8 @@ describe Proscenium::UI::Breadcrumbs do
           controller.instance_variable_set :@foo, 'Foo'
           controller.add_breadcrumb -> { @foo }
 
-          assert find('pui-breadcrumbs div:first-child').has_content?('Foo')
-          assert_no_selector('pui-breadcrumbs div:first-child a')
+          assert find('pui-breadcrumbs pui-breadcrumbs-element').has_content?('Foo')
+          assert_no_selector('pui-breadcrumbs pui-breadcrumbs-element a')
         end
       end
 
@@ -147,8 +147,8 @@ describe Proscenium::UI::Breadcrumbs do
           controller.instance_variable_set :@foo, 'Foo'
           controller.add_breadcrumb -> { @foo }, :root
 
-          assert find('pui-breadcrumbs div:first-child').has_content?('Foo')
-          assert_equal '/', find('pui-breadcrumbs div:first-child a')['href']
+          assert find('pui-breadcrumbs pui-breadcrumbs-element').has_content?('Foo')
+          assert_equal '/', find('pui-breadcrumbs pui-breadcrumbs-element a')['href']
         end
       end
 
@@ -156,8 +156,8 @@ describe Proscenium::UI::Breadcrumbs do
         it 'is passed to url_for' do
           controller.add_breadcrumb 'Foo', :root
 
-          assert find('pui-breadcrumbs div:first-child').has_content?('Foo')
-          assert_equal '/', find('pui-breadcrumbs div:first-child a')['href']
+          assert find('pui-breadcrumbs pui-breadcrumbs-element').has_content?('Foo')
+          assert_equal '/', find('pui-breadcrumbs pui-breadcrumbs-element a')['href']
         end
       end
 
@@ -166,8 +166,8 @@ describe Proscenium::UI::Breadcrumbs do
           controller.class.define_method(:foo) { '/foo' }
           controller.add_breadcrumb 'Foo', :foo
 
-          assert find('pui-breadcrumbs div:first-child').has_content?('Foo')
-          assert_equal '/foo', find('pui-breadcrumbs div:first-child a')['href']
+          assert find('pui-breadcrumbs pui-breadcrumbs-element').has_content?('Foo')
+          assert_equal '/foo', find('pui-breadcrumbs pui-breadcrumbs-element a')['href']
         end
       end
 
@@ -175,8 +175,8 @@ describe Proscenium::UI::Breadcrumbs do
         it 'is passed to url_for' do
           controller.add_breadcrumb 'Foo', [:root]
 
-          assert find('pui-breadcrumbs div:first-child').has_content?('Foo')
-          assert_equal '/', find('pui-breadcrumbs div:first-child a')['href']
+          assert find('pui-breadcrumbs pui-breadcrumbs-element').has_content?('Foo')
+          assert_equal '/', find('pui-breadcrumbs pui-breadcrumbs-element a')['href']
         end
       end
 
@@ -185,8 +185,8 @@ describe Proscenium::UI::Breadcrumbs do
           controller.instance_variable_set :@foo, '/'
           controller.add_breadcrumb 'Foo', -> { @foo }
 
-          assert find('pui-breadcrumbs div:first-child').has_content?('Foo')
-          assert_equal '/', find('pui-breadcrumbs div:first-child a')['href']
+          assert find('pui-breadcrumbs pui-breadcrumbs-element').has_content?('Foo')
+          assert_equal '/', find('pui-breadcrumbs pui-breadcrumbs-element a')['href']
         end
       end
 
@@ -195,8 +195,8 @@ describe Proscenium::UI::Breadcrumbs do
           controller.instance_variable_set :@foo, '/foo'
           controller.add_breadcrumb 'Foo', :@foo
 
-          assert find('pui-breadcrumbs div:first-child').has_content?('Foo')
-          assert_equal '/foo', find('pui-breadcrumbs div:first-child a')['href']
+          assert find('pui-breadcrumbs pui-breadcrumbs-element').has_content?('Foo')
+          assert_equal '/foo', find('pui-breadcrumbs pui-breadcrumbs-element a')['href']
         end
       end
 
@@ -205,8 +205,8 @@ describe Proscenium::UI::Breadcrumbs do
           controller.instance_variable_set :@root_path, :root
           controller.add_breadcrumb 'Foo', :@root_path
 
-          assert find('pui-breadcrumbs div:first-child').has_content?('Foo')
-          assert_equal '/', find('pui-breadcrumbs div:first-child a')['href']
+          assert find('pui-breadcrumbs pui-breadcrumbs-element').has_content?('Foo')
+          assert_equal '/', find('pui-breadcrumbs pui-breadcrumbs-element a')['href']
         end
       end
     end

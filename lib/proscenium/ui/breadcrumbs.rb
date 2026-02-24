@@ -52,6 +52,8 @@ module Proscenium::UI
     include Phlex::Rails::Helpers::URLFor
 
     register_element :pui_breadcrumbs
+    register_element :pui_breadcrumbs_home
+    register_element :pui_breadcrumbs_element
 
     # The path (route) to use as the HREF for the home segment. Defaults to `:root`.
     prop :home_path, _Union(String, Symbol), default: -> { :root }
@@ -63,17 +65,25 @@ module Proscenium::UI
       super.sub_ext('').join('index.rb')
     end
 
+    # For if and when we need to pass instance level css module.
+    #
+    # prop :css_module_path, _Nilable(Pathname)
+    #
+    # def css_module_path
+    #   @css_module_path ||= self.class.css_module_path
+    # end
+
     def view_template
       pui_breadcrumbs do
         if @with_home
-          div do
+          pui_breadcrumbs_home do
             yield if block_given?
             home_template
           end
         end
 
         breadcrumbs.each do |ce|
-          div do
+          pui_breadcrumbs_element do
             path = ce.path
             path.nil? ? ce.name : a(href: url_for(path)) { ce.name }
           end

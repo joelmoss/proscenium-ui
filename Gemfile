@@ -5,7 +5,7 @@ source 'https://rubygems.org'
 # Specify your gem's dependencies in proscenium-ui.gemspec.
 gemspec
 
-gem 'proscenium'
+gem 'proscenium', path: '~/dev/proscenium'
 gem 'puma'
 gem 'sqlite3'
 

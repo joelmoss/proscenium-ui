@@ -1,4 +1,14 @@
 PATH
+  remote: ../proscenium
+  specs:
+    proscenium (0.24.0)
+      ffi (~> 1.17.0)
+      rails (>= 7.1.0, < 9.0)
+    proscenium (0.24.0-arm64-darwin)
+      ffi (~> 1.17.0)
+      rails (>= 7.1.0, < 9.0)
+
+PATH
   remote: .
   specs:
     proscenium-ui (0.1.0)
@@ -199,12 +209,6 @@ GEM
       dispersion (~> 0.2)
     prettyprint (0.2.0)
     prism (1.9.0)
-    proscenium (0.24.0)
-      ffi (~> 1.17.0)
-      rails (>= 7.1.0, < 9.0)
-    proscenium (0.24.0-arm64-darwin)
-      ffi (~> 1.17.0)
-      rails (>= 7.1.0, < 9.0)
     proscenium-phlex (0.6.0)
       phlex-rails (>= 1.2, < 3.0)
       phlexible (>= 3.1.0)
@@ -353,7 +357,7 @@ DEPENDENCIES
   minitest-focus
   minitest-spec-rails
   phlexible
-  proscenium
+  proscenium!
   proscenium-ui!
   puma
   rails_caddy_dev
