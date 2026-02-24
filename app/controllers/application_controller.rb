@@ -3,10 +3,14 @@
 class ApplicationController < ActionController::Base
   include Phlexible::Rails::ActionController::ImplicitRender
 
-  before_action :assign_layout, :assign_color_scheme
+  before_action :assign_layout, :assign_color_scheme, :assign_viewport
 
   def color_scheme
     (session[:color_scheme] || 'light').to_sym
+  end
+
+  def viewport
+    (session[:viewport] || 'desktop').to_sym
   end
 
   private
@@ -21,5 +25,9 @@ class ApplicationController < ActionController::Base
 
     def assign_color_scheme
       session[:color_scheme] = params[:color_scheme] if params[:color_scheme].in?(%w[light dark])
+    end
+
+    def assign_viewport
+      session[:viewport] = params[:viewport] if params[:viewport].in?(%w[desktop mobile])
     end
 end

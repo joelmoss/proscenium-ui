@@ -6,7 +6,8 @@ class Views::Application < Phlex::HTML
   include Phlexible::PageTitle
   include Phlexible::Rails::AElement
 
-  delegate :request, :controller, :params, to: :view_context
+  register_output_helper :icon
+  delegate :request, :controller, :params, :icon, to: :view_context
 
   self.page_title = Rails.application.class.name.deconstantize
 end

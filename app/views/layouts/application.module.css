@@ -88,6 +88,15 @@ main {
     padding: 10px;
     border: 0;
   }
+
+  &[data-viewport="mobile"] iframe {
+    flex: none;
+    width: 375px;
+    height: 667px;
+    margin: auto;
+    border-radius: 4px;
+    box-shadow: 0 0 0 1px var(--grey-200);
+  }
 }
 
 .toolbar {
@@ -95,12 +104,16 @@ main {
   padding: 3px;
   border-bottom: 1px solid var(--grey-100);
   border-top: 1px solid var(--grey-100);
+  display: flex;
+  align-items: center;
+  gap: 4px;
 
   a {
     display: inline-flex;
     padding: 4px;
     color: black;
     border: 1px solid transparent;
+    cursor: pointer;
 
     &:hover {
       border-color: var(--grey-200);
@@ -112,5 +125,33 @@ main {
   svg {
     width: 0.9rem;
     height: 0.9rem;
+  }
+}
+
+.toggle_group {
+  display: inline-flex;
+  border: 1px solid var(--grey-200);
+  border-radius: 4px;
+  overflow: hidden;
+
+  button {
+    display: inline-flex;
+    padding: 4px;
+    color: black;
+    border: none;
+    background: none;
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--grey-100);
+    }
+
+    &[aria-pressed="true"] {
+      background-color: var(--grey-200);
+    }
+
+    & + button {
+      border-left: 1px solid var(--grey-200);
+    }
   }
 }

@@ -39,15 +39,28 @@ module Views
                 end
               end
             end
-            main do
+            main data: { viewport: controller.viewport } do
               div class: :@toolbar do
                 if controller.color_scheme == :light
                   a href: color_scheme_path(:dark) do
-                    raw helpers.icon :moon, variant: :outline
+                    icon :moon, variant: :outline
                   end
                 else
                   a href: color_scheme_path(:light) do
-                    raw helpers.icon :moon, variant: :solid
+                    icon :moon, variant: :solid
+                  end
+                end
+
+                div class: :@toggle_group, role: :group do
+                  button type: :button,
+                         aria_pressed: (controller.viewport == :desktop).to_s,
+                         data: { viewport_btn: :desktop } do
+                    icon :'computer-desktop', variant: :outline
+                  end
+                  button type: :button,
+                         aria_pressed: (controller.viewport == :mobile).to_s,
+                         data: { viewport_btn: :mobile } do
+                    icon :'device-phone-mobile', variant: :outline
                   end
                 end
               end
