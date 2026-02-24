@@ -1,4 +1,4 @@
-@layer proscenium-ui {
+@layer pui {
   pui-tel-field {
     --flag-ad: -24px 0;
     --flag-ae: -48px 0;
@@ -241,13 +241,13 @@
       color: var(--pui-input-color);
     }
 
-    [part="inputs"] {
+    [part='inputs'] {
       border: var(--pui-input-border);
       border-radius: var(--pui-input-border-radius);
       display: inline-flex;
     }
 
-    [part="country"] {
+    [part='country'] {
       background-color: var(--pui-input-background-color);
       display: flex;
       align-items: center;
@@ -257,15 +257,15 @@
       padding-right: 6px;
 
       &::before {
-        content: "";
-        background: url("/proscenium/images/flags.png") no-repeat center;
+        content: '';
+        background: url('/proscenium/images/flags.png') no-repeat center;
         background-position: var(--flag-position, 0 0);
         width: 24px;
         height: 24px;
       }
 
       &::after {
-        content: "\005E";
+        content: '\005E';
         width: 1em;
         height: 1em;
         border-left: 1px solid var(--pui-input-accent-color);

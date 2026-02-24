@@ -1,4 +1,4 @@
-@layer hue-component {
+@layer pui {
   .field {
     @mixin fieldWrapper from url('/hue/lib/hue/mixins/form.mixin.css');
 

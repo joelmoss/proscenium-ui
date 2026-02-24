@@ -1,4 +1,4 @@
-@layer hue-component {
+@layer pui {
   .fieldWrapper {
     @mixin checkbox from url('/hue/lib/hue/mixins/checkbox.mixin.css');
   }

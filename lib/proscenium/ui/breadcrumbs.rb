@@ -81,40 +81,41 @@ module Proscenium::UI
       end
     end
 
-    private
-
-      # Override this to customise the home breadcrumb. You can call super with a block to use the
-      # default template, but with custom content.
-      #
-      # @example
-      #  def home_template
-      #    super { 'hello' }
-      #  end
-      def home_template(&block)
-        a href: url_for(@home_path) do
-          if block
-            yield
-          else
-            svg role: 'img', xmlns: 'http://www.w3.org/2000/svg', viewBox: '0 0 576 512' do |s|
-              s.path fill: 'currentColor', d: <<~SVG.delete("\n")
-                M488 312.7V456c0 13.3-10.7 24-24 24H348c-6.6 0-12-5.4-12-12V356c0-6.6-5.4-
-                12-12-12h-72c-6.6 0-12 5.4-12 12v112c0 6.6-5.4 12-12 12H112c-13.3 0-24-10.
-                7-24-24V312.7c0-3.6 1.6-7 4.4-9.3l188-154.8c4.4-3.6 10.8-3.6 15.3 0l188 15
-                4.8c2.7 2.3 4.3 5.7 4.3 9.3zm83.6-60.9L488 182.9V44.4c0-6.6-5.4-12-12-12h-
-                56c-6.6 0-12 5.4-12 12V117l-89.5-73.7c-17.7-14.6-43.3-14.6-61 0L4.4 251.8c
-                -5.1 4.2-5.8 11.8-1.6 16.9l25.5 31c4.2 5.1 11.8 5.8 16.9 1.6l235.2-193.7c4
-                .4-3.6 10.8-3.6 15.3 0l235.2 193.7c5.1 4.2 12.7 3.5 16.9-1.6l25.5-31c4.2-5
-                .2 3.4-12.7-1.7-16.9z
-              SVG
-            end
+    # Override this to customise the home breadcrumb. You can call super with a block to use the
+    # default template, but with custom content.
+    #
+    # @example
+    #  def home_template
+    #    super { 'hello' }
+    #  end
+    def home_template(&block)
+      a href: url_for(@home_path) do
+        if block
+          yield
+        else
+          svg role: 'img', xmlns: 'http://www.w3.org/2000/svg', viewBox: '0 0 24 24',
+              fill: 'currentColor' do |s|
+            s.path d: <<~SVG.delete("\n")
+              M11.47 3.841a.75.75 0 0 1 1.06 0l8.69 8.69a.75.75 0 1 0 1.06-1.061l-8.689
+              -8.69a2.25 2.25 0 0 0-3.182 0l-8.69 8.69a.75.75 0 1 0 1.061 1.06l8.69-8.69Z
+            SVG
+            s.path d: <<~SVG.delete("\n")
+              M12 5.432l8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875
+              1.875H15.75a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 0-.75-.75h-4.5a.75.75 0 0
+              0-.75.75V21a.75.75 0 0 1-.75.75H5.625a1.875 1.875 0 0 1-1.875-1.875v-6.198
+              a2.29 2.29 0 0 0 .091-.086L12 5.432Z
+            SVG
           end
         end
       end
+    end
 
-      # Don't render if @hide_breadcrumbs is true.
-      def render?
-        controller.instance_variable_get(:@hide_breadcrumbs) != true
-      end
+    # Don't render if @hide_breadcrumbs is true.
+    def render?
+      controller.instance_variable_get(:@hide_breadcrumbs) != true
+    end
+
+    private
 
       def breadcrumbs
         controller.breadcrumbs.map do |e|

@@ -1,14 +1,79 @@
-@layer proscenium-ui-component {
+@define-mixin _separator {
+  display: inline-block;
+  content: '';
+  height: 1rem;
+  width: 1rem;
+  -webkit-mask: var(--puiBreadcrumbs--separator, var(--_puiBreadcrumbs--separator)) no-repeat center
+    center;
+  mask: var(--puiBreadcrumbs--separator, var(--_puiBreadcrumbs--separator)) no-repeat center center;
+  vertical-align: sub;
+  background-color: var(--puiBreadcrumbs--separator-color, var(--_puiBreadcrumbs--separator-color));
+}
+
+@layer pui {
   /*
    * Properties:
    *
    *   --puiBreadcrumbs--link-color: LinkText;
    *   --puiBreadcrumbs--link-hover-color: HighlightText;
    *   --puiBreadcrumbs--separator-color: GrayText;
-   *   --puiBreadcrumbs--separator: url("/proscenium/ui/icons/angle-right-regular.svg");
+   *   --puiBreadcrumbs--separator: url("...");
    */
 
   pui-breadcrumbs {
-    @mixin breadcrumbs from url("./mixins.css");
+    --_puiBreadcrumbs--separator-color: GrayText;
+    --_puiBreadcrumbs--separator: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor'%3E%3Cpath fill-rule='evenodd' d='M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z' clip-rule='evenodd'/%3E%3C/svg%3E");
+
+    margin: 10px;
+    display: flex;
+
+    > div {
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+
+      @media (max-width: 426px) {
+        &:not(:nth-last-child(2)) {
+          display: none;
+        }
+
+        &:nth-last-child(2)::before {
+          @mixin _separator;
+          margin: 0 0.5rem 0 0;
+          transform: rotate(180deg);
+        }
+      }
+
+      @media (min-width: 427px) {
+        &:not(:last-child)::after {
+          @mixin _separator;
+          margin: 0 0.5rem;
+        }
+      }
+
+      &:last-child {
+        font-weight: 500;
+        text-transform: none;
+      }
+
+      &:last-child > a {
+        font-weight: 500;
+        text-transform: none;
+      }
+
+      a {
+        color: var(--puiBreadcrumbs--link-color, revert);
+        display: flex;
+
+        &:hover {
+          color: var(--puiBreadcrumbs--link-hover-color, revert);
+        }
+      }
+
+      svg {
+        height: 1em;
+        width: 1em;
+      }
+    }
   }
 }
