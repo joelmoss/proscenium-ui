@@ -124,3 +124,16 @@ main {
     }
   }
 }
+
+.resizer {
+  height: 4px;
+  cursor: row-resize;
+  background-color: var(--grey-200);
+  flex-shrink: 0;
+  transition: background-color 0.15s;
+
+  &:hover,
+  &:active {
+    background-color: var(--grey-400);
+  }
+}

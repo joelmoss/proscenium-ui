@@ -14,6 +14,7 @@ gem 'debug', '>= 1.0.0'
 gem 'icons'
 gem 'phlexible'
 gem 'rails_icons'
+gem 'rouge'
 
 gem 'rubocop-capybara', require: false
 gem 'rubocop-disable_syntax', require: false

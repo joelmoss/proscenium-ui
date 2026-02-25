@@ -279,6 +279,7 @@ GEM
     reline (0.6.3)
       io-console (~> 0.5)
     require-hooks (0.2.3)
+    rouge (4.7.0)
     rubocop (1.84.2)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
@@ -362,6 +363,7 @@ DEPENDENCIES
   puma
   rails_caddy_dev
   rails_icons
+  rouge
   rubocop-capybara
   rubocop-disable_syntax
   rubocop-minitest

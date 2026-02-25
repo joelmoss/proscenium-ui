@@ -1,0 +1,54 @@
+.root {
+  background-color: var(--grey-50);
+  height: 200px;
+  overflow-y: auto;
+  flex-shrink: 0;
+
+  pre {
+    margin: 0;
+    padding: 10px;
+    font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    overflow-x: auto;
+  }
+}
+
+.tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--grey-200);
+  position: sticky;
+  top: 0;
+  background-color: var(--grey-50);
+  z-index: 1;
+
+  button {
+    padding: 6px 12px;
+    font-size: 0.6rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--grey-500);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+
+    &:hover {
+      color: var(--grey-700);
+      background-color: var(--grey-100);
+    }
+
+    &[aria-selected='true'] {
+      color: var(--grey-900);
+      border-bottom-color: var(--grey-900);
+    }
+  }
+}
+
+.tab_panel {
+  &[hidden] {
+    display: none;
+  }
+}

@@ -62,6 +62,8 @@ module Views
                 end
               end
               iframe src: iframe_src
+              div class: :@resizer, data: { resizer: true }
+              render Components::SourcePanel.new(@view)
             end
           end
         end
