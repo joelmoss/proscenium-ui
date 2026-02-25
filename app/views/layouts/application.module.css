@@ -1,4 +1,4 @@
-@import "/config/props.css";
+@import '/config/props.css';
 
 html,
 body {
@@ -40,37 +40,6 @@ aside {
       text-align: center;
     }
   }
-
-  ul {
-    font-family: var(--mono-font);
-    font-size: 0.7em;
-    list-style: none;
-    padding: 0;
-    margin: 10px 0;
-    gap: 0.1em;
-    display: flex;
-    flex-direction: column;
-
-    li {
-      &[data-current] a {
-        font-weight: bold;
-        color: var(--azure);
-      }
-    }
-
-    a {
-      text-decoration: none;
-      color: black;
-      padding: 4px 6px;
-      border-radius: 4px;
-      margin-left: 4px;
-      display: block;
-
-      &:hover {
-        background-color: rgba(0, 0, 0, 0.1);
-      }
-    }
-  }
 }
 
 main {
@@ -89,7 +58,7 @@ main {
     border: 0;
   }
 
-  &[data-viewport="mobile"] iframe {
+  &[data-viewport='mobile'] iframe {
     flex: none;
     width: 375px;
     height: 667px;
@@ -146,7 +115,7 @@ main {
       background-color: var(--grey-100);
     }
 
-    &[aria-pressed="true"] {
+    &[aria-pressed='true'] {
       background-color: var(--grey-200);
     }
 

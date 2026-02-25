@@ -25,18 +25,7 @@ module Views
             aside do
               header do
                 h1 { 'Proscenium::UI' }
-              end
-              ul do
-                li(data: { current: request.path.starts_with?('/breadcrumbs') }) do
-                  a(href: :breadcrumbs) do
-                    'Breadcrumbs'
-                  end
-                end
-                li(data: { current: request.path.starts_with?('/forms') }) do
-                  a(href: :forms) do
-                    'Forms'
-                  end
-                end
+                render Components::Navigation
               end
             end
             main data: { viewport: controller.viewport } do
