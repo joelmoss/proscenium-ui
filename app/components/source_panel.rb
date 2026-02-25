@@ -35,7 +35,13 @@ module Components
     private
 
       def source_files
-        @source_files ||= [['View', highlight(view_template_body, '.rb')]] + asset_files
+        @source_files ||= begin
+          files = []
+          action_body = controller_action_body
+          files << ['Controller', highlight(action_body, '.rb')] if action_body
+          files << ['View', highlight(view_template_body, '.rb')]
+          files + asset_files
+        end
       end
 
       def asset_files
@@ -56,8 +62,21 @@ module Components
       end
 
       def view_template_body
-        file, start_line = @view.method(:view_template).source_location
-        return '' if file.nil?
+        extract_method_body(@view.method(:view_template))
+      end
+
+      def controller_action_body
+        body = extract_method_body(controller.class.instance_method(controller.action_name))
+        return nil if body.nil? || body.strip.empty?
+
+        "def my_action\n#{body.chomp.lines.map { |l| "  #{l}" }.join}\nend\n"
+      rescue NameError
+        nil
+      end
+
+      def extract_method_body(method)
+        file, start_line = method.source_location
+        return nil if file.nil?
 
         lines = File.readlines(file)
         body_lines = []
@@ -70,6 +89,8 @@ module Components
         end
 
         body_lines = body_lines[1...-1] # strip def/end lines
+        return '' if body_lines.empty?
+
         indent = body_lines.first&.match(/^(\s*)/).then { |m| m ? m[1].length : 0 }
         body_lines.map { |l| l.delete_prefix(' ' * indent) }.join
       end
