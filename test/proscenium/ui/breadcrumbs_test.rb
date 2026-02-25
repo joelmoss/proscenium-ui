@@ -209,6 +209,97 @@ describe Proscenium::UI::Breadcrumbs do
           assert_equal '/', find('pui-breadcrumbs pui-breadcrumbs-element a')['href']
         end
       end
+
+      context 'with options' do
+        it 'passes options as attributes to the element' do
+          controller.add_breadcrumb 'Foo', '/foo', class: 'active', data: { id: 1 }
+
+          element = find('pui-breadcrumbs pui-breadcrumbs-element')
+          assert_equal 'active', element['class']
+          assert_equal '1', element['data-id']
+        end
+
+        it 'renders element without extra attributes when no options given' do
+          controller.add_breadcrumb 'Foo', '/foo'
+
+          element = find('pui-breadcrumbs pui-breadcrumbs-element')
+          assert_nil element['class']
+        end
+      end
+    end
+
+    describe '.add_breadcrumb' do
+      it 'renders breadcrumb' do
+        controller.class.add_breadcrumb 'Foo', '/foo'
+        controller._process_action_callbacks.to_a.last.filter.call(controller)
+
+        assert find('pui-breadcrumbs pui-breadcrumbs-element a').has_content?('Foo')
+      end
+
+      it 'supports :if, :unless, :only, and :except callback options' do
+        controller.class.add_breadcrumb 'Foo', '/foo', if: -> { false }
+        assert_not_empty controller._process_action_callbacks.to_a.last.instance_variable_get(:@if)
+
+        controller.class.add_breadcrumb 'Foo', '/foo', unless: -> { false }
+        assert_not_empty controller._process_action_callbacks.to_a.last
+                                   .instance_variable_get(:@unless)
+
+        controller.class.add_breadcrumb 'Foo', '/foo', only: :show
+        assert_not_empty controller._process_action_callbacks.to_a.last.instance_variable_get(:@if)
+
+        controller.class.add_breadcrumb 'Foo', '/foo', except: :show
+        assert_not_empty controller._process_action_callbacks.to_a.last
+                                   .instance_variable_get(:@unless)
+      end
+
+      context 'with options' do
+        it 'passes options as attributes to the element' do
+          controller.class.add_breadcrumb 'Foo', '/foo', class: 'active', data: { id: 1 }
+          controller._process_action_callbacks.to_a.last.filter.call(controller)
+
+          element = find('pui-breadcrumbs pui-breadcrumbs-element')
+          assert_equal 'active', element['class']
+          assert_equal '1', element['data-id']
+        end
+      end
+    end
+
+    describe '.prepend_breadcrumb' do
+      it 'renders breadcrumb' do
+        controller.add_breadcrumb 'Foo', '/foo'
+        controller.class.prepend_breadcrumb 'Bar', '/bar'
+        controller._process_action_callbacks.to_a.last.filter.call(controller)
+
+        assert find('pui-breadcrumbs pui-breadcrumbs-element:first a').has_content?('Bar')
+        assert find('pui-breadcrumbs pui-breadcrumbs-element:last a').has_content?('Foo')
+      end
+
+      it 'supports :if, :unless, :only, and :except callback options' do
+        controller.class.prepend_breadcrumb 'Foo', '/foo', if: -> { false }
+        assert_not_empty controller._process_action_callbacks.to_a.last.instance_variable_get(:@if)
+
+        controller.class.prepend_breadcrumb 'Foo', '/foo', unless: -> { false }
+        assert_not_empty controller._process_action_callbacks.to_a.last
+                                   .instance_variable_get(:@unless)
+
+        controller.class.prepend_breadcrumb 'Foo', '/foo', only: :show
+        assert_not_empty controller._process_action_callbacks.to_a.last.instance_variable_get(:@if)
+
+        controller.class.prepend_breadcrumb 'Foo', '/foo', except: :show
+        assert_not_empty controller._process_action_callbacks.to_a.last
+                                   .instance_variable_get(:@unless)
+      end
+
+      context 'with options' do
+        it 'passes options as attributes to the element' do
+          controller.class.prepend_breadcrumb 'Foo', '/foo', class: 'active', data: { id: 1 }
+          controller._process_action_callbacks.to_a.last.filter.call(controller)
+
+          element = find('pui-breadcrumbs pui-breadcrumbs-element')
+          assert_equal 'active', element['class']
+          assert_equal '1', element['data-id']
+        end
+      end
     end
   end
 end

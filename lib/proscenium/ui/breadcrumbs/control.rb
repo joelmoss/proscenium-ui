@@ -18,9 +18,13 @@ class Proscenium::UI::Breadcrumbs
       # @param name [String, Symbol, Proc, #for_breadcrumb] The name or content of the breadcrumb.
       # @param path [String, Symbol, Array, Proc, nil] The path (route) to use as the HREF for the
       #   breadcrumb.
-      # @param filter_options [Hash] Options to pass through to the before_action filter.
-      def add_breadcrumb(name, path = nil, **filter_options)
-        element_options = filter_options.delete(:options) || {}
+      # @param options [Hash] Filter options to pass through to the before_action filter. Options
+      #   include :if, :unless, :only, and :except. Any options not included in the filter options
+      #   will be passed as options to the breadcrumb element. For example, you could pass a :class
+      #   option to add a CSS class to the breadcrumb element.
+      def add_breadcrumb(name, path = nil, **options)
+        filter_options = options.slice(:if, :unless, :only, :except)
+        element_options = options.except(:if, :unless, :only, :except)
 
         before_action(filter_options) do |controller|
           controller.send :add_breadcrumb, name, path, element_options
@@ -32,9 +36,13 @@ class Proscenium::UI::Breadcrumbs
       # @param name [String, Symbol, Proc, #for_breadcrumb] The name or content of the breadcrumb.
       # @param path [String, Symbol, Array, Proc, nil] The path (route) to use as the HREF for the
       #   breadcrumb.
-      # @param filter_options [Hash] Options to pass through to the before_action filter.
-      def prepend_breadcrumb(name, path = nil, **filter_options)
-        element_options = filter_options.delete(:options) || {}
+      # @param options [Hash] Filter options to pass through to the before_action filter. Options
+      #   include :if, :unless, :only, and :except. Any options not included in the filter options
+      #   will be passed as options to the breadcrumb element. For example, you could pass a :class
+      #   option to add a CSS class to the breadcrumb element.
+      def prepend_breadcrumb(name, path = nil, **options)
+        filter_options = options.slice(:if, :unless, :only, :except)
+        element_options = options.except(:if, :unless, :only, :except)
 
         before_action(filter_options) do |controller|
           controller.send :prepend_breadcrumb, name, path, element_options

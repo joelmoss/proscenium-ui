@@ -65,7 +65,7 @@ module Proscenium::UI
       super.sub_ext('').join('index.rb')
     end
 
-    # For if and when we need to pass instance level css module.
+    # TODO: For if and when we need to pass instance level css module.
     #
     # prop :css_module_path, _Nilable(Pathname)
     #
@@ -83,7 +83,7 @@ module Proscenium::UI
         end
 
         breadcrumbs.each do |ce|
-          pui_breadcrumbs_element do
+          pui_breadcrumbs_element(**ce.options) do
             path = ce.path
             path.nil? ? ce.name : a(href: url_for(path)) { ce.name }
           end

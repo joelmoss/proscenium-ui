@@ -7,6 +7,8 @@ class Proscenium::UI::Breadcrumbs
       @context = context
     end
 
+    delegate :options, to: :@element
+
     # If name is a Symbol of a controller method, that method is called.
     # If name is a Symbol of a controller instance variable, that variable is returned.
     # If name is a Proc, it is executed in the context of the controller instance.
