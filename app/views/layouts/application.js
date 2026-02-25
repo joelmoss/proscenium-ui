@@ -45,12 +45,15 @@ document.addEventListener('DOMContentLoaded', () => {
     })
   })
 
-  document.querySelectorAll('[data-color-scheme-btn]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const scheme = btn.dataset.colorSchemeBtn
-      document.querySelectorAll('[data-color-scheme-btn]').forEach(b => {
-        b.setAttribute('aria-pressed', b.dataset.colorSchemeBtn === scheme)
-      })
+  const colorToggle = document.querySelector('[data-color-scheme-toggle]')
+  if (colorToggle) {
+    colorToggle.addEventListener('click', () => {
+      const current = colorToggle.dataset.colorSchemeToggle
+      const scheme = current === 'light' ? 'dark' : 'light'
+      colorToggle.dataset.colorSchemeToggle = scheme
+
+      colorToggle.querySelector('[data-icon="light"]').hidden = scheme !== 'dark'
+      colorToggle.querySelector('[data-icon="dark"]').hidden = scheme !== 'light'
 
       const iframe = document.querySelector('iframe')
       if (iframe?.contentDocument) {
@@ -61,5 +64,5 @@ document.addEventListener('DOMContentLoaded', () => {
       url.searchParams.set('color_scheme', scheme)
       fetch(url, { method: 'HEAD' })
     })
-  })
+  }
 })

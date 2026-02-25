@@ -30,15 +30,13 @@ module Views
             end
             main data: { viewport: controller.viewport } do
               div class: :@toolbar do
-                div class: :@toggle_group, role: :group do
-                  button type: :button,
-                         aria_pressed: (controller.color_scheme == :light).to_s,
-                         data: { color_scheme_btn: :light } do
+                button type: :button, data: { color_scheme_toggle: controller.color_scheme } do
+                  span(data: { icon: :light },
+                       hidden: controller.color_scheme != :dark || nil) do
                     icon :sun, variant: :outline
                   end
-                  button type: :button,
-                         aria_pressed: (controller.color_scheme == :dark).to_s,
-                         data: { color_scheme_btn: :dark } do
+                  span(data: { icon: :dark },
+                       hidden: controller.color_scheme != :light || nil) do
                     icon :moon, variant: :outline
                   end
                 end
