@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Views
-  class Forms::Index < Application
+  class Forms::Basic < Application
     def view_template
       h1 { 'Forms index' }
 

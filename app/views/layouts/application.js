@@ -45,6 +45,15 @@ document.addEventListener('DOMContentLoaded', () => {
     })
   })
 
+  // Clicking anywhere on summary navigates to the controller landing page
+  document.querySelectorAll('details[data-nav-group] > summary').forEach(summary => {
+    summary.addEventListener('click', e => {
+      e.preventDefault()
+      const path = summary.closest('[data-nav-group]').dataset.navGroup
+      if (path) window.location = path
+    })
+  })
+
   const colorToggle = document.querySelector('[data-color-scheme-toggle]')
   if (colorToggle) {
     colorToggle.addEventListener('click', () => {

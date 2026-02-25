@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Views
-  class Breadcrumbs::Index < Application
+  class Breadcrumbs::Basic < Application
     include Phlexible::Rails::AutoLayout
 
     self.page_title = 'Breadcrumbs'

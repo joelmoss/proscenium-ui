@@ -3,7 +3,7 @@
 class BreadcrumbsController < ApplicationController
   include Proscenium::UI::Breadcrumbs::Control
 
-  def index
+  def basic
     add_breadcrumb 'Foo', '/foo'
     add_breadcrumb 'Bar', '/foo/bar'
     add_breadcrumb 'Baz'

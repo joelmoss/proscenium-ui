@@ -24,7 +24,7 @@ module Components
       end
 
       def expandable_item(name, path, actions, open:)
-        details(open: open || nil) do
+        details(open: open || nil, data: { nav_group: path }) do
           summary do
             span { icon :'chevron-right', variant: :mini }
             plain name.titleize
@@ -35,7 +35,6 @@ module Components
 
       def action_list(path, actions)
         ul do
-          nav_link(path, 'Default')
           actions.each { |action| nav_link("#{path}/#{action}", action.titleize) }
         end
       end
