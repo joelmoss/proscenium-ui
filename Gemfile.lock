@@ -1,14 +1,4 @@
 PATH
-  remote: ../proscenium
-  specs:
-    proscenium (0.24.0)
-      ffi (~> 1.17.0)
-      rails (>= 7.1.0, < 9.0)
-    proscenium (0.24.0-arm64-darwin)
-      ffi (~> 1.17.0)
-      rails (>= 7.1.0, < 9.0)
-
-PATH
   remote: .
   specs:
     proscenium-ui (0.1.0)
@@ -16,7 +6,7 @@ PATH
       literal (~> 1.8.1)
       phonelib (~> 0.10.8)
       proscenium-phlex (~> 0.6.0)
-      rails (>= 7.1.0, < 9.0)
+      rails (>= 7.2.0, < 9.0)
 
 GEM
   remote: https://rubygems.org/
@@ -98,6 +88,10 @@ GEM
     addressable (2.8.8)
       public_suffix (>= 2.0.2, < 8.0)
     amazing_print (2.0.0)
+    appraisal (2.5.0)
+      bundler
+      rake
+      thor (>= 0.14.0)
     ast (2.4.3)
     base64 (0.3.0)
     bigdecimal (4.0.1)
@@ -209,6 +203,12 @@ GEM
       dispersion (~> 0.2)
     prettyprint (0.2.0)
     prism (1.9.0)
+    proscenium (0.24.0)
+      ffi (~> 1.17.0)
+      rails (>= 7.1.0, < 9.0)
+    proscenium (0.24.0-arm64-darwin)
+      ffi (~> 1.17.0)
+      rails (>= 7.1.0, < 9.0)
     proscenium-phlex (0.6.0)
       phlex-rails (>= 1.2, < 3.0)
       phlexible (>= 3.1.0)
@@ -350,6 +350,7 @@ PLATFORMS
 
 DEPENDENCIES
   amazing_print
+  appraisal
   bootsnap
   capybara
   debug (>= 1.0.0)
@@ -359,7 +360,7 @@ DEPENDENCIES
   minitest-focus
   minitest-spec-rails
   phlexible
-  proscenium!
+  proscenium
   proscenium-ui!
   puma
   rails_caddy_dev

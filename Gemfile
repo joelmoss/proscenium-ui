@@ -5,7 +5,7 @@ source 'https://rubygems.org'
 # Specify your gem's dependencies in proscenium-ui.gemspec.
 gemspec
 
-gem 'proscenium', path: '~/dev/proscenium'
+gem 'proscenium'
 gem 'puma'
 gem 'sqlite3'
 
@@ -17,6 +17,7 @@ gem 'rails_icons'
 gem 'redcarpet'
 gem 'rouge'
 
+gem 'appraisal', require: false
 gem 'rubocop-capybara', require: false
 gem 'rubocop-disable_syntax', require: false
 gem 'rubocop-minitest', require: false

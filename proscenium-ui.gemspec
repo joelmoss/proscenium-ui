@@ -25,5 +25,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'literal', '~> 1.8.1'
   spec.add_dependency 'phonelib', '~> 0.10.8'
   spec.add_dependency 'proscenium-phlex', '~> 0.6.0'
-  spec.add_dependency 'rails', ['>= 7.1.0', '< 9.0']
+  spec.add_dependency 'rails', ['>= 7.2.0', '< 9.0']
 end
