@@ -75,7 +75,8 @@ module Proscenium::UI
 
         # Builds the template for the label, along with any error message for the attribute.
         #
-        # By default, the translated attribute name will be used as the content for the label. You can
+        # By default, the translated attribute name will be used as the content for the label. You
+        # can
         # overide this by providing the `:label` keyword argument in `@arguments`. Passing false as
         # the value to `:label` will omit the label.
         #

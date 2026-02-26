@@ -7,7 +7,7 @@ plugins:
   - rubocop-capybara
 
 AllCops:
-  TargetRubyVersion: 3.1
+  TargetRubyVersion: 3.2
   NewCops: enable
   SuggestExtensions: false
   Exclude:
@@ -30,6 +30,14 @@ Lint/ItWithoutArgumentsInBlock:
   Enabled: false
 Lint/MissingSuper:
   Enabled: false
+
+Lint/NestedMethodDefinition:
+  Exclude:
+    - "test/**/*"
+
+Rails/HasManyOrHasOneDependent:
+  Exclude:
+    - "test/dummy/**/*"
 
 Metrics:
   Enabled: false

@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 RailsIcons.configure do |config|
-  config.default_library = "heroicons"
+  config.default_library = 'heroicons'
   # config.default_variant = "" # Set a default variant for all libraries
 
   # Override Heroicon defaults

@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
 
       renderer = Redcarpet::Render::HTML.new(hard_wrap: true)
       markdown = Redcarpet::Markdown.new(renderer, fenced_code_blocks: true, tables: true,
-                                                    no_intra_emphasis: true, autolink: true)
+                                                   no_intra_emphasis: true, autolink: true)
       markdown.render(path.read).html_safe # rubocop:disable Rails/OutputSafety
     end
 

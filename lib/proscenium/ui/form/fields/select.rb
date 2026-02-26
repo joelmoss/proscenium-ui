@@ -154,7 +154,7 @@ module Proscenium::UI::Form::Fields
       def build_options_from_attributes
         @options_from_attributes.to_h do |opt|
           label, value = option_text_and_value(opt)
-          [value, { label:, value:, selected: selected?(value) }]
+          [value,  label:, value:, selected: selected?(value)]
         end
       end
 
