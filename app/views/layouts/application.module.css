@@ -186,6 +186,97 @@ main {
     background: none;
     padding: 0;
   }
+
+  /* Rouge syntax highlighting - :global because classes come from Rouge HTML output */
+  :global(.highlight) {
+    :global(.c),
+    :global(.c1),
+    :global(.cm),
+    :global(.cs) {
+      color: #6a737d;
+      font-style: italic;
+    }
+    :global(.k),
+    :global(.kd),
+    :global(.kn),
+    :global(.kp),
+    :global(.kr),
+    :global(.kv) {
+      color: #d73a49;
+    }
+    :global(.kc) {
+      color: #005cc5;
+    }
+    :global(.kt) {
+      color: #6f42c1;
+    }
+    :global(.s),
+    :global(.s1),
+    :global(.s2),
+    :global(.sb),
+    :global(.sc),
+    :global(.sh) {
+      color: #032f62;
+    }
+    :global(.si) {
+      color: #032f62;
+    }
+    :global(.sr) {
+      color: #032f62;
+    }
+    :global(.se) {
+      color: #005cc5;
+    }
+    :global(.nb) {
+      color: #005cc5;
+    }
+    :global(.nc),
+    :global(.nd),
+    :global(.ni) {
+      color: #6f42c1;
+    }
+    :global(.nf),
+    :global(.nx) {
+      color: #6f42c1;
+    }
+    :global(.na) {
+      color: #005cc5;
+    }
+    :global(.nt) {
+      color: #22863a;
+    }
+    :global(.no) {
+      color: #005cc5;
+    }
+    :global(.mi),
+    :global(.mf),
+    :global(.mh),
+    :global(.mo),
+    :global(.il) {
+      color: #005cc5;
+    }
+    :global(.o),
+    :global(.ow) {
+      color: #d73a49;
+    }
+    :global(.p) {
+      color: #24292e;
+    }
+    :global(.ss) {
+      color: #005cc5;
+    }
+    :global(.vi),
+    :global(.vc),
+    :global(.vg) {
+      color: #e36209;
+    }
+    :global(.nn) {
+      color: #005cc5;
+    }
+    :global(.err) {
+      color: #cb2431;
+    }
+  }
   table {
     border-collapse: collapse;
     width: 100%;

@@ -28,10 +28,19 @@ class ApplicationController < ActionController::Base
       path = Rails.root.join('app/views', controller_path, 'README.md')
       return nil if !path.exist?
 
-      renderer = Redcarpet::Render::HTML.new(hard_wrap: true)
+      renderer = RougeRenderer.new(hard_wrap: true)
       markdown = Redcarpet::Markdown.new(renderer, fenced_code_blocks: true, tables: true,
                                                    no_intra_emphasis: true, autolink: true)
       markdown.render(path.read).html_safe # rubocop:disable Rails/OutputSafety
+    end
+
+    class RougeRenderer < Redcarpet::Render::HTML
+      def block_code(code, language)
+        language ||= 'text'
+        formatter = Rouge::Formatters::HTML.new
+        lexer = Rouge::Lexer.find_fancy(language) || Rouge::Lexers::PlainText.new
+        %(<pre class="highlight"><code>#{formatter.format(lexer.lex(code))}</code></pre>)
+      end
     end
 
     def assign_layout

@@ -16,3 +16,4 @@
 /.env
 /public/assets/*
 /.playwright-mcp
+/.claude/launch.json
