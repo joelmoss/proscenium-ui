@@ -363,6 +363,7 @@ DEPENDENCIES
   proscenium
   proscenium-ui!
   puma
+  rails
   rails_caddy_dev
   rails_icons
   redcarpet

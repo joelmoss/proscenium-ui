@@ -7,6 +7,7 @@ gemspec
 
 gem 'proscenium'
 gem 'puma'
+gem 'rails'
 gem 'sqlite3'
 
 gem 'amazing_print'

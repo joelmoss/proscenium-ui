@@ -1,6 +1,47 @@
 pui-breadcrumbs {
-  pui-breadcrumbs-home svg {
-    color: red;
-    width: 3em;
+  --puiBreadcrumbs--link-color: light-dark(oklch(0.3 0.02 260), oklch(0.9 0.02 260));
+  --puiBreadcrumbs--link-hover-color: light-dark(oklch(0.2 0.02 260), oklch(0.95 0.02 260));
+
+  gap: 0.3em;
+  font-size: 0.8em;
+
+  pui-breadcrumbs-home,
+  pui-breadcrumbs-element {
+    text-transform: none;
+
+    &:after {
+      display: none;
+    }
+
+    a {
+      background-color: light-dark(oklch(0.94 0.01 260), oklch(0.25 0.02 260));
+      border-radius: 999px;
+      padding: 0.3rem 0.85rem;
+      text-decoration: none;
+      transition: background-color 0.15s ease;
+
+      &:hover {
+        background-color: light-dark(
+          color-mix(in oklch, oklch(0.94 0.01 260) 80%, black),
+          color-mix(in oklch, oklch(0.25 0.02 260) 80%, white)
+        );
+      }
+    }
+
+    &:last-child {
+      background-color: light-dark(oklch(0.88 0.06 250), oklch(0.35 0.08 250));
+      color: light-dark(oklch(0.25 0.08 250), oklch(0.92 0.04 250));
+      border-radius: 999px;
+      padding: 0.3rem 0.85rem;
+
+      a {
+        background-color: transparent;
+        padding: 0;
+
+        &:hover {
+          background-color: transparent;
+        }
+      }
+    }
   }
 }
