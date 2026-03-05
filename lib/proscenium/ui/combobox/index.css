@@ -1,0 +1,97 @@
+@layer pui {
+  pui-combobox {
+    position: relative;
+    display: inline-block;
+
+    [part='input'] {
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    [part='listbox'] {
+      position: absolute;
+      top: calc(100% + 2px);
+      left: 0;
+      right: 0;
+      max-height: 15rem;
+      overflow-y: auto;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      background-color: var(--pui-input-background-color, Canvas);
+      border: var(--pui-input-border, 1px solid);
+      border-radius: var(--pui-input-border-radius);
+      z-index: 10;
+    }
+
+    [role='option'] {
+      padding: 0.2em 0.4em;
+      cursor: pointer;
+
+      &[data-active] {
+        background-color: var(--pui-combobox-active-bg, SelectedItem);
+        color: var(--pui-combobox-active-color, SelectedItemText);
+      }
+
+      &[aria-selected='true'] {
+        font-weight: 600;
+      }
+
+      &[hidden] {
+        display: none;
+      }
+
+      @media (pointer: coarse) {
+        padding: 0.6em 0.5em;
+      }
+    }
+
+    [part='tags'] {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.25em;
+      margin-bottom: 0.25em;
+    }
+
+    [part='tag'] {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25em;
+      padding: 0.1em 0.4em;
+      border: 1px solid;
+      border-radius: 0.2em;
+      font-size: 0.875em;
+      line-height: 1.25;
+    }
+
+    [part='tag-remove'] {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.1em;
+      min-width: 1.2em;
+      min-height: 1.2em;
+      line-height: 1;
+      font-size: 1em;
+      color: inherit;
+      opacity: 0.6;
+
+      &:hover,
+      &:active {
+        opacity: 1;
+      }
+
+      @media (pointer: coarse) {
+        padding: 0.3em;
+        min-width: 2em;
+        min-height: 2em;
+      }
+    }
+
+    &[disabled] {
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+  }
+}

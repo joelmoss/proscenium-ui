@@ -41,6 +41,25 @@ lib/proscenium/ui/
 - **Breadcrumbs** (`breadcrumbs.rb`, `breadcrumbs/`) — Navigation breadcrumbs. Controllers mix in `Breadcrumbs::Control` to define breadcrumb trails.
 - **Flash** (`flash.rb`, `flash/`) — Toast notifications using sourdough-toast JS library.
 - **UJS** (`ujs/`) — Unobtrusive JavaScript helpers (data-confirm, data-disable-with).
+- **Combobox** (`combobox.rb`, `combobox/`) — Searchable select using WAI-ARIA combobox pattern. Custom element `<pui-combobox>` with static filtering, async search, and multi-select with tags.
+
+### Demo/Docs App
+
+The main Rails app (`app/`) is a component playground (like Storybook/Lookbook):
+- **Navigation** (`app/components/navigation.rb`) auto-discovers controllers by scanning `app/controllers/` for `*_controller.rb` files, and sub-pages from view files in `app/views/<controller>/`.
+- **Adding a new component demo** requires: a controller (e.g. `combobox_controller.rb`), view files per example (e.g. `app/views/combobox/basic.rb`), routes for each action, and a `README.md` for the landing page.
+- **Views** are Phlex classes inheriting from `Views::Application` with `Phlexible::Rails::AutoLayout`.
+- **Landing pages** are handled by `ApplicationController#landing` which renders the controller's `README.md`.
+- **Preview pages** render in an iframe via `/bare/` prefix routes.
+
+### Design Philosophy
+
+- Components are **unstyled by default** — use browser defaults, not opinionated styling.
+- CSS custom properties (e.g. `--pui-input-border`) allow opt-in theming but have no defaults set.
+- Component CSS lives in `@layer pui` to keep specificity low.
+- Use system colors (`Canvas`, `SelectedItem`, `SelectedItemText`) over hardcoded values for light/dark mode compatibility.
+- Use `em` units (not `rem`) so component sizing is relative to its own font size.
+- Use `@media (pointer: coarse)` for touch adaptations rather than viewport breakpoints.
 
 ### Testing
 

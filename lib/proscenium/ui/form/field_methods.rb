@@ -84,5 +84,12 @@ class Proscenium::UI::Form
     def radio_input(*args, **)
       render Fields::RadioInput.new(args, @model, self, **)
     end
+
+    # @param args [Array<Symbol>] name or nested names of model attribute
+    # @param attributes [Hash] passed through to each input
+    def combobox_field(*args, **attributes)
+      merge_bang_attributes! args, attributes
+      render Fields::Combobox.new(args, @model, self, **attributes)
+    end
   end
 end
