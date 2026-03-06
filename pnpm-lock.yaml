@@ -12,8 +12,8 @@ importers:
         specifier: ^1.0.0
         version: 1.0.0
       sourdough-toast:
-        specifier: github:mikker/sourdough-toast#1973598
-        version: https://codeload.github.com/mikker/sourdough-toast/tar.gz/1973598
+        specifier: github:joelmoss/sourdough-toast
+        version: https://codeload.github.com/joelmoss/sourdough-toast/tar.gz/2a4ccb55af795c4528e38a05d427649151bdc521
     devDependencies:
       '@eslint/js':
         specifier: ^10.0.1
@@ -330,8 +330,8 @@ packages:
     resolution: {integrity: sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==}
     engines: {node: '>=8'}
 
-  sourdough-toast@https://codeload.github.com/mikker/sourdough-toast/tar.gz/1973598:
-    resolution: {tarball: https://codeload.github.com/mikker/sourdough-toast/tar.gz/1973598}
+  sourdough-toast@https://codeload.github.com/joelmoss/sourdough-toast/tar.gz/2a4ccb55af795c4528e38a05d427649151bdc521:
+    resolution: {tarball: https://codeload.github.com/joelmoss/sourdough-toast/tar.gz/2a4ccb55af795c4528e38a05d427649151bdc521}
     version: 0.1.0
 
   type-check@0.4.0:
@@ -621,7 +621,7 @@ snapshots:
 
   shebang-regex@3.0.0: {}
 
-  sourdough-toast@https://codeload.github.com/mikker/sourdough-toast/tar.gz/1973598: {}
+  sourdough-toast@https://codeload.github.com/joelmoss/sourdough-toast/tar.gz/2a4ccb55af795c4528e38a05d427649151bdc521: {}
 
   type-check@0.4.0:
     dependencies:

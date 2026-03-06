@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 module Views
-  class Flash::Index < Proscenium::Phlex
-    include Phlex::Rails::Helpers::Flash
+  class Flash::Types < Application
+    include Phlexible::Rails::AutoLayout
+
+    self.page_title = 'Flash'
 
     def view_template
-      flash.notice = 'Hello!'
       render Proscenium::UI::Flash
     end
   end

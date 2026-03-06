@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "dom-mutations": "^1.0.0",
-    "sourdough-toast": "github:mikker/sourdough-toast#1973598"
+    "sourdough-toast": "github:joelmoss/sourdough-toast"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
