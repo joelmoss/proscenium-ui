@@ -35,10 +35,6 @@ Lint/NestedMethodDefinition:
   Exclude:
     - "test/**/*"
 
-Rails/HasManyOrHasOneDependent:
-  Exclude:
-    - "test/dummy/**/*"
-
 Metrics:
   Enabled: false
 

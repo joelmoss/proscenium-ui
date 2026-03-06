@@ -3,13 +3,22 @@
 # Configure Rails Environment
 ENV['RAILS_ENV'] = 'test'
 
-require_relative '../test/dummy/config/environment'
-ActiveRecord::Migrator.migrations_paths = [File.expand_path('../test/dummy/db/migrate', __dir__)]
+require_relative '../config/environment'
+require_relative 'fixtures/routes'
+
 require 'rails/test_help'
 require 'minitest/difftastic'
 require 'maxitest/autorun'
 require 'capybara/rails'
 require 'capybara/minitest'
+
+ActiveRecord::Schema.verbose = false
+load './test/fixtures/db/schema.rb'
+
+Dir.glob('./test/fixtures/models/*.rb').each do |file|
+  class_name = File.basename(file, '.rb').classify
+  autoload class_name.to_sym, file.delete_prefix('./test/')
+end
 
 COMPONENTS_PATH = '/node_modules/@rubygems/proscenium-ui/lib/proscenium/ui'
 

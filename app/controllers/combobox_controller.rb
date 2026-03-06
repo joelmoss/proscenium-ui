@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 class ComboboxController < ApplicationController
+  def basic; end
+  def multi_select; end
+  def async; end
+
   USERS = [
     { label: 'Alice', value: '1' },
     { label: 'Alicia', value: '2' },

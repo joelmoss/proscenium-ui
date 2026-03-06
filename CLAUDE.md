@@ -71,8 +71,6 @@ Key test helpers defined in `test/test_helper.rb`:
 - `page` / `subject` — Returns the Capybara node of the rendered component.
 - `html` — Returns raw HTML string of the rendered component.
 
-A dummy Rails app at `test/dummy/` provides the test environment.
-
 ## Code Style
 
 - `unless`, `and`/`or`/`not`, and numbered block parameters are **disabled** (RuboCop enforced)

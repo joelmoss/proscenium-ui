@@ -1,20 +1,20 @@
-import js from "@eslint/js";
-import prettier from "eslint-config-prettier";
-import globals from "globals";
+import js from '@eslint/js'
+import prettier from 'eslint-config-prettier'
+import globals from 'globals'
 
 export default [
   js.configs.recommended,
   prettier,
   {
     languageOptions: {
-      ecmaVersion: "latest",
-      sourceType: "module",
+      ecmaVersion: 'latest',
+      sourceType: 'module',
       globals: {
-        ...globals.browser,
-      },
-    },
+        ...globals.browser
+      }
+    }
   },
   {
-    ignores: ["node_modules/", "public/", "test/dummy/public/"],
-  },
-];
+    ignores: ['node_modules/', 'public/']
+  }
+]

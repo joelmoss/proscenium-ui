@@ -1,15 +1,14 @@
 # frozen_string_literal: true
 
-require 'zeitwerk'
 require 'proscenium/ui/railtie'
+require 'proscenium/phlex'
+require 'literal'
 
-# Don't use Zeitwerk in development when running the gem locally, since it causes issues when this
-# gem is used by another rails app.
-if !ENV.key?('PUI_ENV')
-  loader = Zeitwerk::Loader.for_gem_extension(Proscenium)
-  loader.inflector.inflect('ui' => 'UI', 'ujs' => 'UJS')
-  loader.setup
-end
+require 'zeitwerk'
+
+loader = Zeitwerk::Loader.for_gem_extension(Proscenium)
+loader.inflector.inflect('ui' => 'UI', 'ujs' => 'UJS')
+loader.setup
 
 module Proscenium
   module UI
