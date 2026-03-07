@@ -7,7 +7,7 @@ module Views
     self.page_title = 'Badge'
 
     def view_template
-      Proscenium::UI::Badge('Active')
+      render Proscenium::UI::Badge('Active')
     end
   end
 end

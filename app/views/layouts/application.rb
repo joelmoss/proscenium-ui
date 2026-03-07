@@ -24,10 +24,10 @@ module Views
         body do
           div class: :@root do
             aside do
-              header do
-                h1 { 'Proscenium::UI' }
-                render Components::Navigation
+              div class: :@logo do
+                img src: '/proscenium-ui-black.png', width: 150, height: 17, title: 'Proscenium UI'
               end
+              render Components::Navigation
             end
             main data: { viewport: controller.viewport } do
               if controller.action_name == 'landing'

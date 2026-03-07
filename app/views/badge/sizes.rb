@@ -8,9 +8,9 @@ module Views
 
     def view_template
       div(style: 'display: flex; gap: 0.5em; align-items: center;') do
-        Proscenium::UI::Badge('Small', size: :sm)
-        Proscenium::UI::Badge('Medium')
-        Proscenium::UI::Badge('Large', size: :lg)
+        render Proscenium::UI::Badge('Small', size: :sm)
+        render Proscenium::UI::Badge('Medium')
+        render Proscenium::UI::Badge('Large', size: :lg)
       end
     end
   end
