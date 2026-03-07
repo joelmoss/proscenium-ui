@@ -101,10 +101,20 @@ module Proscenium::UI
         return if @multiple
 
         button(
+          part: :clear,
+          type: :button,
+          tabindex: -1,
+          aria_label: 'Clear selection',
+          hidden: initial_input_value.nil?,
+          **(@disabled ? { disabled: true } : {})
+        ) { plain "\u00D7" }
+
+        button(
           part: :toggle,
           type: :button,
           tabindex: -1,
           aria_label: 'Toggle options',
+          **(@src ? { hidden: true } : {}),
           **(@disabled ? { disabled: true } : {})
         ) { plain "\u25BE" }
       end

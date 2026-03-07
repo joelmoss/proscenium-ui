@@ -9,9 +9,10 @@
     }
 
     &:not([data-multiple]) [part='input'] {
-      padding-right: 1.5em;
+      padding-right: 3em;
     }
 
+    [part='clear'],
     [part='toggle'] {
       position: absolute;
       top: 0;
@@ -29,8 +30,31 @@
       padding: 0;
       line-height: 1;
 
+      &[hidden] {
+        display: none;
+      }
+
       @media (pointer: coarse) {
         width: 2.5em;
+      }
+    }
+
+    [part='clear'] {
+      right: 1.5em;
+      opacity: 0.4;
+
+      &::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 25%;
+        height: 50%;
+        border-right: 1px solid color-mix(in srgb, currentColor 25%, transparent);
+      }
+
+      &:hover,
+      &:active {
+        opacity: 1;
       }
     }
 
@@ -38,6 +62,7 @@
       transform: rotate(180deg);
     }
 
+    &[disabled] [part='clear'],
     &[disabled] [part='toggle'] {
       display: none;
     }

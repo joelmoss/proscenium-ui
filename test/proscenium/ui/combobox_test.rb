@@ -103,6 +103,43 @@ describe Proscenium::UI::Combobox do
     end
   end
 
+  describe 'clear button' do
+    describe 'single-select without value' do
+      render_subject do
+        [options: %w[Red Green Blue], name: 'color']
+      end
+
+      it 'renders hidden clear button' do
+        btn = page.find('button[part="clear"]', visible: :all)
+        assert_equal 'button', btn[:type]
+        assert_equal '-1', btn[:tabindex]
+        assert_equal 'Clear selection', btn[:'aria-label']
+        assert btn[:hidden]
+      end
+    end
+
+    describe 'single-select with value' do
+      render_subject do
+        [options: %w[Red Green Blue], name: 'color', value: 'Red']
+      end
+
+      it 'renders visible clear button' do
+        btn = page.find('button[part="clear"]')
+        assert_nil btn[:hidden]
+      end
+    end
+
+    describe 'multiple mode' do
+      render_subject do
+        [options: %w[Red Green Blue], name: 'color', multiple: true]
+      end
+
+      it 'does not render clear button' do
+        assert page.has_no_css?('button[part="clear"]', visible: :all)
+      end
+    end
+  end
+
   describe 'toggle button' do
     describe 'single-select' do
       render_subject do
@@ -141,6 +178,14 @@ describe Proscenium::UI::Combobox do
   describe 'async mode' do
     render_subject do
       [name: 'user_id', src: '/api/users', placeholder: 'Search users...']
+    end
+
+    it 'renders hidden toggle button' do
+      assert page.has_css?('button[part="toggle"][hidden]', visible: :all)
+    end
+
+    it 'renders hidden clear button' do
+      assert page.has_css?('button[part="clear"][hidden]', visible: :all)
     end
 
     it 'sets data-src attribute' do

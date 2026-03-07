@@ -1,0 +1,50 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'thor'
+require 'pathname'
+require 'net/http'
+
+class WorkroomTeardown < Thor::Group
+  include Thor::Actions
+
+  def self.exit_on_failure? = false
+
+  desc 'Tear down the workroom'
+
+  def delete_caddy_route
+    return if !ENV.key?('DEVCADDY')
+
+    caddy_host = 'localhost'
+    caddy_port = 2019
+    route_id = "#{workroom_name}-#{ENV['PROJECT_NAME'].downcase}"
+
+    uri = URI("http://#{caddy_host}:#{caddy_port}/id/#{route_id}")
+
+    begin
+      response = Net::HTTP.get_response(uri)
+      if !response.is_a?(Net::HTTPSuccess)
+        say "No Caddy route found for '#{route_id}', skipping...", :yellow
+        return
+      end
+
+      http = Net::HTTP.new(caddy_host, caddy_port)
+      request = Net::HTTP::Delete.new("/id/#{route_id}")
+      response = http.request(request)
+
+      if response.is_a?(Net::HTTPSuccess)
+        say "Caddy route for '#{route_id}' deleted.", :green
+      else
+        say_error "Failed to delete Caddy route: #{response.body}", :yellow
+      end
+    rescue Errno::ECONNREFUSED
+      say 'Caddy admin API not available, skipping route deletion.', :yellow
+    end
+  end
+
+  private
+
+    def workroom_name = @workroom_name ||= ENV.fetch('WORKROOM_NAME')
+end
+
+WorkroomTeardown.start

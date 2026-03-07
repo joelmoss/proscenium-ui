@@ -1,0 +1,65 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'thor'
+require 'pathname'
+
+# Sets up the new workroom with a copy of .env.local and a symlink to .bundle (if it exists). You
+# can then `cd` into the new workspace and run `bin/setup` to get going.
+#
+# The workroom name will be used as a subdomain for your local development URL, so it should be
+# something simple and URL-friendly. For example, if your main project is `london`, and the project
+# name is `my-feature`, you'll get a new workspace at `~/workrooms/my-feature` and be able to
+# access it at `https://my-feature.localhost`.
+class WorkroomSetup < Thor::Group
+  include Thor::Actions
+
+  def self.exit_on_failure? = false
+
+  desc 'Set up a new workroom'
+
+  def copy_env
+    parent_env_path = parent_dir.join('.env')
+    workroom_env_path = cwd.join('.env')
+
+    workroom_env_content = <<~ENV
+      WORKROOM_PARENT_DIR=#{parent_dir}
+      WORKROOM_NAME=#{workroom_name}
+    ENV
+
+    if parent_env_path.exist?
+      create_file(workroom_env_path, "#{workroom_env_content}\n#{parent_env_path.read}")
+    else
+      say_error '.env not found.', :yellow
+      create_file(workroom_env_path, workroom_env_content)
+      say '  Created a fresh .env for you. Check out .env.example to get started.',
+          :yellow
+    end
+  end
+
+  def copy_local_claude_config
+    parent_path = parent_dir.join('.claude/settings.local.json')
+    workroom_path = cwd.join('.claude/settings.local.json')
+
+    if parent_path.exist?
+      create_file(workroom_path, parent_path.read)
+    else
+      say 'No .claude/settings.local.json config found in the parent directory. Skipping copy.',
+          :yellow
+    end
+  end
+
+  def symlink_bundle
+    return if !(bundle_path = parent_dir.join('.bundle')).exist?
+
+    create_link(cwd.join('.bundle'), bundle_path)
+  end
+
+  private
+
+    def cwd = @cwd ||= Pathname.pwd
+    def parent_dir = @parent_dir ||= Pathname.new(ENV.fetch('WORKROOM_PARENT_DIR'))
+    def workroom_name = @workroom_name ||= ENV.fetch('WORKROOM_NAME')
+end
+
+WorkroomSetup.start

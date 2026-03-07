@@ -81,24 +81,79 @@ class ComboboxTest < ApplicationSystemTestCase
     end
   end
 
+  describe 'Clear Button' do
+    before { visit '/bare/combobox/basic' }
+
+    it 'is not visible when no value is selected' do
+      assert_no_selector 'button[part="clear"]'
+    end
+
+    it 'is visible after selecting a value' do
+      find('button[part="toggle"]').click
+      find('li[role="option"]', text: 'Blue').click
+
+      assert_selector 'button[part="clear"]'
+    end
+
+    it 'clears the selection when clicked' do
+      input = find('input[role="combobox"]')
+      find('button[part="toggle"]').click
+      find('li[role="option"]', text: 'Blue').click
+
+      assert_equal 'Blue', input.value
+
+      find('button[part="clear"]').click
+
+      assert_equal '', input.value
+      assert_equal '', find('input[type="hidden"][name="color"]', visible: :all).value
+      assert_no_selector 'button[part="clear"]'
+    end
+  end
+
   describe 'Toggle Button' do
     before { visit '/bare/combobox/basic' }
+
+    it 'is visible on initial load with static options' do
+      assert_selector 'button[part="toggle"]'
+    end
 
     it 'clicking toggle button opens the listbox' do
       find('button[part="toggle"]').click
 
-      assert_not find('ul[role="listbox"]')[:hidden]
+      assert_selector 'ul[role="listbox"]'
     end
 
     it 'clicking toggle button again closes the listbox' do
-      toggle = find('button[part="toggle"]')
-      toggle.click
+      find('button[part="toggle"]').click
+      assert_selector 'ul[role="listbox"]'
 
-      assert_not find('ul[role="listbox"]')[:hidden]
+      find('button[part="toggle"]').click
+      assert_no_selector 'ul[role="listbox"]'
+    end
 
-      toggle.click
+    it 'is not visible when filtering yields no matches' do
+      input = find('input[role="combobox"]')
+      input.click
+      input.send_keys('zzz')
 
-      assert find('ul[role="listbox"]', visible: :all)[:hidden]
+      assert_no_selector 'button[part="toggle"]'
+    end
+
+    it 'becomes visible again when matches return after no-match filter' do
+      input = find('input[role="combobox"]')
+      input.click
+      input.send_keys('zzz')
+
+      assert_no_selector 'button[part="toggle"]'
+
+      # Clear the input to restore all options
+      page.driver.with_playwright_page do |pw_page|
+        pw_page.keyboard.press('Meta+a')
+        pw_page.keyboard.press('Backspace')
+      end
+      input.click
+
+      assert_selector 'button[part="toggle"]'
     end
   end
 
@@ -265,6 +320,81 @@ class ComboboxTest < ApplicationSystemTestCase
       assert_equal 'Alice', input.value
       hidden = combobox.find('input[type="hidden"]', visible: :all)
       assert_equal '1', hidden.value
+    end
+
+    it 'toggle is not visible initially and becomes visible with results' do
+      combobox = first('pui-combobox')
+
+      within(combobox) do
+        assert_no_selector 'button[part="toggle"]'
+      end
+
+      input = combobox.find('input[role="combobox"]')
+      input.send_keys('Al')
+
+      within(combobox) do
+        assert_selector 'li[role="option"]', text: 'Alice'
+        assert_selector 'button[part="toggle"]'
+      end
+    end
+
+    it 'toggle is not visible when input is cleared below min_chars' do
+      combobox = first('pui-combobox')
+      input = combobox.find('input[role="combobox"]')
+      input.send_keys('Al')
+
+      within(combobox) do
+        assert_selector 'li[role="option"]', text: 'Alice'
+        assert_selector 'button[part="toggle"]'
+      end
+
+      page.driver.with_playwright_page do |pw_page|
+        pw_page.keyboard.press('Meta+a')
+        pw_page.keyboard.press('Backspace')
+      end
+
+      within(combobox) do
+        assert_no_selector 'button[part="toggle"]'
+      end
+    end
+
+    it 'clear button is not visible initially' do
+      combobox = first('pui-combobox')
+
+      within(combobox) do
+        assert_no_selector 'button[part="clear"]'
+      end
+    end
+
+    it 'clear button is visible after selecting an async result' do
+      combobox = first('pui-combobox')
+      input = combobox.find('input[role="combobox"]')
+      input.send_keys('Al')
+
+      within(combobox) do
+        find('li[role="option"]', text: 'Alice').click
+        assert_selector 'button[part="clear"]'
+      end
+    end
+
+    it 'clear button resets async selection and hides both buttons' do
+      combobox = first('pui-combobox')
+      input = combobox.find('input[role="combobox"]')
+      input.send_keys('Al')
+
+      within(combobox) do
+        find('li[role="option"]', text: 'Alice').click
+      end
+
+      combobox.find('button[part="clear"]').click
+
+      assert_equal '', input.value
+      assert_equal '', combobox.find('input[type="hidden"]', visible: :all).value
+
+      within(combobox) do
+        assert_no_selector 'button[part="clear"]'
+        assert_no_selector 'button[part="toggle"]'
+      end
     end
   end
 
