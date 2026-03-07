@@ -8,6 +8,40 @@
       box-sizing: border-box;
     }
 
+    &:not([data-multiple]) [part='input'] {
+      padding-right: 1.5em;
+    }
+
+    [part='toggle'] {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.5em;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: inherit;
+      font-size: 1em;
+      padding: 0;
+      line-height: 1;
+
+      @media (pointer: coarse) {
+        width: 2.5em;
+      }
+    }
+
+    [part='input'][aria-expanded='true'] ~ [part='toggle'] {
+      transform: rotate(180deg);
+    }
+
+    &[disabled] [part='toggle'] {
+      display: none;
+    }
+
     [part='listbox'] {
       position: absolute;
       top: calc(100% + 2px);

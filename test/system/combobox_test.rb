@@ -4,7 +4,7 @@ require 'application_system_test_case'
 
 class ComboboxTest < ApplicationSystemTestCase
   describe 'Static Filtering' do
-    before { visit '/combobox/basic' }
+    before { visit '/bare/combobox/basic' }
 
     it 'shows all options on focus when input is empty' do
       find('input[role="combobox"]').click
@@ -54,7 +54,7 @@ class ComboboxTest < ApplicationSystemTestCase
   end
 
   describe 'Single Select' do
-    before { visit '/combobox/basic' }
+    before { visit '/bare/combobox/basic' }
 
     it 'selects option by click' do
       input = find('input[role="combobox"]')
@@ -81,8 +81,29 @@ class ComboboxTest < ApplicationSystemTestCase
     end
   end
 
+  describe 'Toggle Button' do
+    before { visit '/bare/combobox/basic' }
+
+    it 'clicking toggle button opens the listbox' do
+      find('button[part="toggle"]').click
+
+      assert_not find('ul[role="listbox"]')[:hidden]
+    end
+
+    it 'clicking toggle button again closes the listbox' do
+      toggle = find('button[part="toggle"]')
+      toggle.click
+
+      assert_not find('ul[role="listbox"]')[:hidden]
+
+      toggle.click
+
+      assert find('ul[role="listbox"]', visible: :all)[:hidden]
+    end
+  end
+
   describe 'Keyboard Navigation' do
-    before { visit '/combobox/basic' }
+    before { visit '/bare/combobox/basic' }
 
     it 'ArrowDown opens listbox when closed' do
       input = find('input[role="combobox"]')
@@ -142,7 +163,7 @@ class ComboboxTest < ApplicationSystemTestCase
   end
 
   describe 'Multi-Select' do
-    before { visit '/combobox/multi_select' }
+    before { visit '/bare/combobox/multi_select' }
 
     it 'renders pre-selected tags on load' do
       tags = all('[part="tag"]')
@@ -207,7 +228,7 @@ class ComboboxTest < ApplicationSystemTestCase
   end
 
   describe 'Async Search' do
-    before { visit '/combobox/async' }
+    before { visit '/bare/combobox/async' }
 
     it 'does not fetch with fewer than min_chars' do
       combobox = first('pui-combobox')
@@ -248,7 +269,7 @@ class ComboboxTest < ApplicationSystemTestCase
   end
 
   describe 'Async Multi-Select' do
-    before { visit '/combobox/async' }
+    before { visit '/bare/combobox/async' }
 
     it 'renders pre-selected tag from selected_options' do
       combobox = all('pui-combobox')[1]
@@ -275,7 +296,7 @@ class ComboboxTest < ApplicationSystemTestCase
   end
 
   describe 'ARIA Attributes' do
-    before { visit '/combobox/basic' }
+    before { visit '/bare/combobox/basic' }
 
     it 'has correct initial ARIA state' do
       input = find('input[role="combobox"]')

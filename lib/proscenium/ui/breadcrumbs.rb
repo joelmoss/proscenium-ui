@@ -55,10 +55,10 @@ module Proscenium::UI
     register_element :pui_breadcrumbs_home
     register_element :pui_breadcrumbs_element
 
-    # The path (route) to use as the HREF for the home segment. Defaults to `:root`.
+    # @param home_path [String, Symbol] The path (route) to use as the HREF for the home segment.
     prop :home_path, _Union(String, Symbol), default: -> { :root }
 
-    # Assign false to hide the home segment.
+    # @param with_home [Boolean] Whether to show the home segment. Set to false to hide it.
     prop :with_home, _Boolean, default: -> { true }
 
     def self.source_path

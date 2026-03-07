@@ -103,6 +103,41 @@ describe Proscenium::UI::Combobox do
     end
   end
 
+  describe 'toggle button' do
+    describe 'single-select' do
+      render_subject do
+        [options: %w[Red Green Blue], name: 'color']
+      end
+
+      it 'renders toggle button' do
+        btn = page.find('button[part="toggle"]')
+        assert_equal 'button', btn[:type]
+        assert_equal '-1', btn[:tabindex]
+        assert_equal 'Toggle options', btn[:'aria-label']
+      end
+    end
+
+    describe 'multiple mode' do
+      render_subject do
+        [options: %w[Red Green Blue], name: 'color', multiple: true]
+      end
+
+      it 'does not render toggle button' do
+        assert page.has_no_css?('button[part="toggle"]')
+      end
+    end
+
+    describe 'disabled' do
+      render_subject do
+        [options: %w[Red Green], name: 'color', disabled: true]
+      end
+
+      it 'renders disabled toggle button' do
+        assert page.has_css?('button[part="toggle"][disabled]')
+      end
+    end
+  end
+
   describe 'async mode' do
     render_subject do
       [name: 'user_id', src: '/api/users', placeholder: 'Search users...']

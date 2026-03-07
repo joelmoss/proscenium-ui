@@ -4,15 +4,37 @@ module Proscenium::UI
   class Combobox < Component
     register_element :pui_combobox
 
+    # @param options [Array] List of options. Each element can be a String, a [label, value]
+    #   Array, or a Hash with :label and :value keys.
     prop :options, _Array(_Any), default: -> { [] }
-    prop :src, _Nilable(String)
+
+    # @param src [String, nil] URL for async option fetching. When set, options are loaded
+    #   remotely as the user types.
+    prop :src, _String?
+
+    # @param multiple [Boolean] Whether multiple values can be selected.
     prop :multiple, _Boolean, default: -> { false }
-    prop :placeholder, _Nilable(String)
-    prop :name, _Nilable(String)
+
+    # @param placeholder [String, nil] Placeholder text for the input.
+    prop :placeholder, _String?
+
+    # @param name [String, nil] The form field name for the hidden input(s).
+    prop :name, _String?
+
+    # @param value [String, Array<String>, nil] The currently selected value(s).
     prop :value, _Union(String, _Array(String), NilClass), default: -> {}
+
+    # @param min_chars [Integer] Minimum characters before filtering or fetching begins.
     prop :min_chars, Integer, default: -> { 0 }
+
+    # @param debounce [Integer] Debounce delay in milliseconds for async search.
     prop :debounce, Integer, default: -> { 300 }
+
+    # @param disabled [Boolean] Whether the combobox is disabled.
     prop :disabled, _Boolean, default: -> { false }
+
+    # @param selected_options [Array] Pre-resolved selected options for multi-select, useful when
+    #   the selected values are not present in the initial options list.
     prop :selected_options, _Array(_Any), default: -> { [] }
 
     def self.source_path
@@ -75,6 +97,16 @@ module Proscenium::UI
           value: initial_input_value,
           **(@disabled ? { disabled: true } : {})
         )
+
+        return if @multiple
+
+        button(
+          part: :toggle,
+          type: :button,
+          tabindex: -1,
+          aria_label: 'Toggle options',
+          **(@disabled ? { disabled: true } : {})
+        ) { plain "\u25BE" }
       end
 
       def listbox

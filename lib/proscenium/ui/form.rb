@@ -53,17 +53,22 @@ module Proscenium::UI
       end
     end
 
+    # @param model [#to_model] The model instance for the form.
     prop :model, _Interface(:to_model), :positional, reader: :public
 
+    # @param method [Symbol, String, nil] The HTTP method for the form. Defaults to 'patch' for
+    #   persisted models, 'post' otherwise. (:get, :post, :put, :patch, :delete)
     prop :method, _Union?(:get, :post, :put, :patch, :delete,
                           'get', 'post', 'put', 'patch', 'delete') do |value|
       value ||= 'patch' if @model.respond_to?(:persisted?) && @model.persisted?
       value&.to_s&.downcase || 'post'
     end
 
-    # The form action, which can be any value that can be passed to Rails `url_for` helper.
+    # @param action [String, Symbol, Array, Hash, nil] The form action URL. Accepts any value
+    #   that can be passed to Rails `url_for` helper.
     prop :action, _Union?(String, Symbol, Array, Hash)
 
+    # @param attributes [Hash] Additional HTML attributes passed to the <form> element.
     prop :attributes, Hash, :**
 
     def self.source_path = super / '../form/index.rb'
