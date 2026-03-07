@@ -14,6 +14,11 @@ Rails.application.routes.draw do
   get 'flash/basic', to: 'flash#basic'
   get 'flash/types', to: 'flash#types'
 
+  get :badge, to: 'badge#landing'
+  get 'badge/basic', to: 'badge#basic'
+  get 'badge/types', to: 'badge#types'
+  get 'badge/sizes', to: 'badge#sizes'
+
   get :breadcrumbs, to: 'breadcrumbs#landing'
   get 'breadcrumbs/basic', to: 'breadcrumbs#basic'
   get 'breadcrumbs/custom_css', to: 'breadcrumbs#custom_css'
@@ -27,6 +32,10 @@ Rails.application.routes.draw do
 
     get 'flash/basic', to: 'flash#basic'
     get 'flash/types', to: 'flash#types'
+
+    get 'badge/basic', to: 'badge#basic'
+    get 'badge/types', to: 'badge#types'
+    get 'badge/sizes', to: 'badge#sizes'
 
     get 'breadcrumbs/basic', to: 'breadcrumbs#basic'
     get 'breadcrumbs/custom_css', to: 'breadcrumbs#custom_css'
