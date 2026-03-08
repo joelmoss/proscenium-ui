@@ -22,7 +22,7 @@ module Proscenium::UI
   #
   #   render Proscenium::UI::Breadcrumbs
   #
-  # At it's simplest, you can add a breadcrumb with a name of "Users", and a path of "/users" like
+  # At its simplest, you can add a breadcrumb with a name of "Users", and a path of "/users" like
   # this:
   #
   #   add_breadcrumb 'Users', '/users'
@@ -103,8 +103,8 @@ module Proscenium::UI
         if block
           yield
         else
-          svg role: 'img', xmlns: 'http://www.w3.org/2000/svg', viewBox: '0 0 24 24',
-              fill: 'currentColor' do |s|
+          svg role: 'img', aria_label: 'Home', xmlns: 'http://www.w3.org/2000/svg',
+              viewBox: '0 0 24 24', fill: 'currentColor' do |s|
             s.path d: <<~SVG.delete("\n")
               M11.47 3.841a.75.75 0 0 1 1.06 0l8.69 8.69a.75.75 0 1 0 1.06-1.061l-8.689
               -8.69a2.25 2.25 0 0 0-3.182 0l-8.69 8.69a.75.75 0 1 0 1.061 1.06l8.69-8.69Z

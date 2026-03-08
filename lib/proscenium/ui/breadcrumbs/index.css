@@ -1,8 +1,8 @@
 @define-mixin _separator {
   display: inline-block;
   content: '';
-  height: 1rem;
-  width: 1rem;
+  height: 1em;
+  width: 1em;
   -webkit-mask: var(--puiBreadcrumbs--separator, var(--_puiBreadcrumbs--separator)) no-repeat center
     center;
   mask: var(--puiBreadcrumbs--separator, var(--_puiBreadcrumbs--separator)) no-repeat center center;
@@ -25,6 +25,8 @@
     --_puiBreadcrumbs--separator: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor'%3E%3Cpath fill-rule='evenodd' d='M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z' clip-rule='evenodd'/%3E%3C/svg%3E");
 
     display: flex;
+    flex-wrap: wrap;
+    align-items: center;
 
     pui-breadcrumbs-home,
     pui-breadcrumbs-element {
@@ -39,7 +41,7 @@
 
         &:nth-last-child(2)::before {
           @mixin _separator;
-          margin: 0 0.5rem 0 0;
+          margin: 0 0.5em 0 0;
           transform: rotate(180deg);
         }
       }
@@ -47,7 +49,7 @@
       @media (min-width: 427px) {
         &:not(:last-child)::after {
           @mixin _separator;
-          margin: 0 0.5rem;
+          margin: 0 0.5em;
         }
       }
 
@@ -60,9 +62,14 @@
       a {
         color: var(--puiBreadcrumbs--link-color, revert);
         display: flex;
+        align-items: center;
 
         &:hover {
           color: var(--puiBreadcrumbs--link-hover-color, revert);
+        }
+
+        @media (pointer: coarse) {
+          min-height: 44px;
         }
       }
     }
