@@ -2,10 +2,12 @@
   pui-badge {
     display: inline-flex;
     align-items: center;
+    vertical-align: baseline;
     gap: 0.25em;
     padding: 0.15em 0.5em;
     border-radius: 0.25em;
     font-size: 0.875em;
+    font-variant-numeric: tabular-nums;
     line-height: 1.4;
     white-space: nowrap;
     background-color: var(--puiBadge--bg, color-mix(in srgb, currentColor 10%, transparent));
@@ -23,27 +25,51 @@
     }
 
     &[data-variant='success'] {
-      background-color: var(--puiBadge--success-bg, color-mix(in srgb, green 15%, transparent));
-      color: var(--puiBadge--success-color, green);
-      border-color: var(--puiBadge--success-border-color, color-mix(in srgb, green 30%, transparent));
+      background-color: var(
+        --puiBadge--success-bg,
+        color-mix(in srgb, light-dark(#15803d, #4ade80) 15%, transparent)
+      );
+      color: var(--puiBadge--success-color, light-dark(#15803d, #4ade80));
+      border-color: var(
+        --puiBadge--success-border-color,
+        color-mix(in srgb, light-dark(#15803d, #4ade80) 30%, transparent)
+      );
     }
 
     &[data-variant='warning'] {
-      background-color: var(--puiBadge--warning-bg, color-mix(in srgb, orange 15%, transparent));
-      color: var(--puiBadge--warning-color, orange);
-      border-color: var(--puiBadge--warning-border-color, color-mix(in srgb, orange 30%, transparent));
+      background-color: var(
+        --puiBadge--warning-bg,
+        color-mix(in srgb, light-dark(#a16207, #fbbf24) 15%, transparent)
+      );
+      color: var(--puiBadge--warning-color, light-dark(#a16207, #fbbf24));
+      border-color: var(
+        --puiBadge--warning-border-color,
+        color-mix(in srgb, light-dark(#a16207, #fbbf24) 30%, transparent)
+      );
     }
 
     &[data-variant='danger'] {
-      background-color: var(--puiBadge--danger-bg, color-mix(in srgb, red 15%, transparent));
-      color: var(--puiBadge--danger-color, red);
-      border-color: var(--puiBadge--danger-border-color, color-mix(in srgb, red 30%, transparent));
+      background-color: var(
+        --puiBadge--danger-bg,
+        color-mix(in srgb, light-dark(#dc2626, #f87171) 15%, transparent)
+      );
+      color: var(--puiBadge--danger-color, light-dark(#dc2626, #f87171));
+      border-color: var(
+        --puiBadge--danger-border-color,
+        color-mix(in srgb, light-dark(#dc2626, #f87171) 30%, transparent)
+      );
     }
 
     &[data-variant='info'] {
-      background-color: var(--puiBadge--info-bg, color-mix(in srgb, blue 15%, transparent));
-      color: var(--puiBadge--info-color, blue);
-      border-color: var(--puiBadge--info-border-color, color-mix(in srgb, blue 30%, transparent));
+      background-color: var(
+        --puiBadge--info-bg,
+        color-mix(in srgb, light-dark(#2563eb, #60a5fa) 15%, transparent)
+      );
+      color: var(--puiBadge--info-color, light-dark(#2563eb, #60a5fa));
+      border-color: var(
+        --puiBadge--info-border-color,
+        color-mix(in srgb, light-dark(#2563eb, #60a5fa) 30%, transparent)
+      );
     }
   }
 }

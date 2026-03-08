@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Views
-  class Badge::Types < Application
+  class Badge::Variants < Application
     include Phlexible::Rails::AutoLayout
 
     self.page_title = 'Badge'

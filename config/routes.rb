@@ -16,7 +16,7 @@ Rails.application.routes.draw do
 
   get :badge, to: 'badge#landing'
   get 'badge/basic', to: 'badge#basic'
-  get 'badge/types', to: 'badge#types'
+  get 'badge/variants', to: 'badge#variants'
   get 'badge/sizes', to: 'badge#sizes'
 
   get :breadcrumbs, to: 'breadcrumbs#landing'
@@ -34,7 +34,7 @@ Rails.application.routes.draw do
     get 'flash/types', to: 'flash#types'
 
     get 'badge/basic', to: 'badge#basic'
-    get 'badge/types', to: 'badge#types'
+    get 'badge/variants', to: 'badge#variants'
     get 'badge/sizes', to: 'badge#sizes'
 
     get 'breadcrumbs/basic', to: 'breadcrumbs#basic'
