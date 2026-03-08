@@ -6,18 +6,20 @@ require 'literal'
 
 require 'zeitwerk'
 
-loader = Zeitwerk::Loader.for_gem_extension(Proscenium)
-loader.inflector.inflect('ui' => 'UI', 'ujs' => 'UJS')
-loader.setup
-
 module Proscenium
   module UI
+    LOADER = Zeitwerk::Loader.for_gem_extension(Proscenium)
+    LOADER.inflector.inflect('ui' => 'UI', 'ujs' => 'UJS')
+    LOADER.enable_reloading if defined?(Rails.root) && Rails.env.development? &&
+                               __dir__.start_with?(Rails.root.to_s)
+    LOADER.setup
+
     class << self
       def method_missing(name, ...)
         if methods.exclude?(name) && name[0] == name[0].upcase && const_defined?(name) &&
-           (component = const_get(name)) < Component
+           const_get(name) < Component
           define_singleton_method(name) do |*args, **kwargs, &block|
-            component.new(*args, **kwargs, &block)
+            const_get(name).new(*args, **kwargs, &block)
           end
           public_send(name, ...)
         else

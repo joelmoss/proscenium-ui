@@ -5,6 +5,9 @@ module Proscenium::UI
     register_element :pui_badge
 
     prop :text, String, :positional
+
+    # @param variant [Symbol] The visual style variant. (:default, :success, :warning, :danger,
+    # :info)
     prop :variant, _Union(:default, :success, :warning, :danger, :info), default: -> { :default }
     prop :size, _Union(:sm, :md, :lg), default: -> { :md }
     prop :rest, Hash, :**

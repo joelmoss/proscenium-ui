@@ -3,24 +3,21 @@
 module Proscenium
   module UI
     class Railtie < ::Rails::Railtie
-      # engine_name 'proscenium-ui'
-      # isolate_namespace Proscenium::UI
+      initializer 'proscenium-ui.reloader' do |app|
+        next if !Proscenium::UI::LOADER.reloading_enabled?
 
-      # initializer 'proscenium-ui.paths' do |app|
-      # config.autoload_paths << "#{root}/app/components"
-      # config.autoload_paths << "#{root}/lib/proscenium/ui"
-      # pp config.autoload_paths
-      # end
+        lib_path = File.expand_path('../..', __dir__)
 
-      # initializer 'proscenium-ui.public_path' do |app|
-      #   if app.config.public_file_server.enabled
-      #     headers = app.config.public_file_server.headers || {}
-      #     index = app.config.public_file_server.index_name || 'index'
+        checker = app.config.file_watcher.new([], { lib_path => [:rb] }) do
+          Proscenium::UI::LOADER.reload
+        end
 
-      #     app.middleware.insert_after(ActionDispatch::Static, ActionDispatch::Static,
-      #                                 root.join('public').to_s, index:, headers:)
-      #   end
-      # end
+        app.reloaders << checker
+
+        app.reloader.to_run do
+          checker.execute_if_updated
+        end
+      end
     end
   end
 end
