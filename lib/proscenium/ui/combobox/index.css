@@ -29,6 +29,9 @@
       font-size: 1em;
       padding: 0;
       line-height: 1;
+      transition:
+        opacity 0.15s ease,
+        transform 0.15s ease;
 
       &[hidden] {
         display: none;
@@ -72,8 +75,10 @@
       top: calc(100% + 2px);
       left: 0;
       right: 0;
-      max-height: 15rem;
+      max-height: 15em;
       overflow-y: auto;
+      overscroll-behavior: contain;
+      scrollbar-gutter: stable;
       margin: 0;
       padding: 0;
       list-style: none;
@@ -134,6 +139,7 @@
       font-size: 1em;
       color: inherit;
       opacity: 0.6;
+      transition: opacity 0.15s ease;
 
       &:hover,
       &:active {
