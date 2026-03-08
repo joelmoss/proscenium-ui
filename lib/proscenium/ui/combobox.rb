@@ -114,7 +114,7 @@ module Proscenium::UI
           type: :button,
           tabindex: -1,
           aria_label: 'Toggle options',
-          **(@src ? { hidden: true } : {}),
+          hidden: !!@src,
           **(@disabled ? { disabled: true } : {})
         ) { plain "\u25BE" }
       end
