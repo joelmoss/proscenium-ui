@@ -39,7 +39,7 @@ pidfile ENV['PIDFILE'] if ENV['PIDFILE']
 if ENV['RAILS_ENV'] == 'development' || ENV['RAILS_ENV'].nil?
   after_booted do
     Rails.logger.debug ''
-    Rails.logger.debug { "✅ Now running at #{"https://#{ENV.fetch('PROJECT_HOST', nil)}"}" }
+    Rails.logger.debug { "✅ Now running at #{"https://#{ENV.fetch('PROJECT_NAME')}.localhost"}" }
     Rails.logger.debug ''
   end
 end
