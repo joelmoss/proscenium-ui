@@ -10,6 +10,9 @@ Rails.application.routes.draw do
   get 'combobox/async', to: 'combobox#async'
   get 'combobox/users', to: 'combobox#users'
 
+  get :dropdown, to: 'dropdown#landing'
+  get 'dropdown/basic', to: 'dropdown#basic'
+
   get :flash, to: 'flash#landing'
   get 'flash/basic', to: 'flash#basic'
   get 'flash/types', to: 'flash#types'
@@ -29,6 +32,8 @@ Rails.application.routes.draw do
     get 'combobox/basic', to: 'combobox#basic'
     get 'combobox/multi_select', to: 'combobox#multi_select'
     get 'combobox/async', to: 'combobox#async'
+
+    get 'dropdown/basic', to: 'dropdown#basic'
 
     get 'flash/basic', to: 'flash#basic'
     get 'flash/types', to: 'flash#types'

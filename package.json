@@ -17,6 +17,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@floating-ui/dom": "^1.7.6",
     "dom-mutations": "^1.0.0",
     "sourdough-toast": "github:mikker/sourdough-toast#016c3d8"
   },
