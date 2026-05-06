@@ -6,7 +6,6 @@
   "author": "",
   "license": "MIT",
   "type": "module",
-  "packageManager": "pnpm@10.7.1",
   "prettier": {
     "trailingComma": "none",
     "printWidth": 100,
@@ -19,7 +18,7 @@
   },
   "dependencies": {
     "dom-mutations": "^1.0.0",
-    "sourdough-toast": "github:joelmoss/sourdough-toast"
+    "sourdough-toast": "github:mikker/sourdough-toast#016c3d8"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
