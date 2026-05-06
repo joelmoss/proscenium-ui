@@ -9,8 +9,8 @@ require_relative '../config/routes'
 # Setup Playwright with compatible version
 #
 #   export PLAYWRIGHT_CLI_VERSION=$(bundle exec ruby -e 'require "playwright"; puts Playwright::COMPATIBLE_PLAYWRIGHT_VERSION.strip')
-#   pnpm add -D playwright@$PLAYWRIGHT_CLI_VERSION
-#   pnpm playwright install
+#   bun add -D playwright@$PLAYWRIGHT_CLI_VERSION
+#   bun playwright install
 
 Capybara.register_driver :my_playwright do |app|
   Capybara::Playwright::Driver.new(
@@ -18,6 +18,7 @@ Capybara.register_driver :my_playwright do |app|
     browser_type: ENV['PLAYWRIGHT_BROWSER']&.to_sym || :chromium,
     # -> failing with `ArgumentError: unknown keyword: :devtools`
     # devtools: ENV.key?('PLAYWRIGHT_DEVTOOLS'),
+    # slowMo: 1000, # Uncomment to slow down Playwright operations for debugging
     headless: ENV['CI'] || !ENV.fetch('PLAYWRIGHT_HEADED', nil)
   )
 end
