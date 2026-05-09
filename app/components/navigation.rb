@@ -2,6 +2,8 @@
 
 module Components
   class Navigation < Application
+    IGNORED_CONTROLLERS = %w[application test].freeze
+
     def view_template
       ul do
         controllers.each { |name, actions| nav_item(name, actions) }
@@ -53,7 +55,7 @@ module Components
         Rails.root.join('app/controllers').children
              .select { |f| f.basename.to_s.end_with?('_controller.rb') }
              .map { |f| f.basename('.rb').to_s.delete_suffix('_controller') }
-             .reject { |name| name == 'application' }
+             .reject { |name| IGNORED_CONTROLLERS.include?(name) }
              .sort
       end
 

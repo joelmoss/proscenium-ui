@@ -17,14 +17,14 @@ module Proscenium::UI
       menu_template
     end
 
-    def item(href: nil, disabled: false, **attrs, &block)
+    def item(href: nil, disabled: false, **attrs, &)
       base = { role: 'menuitem', tabindex: -1, **attrs }
       if disabled
-        span(**base, aria_disabled: 'true', &block)
+        span(**base, aria_disabled: 'true', &)
       elsif href
-        a(href: href, **base, &block)
+        a(href: href, **base, &)
       else
-        button(type: :button, **base, &block)
+        button(type: :button, **base, &)
       end
     end
 

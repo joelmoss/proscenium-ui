@@ -51,5 +51,13 @@ Rails.application.routes.draw do
     get 'breadcrumbs/custom_css', to: 'breadcrumbs#custom_css'
   end
 
+  namespace :test do
+    get 'web_component/actions', to: 'web_component#actions'
+    get 'web_component/targets', to: 'web_component#targets'
+    get 'web_component/values', to: 'web_component#values'
+    get 'web_component/events', to: 'web_component#events'
+    get 'web_component/attributes', to: 'web_component#attributes'
+  end
+
   root to: 'home#index'
 end
