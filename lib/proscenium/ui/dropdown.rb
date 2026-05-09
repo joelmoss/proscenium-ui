@@ -26,14 +26,18 @@ module Proscenium::UI
 
     private
 
+      def host_element = :pui_dropdown
+      def trigger_haspopup = 'true'
+      def container_role = nil
+
       def base_template
         container_id = "pui-dd-#{object_id}"
 
-        pui_dropdown do
+        send(host_element) do
           pui_dropdown_trigger(
             tabindex: 0,
             role: 'button',
-            aria_haspopup: 'true',
+            aria_haspopup: trigger_haspopup,
             aria_expanded: 'false',
             aria_controls: container_id,
             on_click: :toggle,
@@ -41,7 +45,7 @@ module Proscenium::UI
             &:trigger_template
           )
 
-          pui_dropdown_container(id: container_id, popover: :auto) do
+          pui_dropdown_container(id: container_id, role: container_role, popover: :auto) do
             pui_dropdown_body(&:dropdown_template)
             pui_dropdown_arrow
           end

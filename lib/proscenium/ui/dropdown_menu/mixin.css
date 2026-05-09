@@ -1,0 +1,63 @@
+/*
+ * Properties:
+ *
+ *   --pui-dropdown-menu-item-hover-bg: color-mix(in srgb, CanvasText 8%, transparent);
+ *   --pui-dropdown-menu-item-active-bg: SelectedItem;
+ *   --pui-dropdown-menu-item-active-color: SelectedItemText;
+ *   --pui-dropdown-menu-item-disabled-opacity: 0.5;
+ */
+
+@define-mixin base {
+  pui-dropdown-menu {
+    @mixin host;
+  }
+}
+
+@define-mixin host {
+  [role='menuitem'] {
+    display: block;
+    box-sizing: border-box;
+    padding: 0.4em 0.8em;
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: inherit;
+    font: inherit;
+
+    &:hover {
+      background-color: var(
+        --pui-dropdown-menu-item-hover-bg,
+        color-mix(in srgb, CanvasText 8%, transparent)
+      );
+    }
+
+    &:focus-visible {
+      outline: none;
+      background-color: var(--pui-dropdown-menu-item-active-bg, SelectedItem);
+      color: var(--pui-dropdown-menu-item-active-color, SelectedItemText);
+    }
+
+    &[aria-disabled='true'] {
+      cursor: default;
+      opacity: var(--pui-dropdown-menu-item-disabled-opacity, 0.5);
+
+      &:hover {
+        background-color: transparent;
+      }
+    }
+
+    @media (pointer: coarse) {
+      padding: 0.7em 1em;
+    }
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px solid
+      var(--pui-dropdown-border-color, color-mix(in srgb, CanvasText 20%, transparent));
+    margin: 0.25em 0;
+  }
+}
