@@ -29,6 +29,11 @@ Rails.application.routes.draw do
   get 'breadcrumbs/basic', to: 'breadcrumbs#basic'
   get 'breadcrumbs/custom_css', to: 'breadcrumbs#custom_css'
 
+  get :web_component, to: 'web_component#landing'
+  get 'web_component/counter', to: 'web_component#counter'
+  get 'web_component/toggle', to: 'web_component#toggle'
+  get 'web_component/tabs', to: 'web_component#tabs'
+
   scope path: :bare, as: :bare do
     get 'forms/basic', to: 'forms#basic'
 
@@ -49,6 +54,10 @@ Rails.application.routes.draw do
 
     get 'breadcrumbs/basic', to: 'breadcrumbs#basic'
     get 'breadcrumbs/custom_css', to: 'breadcrumbs#custom_css'
+
+    get 'web_component/counter', to: 'web_component#counter'
+    get 'web_component/toggle', to: 'web_component#toggle'
+    get 'web_component/tabs', to: 'web_component#tabs'
   end
 
   namespace :test do
