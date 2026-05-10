@@ -162,6 +162,10 @@ class WebComponentTest < ApplicationSystemTestCase
       assert_equal 'merged-observes:true:true', static_log_entry('merged-observes')
     end
 
+    it 'recognises dragstart, dragover, drop and dragend as action types' do
+      assert_equal 'drag-actions:ok', static_log_entry('drag-actions')
+    end
+
     it 'attributeChangedCallback routes to a camelCased <attr>Changed method' do
       page.driver.with_playwright_page do |pw_page|
         pw_page.evaluate(<<~JS)

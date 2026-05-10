@@ -83,6 +83,32 @@ function recordRegistrationError() {
   WebComponent.register(WithExtraObserved)
   const merged = WithExtraObserved.observedAttributes
   log('merged-observes', `${merged.includes('data-extra')}:${merged.includes('data-open')}`)
+
+  // 5. The four drag-and-drop action types are recognised — registering them must not
+  //    emit the "Unknown action" warning that #listenForActions logs for unknown types.
+  class DragProbe extends WebComponent {
+    static componentName = 'pui-test-drag-probe'
+    static actions = {
+      dragstart: ['noop'],
+      dragover: ['noop'],
+      drop: ['noop'],
+      dragend: ['noop']
+    }
+    noop() {}
+  }
+  WebComponent.register(DragProbe)
+
+  const warnings = []
+  const origWarn = console.warn
+  console.warn = (...args) => {
+    warnings.push(args.join(' '))
+    origWarn.apply(console, args)
+  }
+  document.body.appendChild(document.createElement('pui-test-drag-probe'))
+  console.warn = origWarn
+
+  const unknown = warnings.some(w => w.includes('Unknown action'))
+  log('drag-actions', unknown ? 'unknown-action-warning' : 'ok')
 }
 
 WebComponent.register(TestAttrs)

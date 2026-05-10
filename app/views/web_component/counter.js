@@ -1,4 +1,4 @@
-import WebComponent from '../../../lib/proscenium/ui/web_component'
+import WebComponent from '/lib/proscenium/ui/web_component'
 
 class Counter extends WebComponent {
   static componentName = 'pui-demo-counter'

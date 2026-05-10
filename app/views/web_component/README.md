@@ -49,7 +49,7 @@ class MyCounter extends WebComponent {
 </my-counter>
 ```
 
-The handler receives the original `event` and the closest ancestor element carrying the matching `on-<event>` attribute (the click target itself may be a descendant of that ancestor — the helper walks up to find it). Supported event types: `click`, `focusin`, `keydown`, `keyup`, `change`, `submit`, `beforeinput`, `input`.
+The handler receives the original `event` and the closest ancestor element carrying the matching `on-<event>` attribute (the click target itself may be a descendant of that ancestor — the helper walks up to find it). Supported event types: `click`, `focusin`, `keydown`, `keyup`, `change`, `submit`, `beforeinput`, `input`, `dragstart`, `dragover`, `drop`, `dragend`.
 
 ## Targets
 

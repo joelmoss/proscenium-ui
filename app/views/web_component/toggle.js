@@ -1,4 +1,4 @@
-import WebComponent from '../../../lib/proscenium/ui/web_component'
+import WebComponent from '/lib/proscenium/ui/web_component'
 
 class Toggle extends WebComponent {
   static componentName = 'pui-demo-toggle'
