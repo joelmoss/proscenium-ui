@@ -18,7 +18,7 @@ Gem::Specification.new do |spec|
   spec.metadata['rubygems_mfa_required'] = 'true'
 
   spec.files = Dir.chdir(File.expand_path(__dir__)) do
-    Dir['{lib}/**/*', 'MIT-LICENSE', 'README.md']
+    Dir['{lib}/**/*', 'MIT-LICENSE', 'README.md', 'package.json']
   end
 
   spec.add_dependency 'countries', '~> 8.1.0'
