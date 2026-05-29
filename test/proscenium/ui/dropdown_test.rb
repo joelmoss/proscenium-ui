@@ -6,11 +6,11 @@ describe Proscenium::UI::Dropdown do
   let(:concrete_class) do
     Class.new(Proscenium::UI::Dropdown) do
       def trigger_template
-        'Open'
+        super { 'Open' }
       end
 
-      def dropdown_template
-        a(href: '#') { 'Click me!' }
+      def body_template
+        super { a(href: '#') { 'Click me!' } }
       end
     end
   end
@@ -51,7 +51,7 @@ describe Proscenium::UI::Dropdown do
       assert_equal 'onTriggerKey', trigger['on-keydown']
     end
 
-    it 'renders trigger_template content' do
+    it 'renders the trigger content' do
       assert_equal 'Open', trigger.text
     end
 
@@ -80,33 +80,21 @@ describe Proscenium::UI::Dropdown do
       assert container.has_css?('pui-dropdown-arrow', visible: :all)
     end
 
-    it 'renders dropdown_template inside the body' do
+    it 'renders the body content inside the body' do
       body = container.find('pui-dropdown-body', visible: :all)
       assert body.has_css?('a', text: 'Click me!', visible: :all)
     end
   end
 
-  describe 'abstract subclass requirements' do
-    it 'raises NotImplementedError when trigger_template is not implemented' do
-      cls = Class.new(Proscenium::UI::Dropdown) do
-        def dropdown_template
-          'body'
-        end
-      end
+  describe 'without subclass overrides' do
+    # The trigger and body default to empty — a subclass fills them by overriding the template
+    # method and calling super with a block.
+    it 'renders an empty trigger and body without raising' do
+      bare = Class.new(Proscenium::UI::Dropdown)
+      doc = Capybara.string(view_context.render(bare.new))
 
-      err = assert_raises(NotImplementedError) { view_context.render(cls.new) }
-      assert_match(/trigger_template/, err.message)
-    end
-
-    it 'raises NotImplementedError when dropdown_template is not implemented' do
-      cls = Class.new(Proscenium::UI::Dropdown) do
-        def trigger_template
-          'Open'
-        end
-      end
-
-      err = assert_raises(NotImplementedError) { view_context.render(cls.new) }
-      assert_match(/dropdown_template/, err.message)
+      assert doc.has_css?('pui-dropdown-trigger', visible: :all)
+      assert doc.has_css?('pui-dropdown-body', visible: :all)
     end
   end
 end

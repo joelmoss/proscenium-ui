@@ -6,7 +6,7 @@ describe Proscenium::UI::DropdownMenu do
   let(:concrete_class) do
     Class.new(Proscenium::UI::DropdownMenu) do
       def trigger_template
-        'Account'
+        super { 'Account' }
       end
 
       def menu_template
@@ -84,7 +84,7 @@ describe Proscenium::UI::DropdownMenu do
     it 'forwards extra attributes to the underlying element' do
       cls = Class.new(Proscenium::UI::DropdownMenu) do
         def trigger_template
-          'T'
+          super { 'T' }
         end
 
         def menu_template
@@ -106,26 +106,17 @@ describe Proscenium::UI::DropdownMenu do
   end
 
   describe 'abstract subclass requirements' do
+    # The trigger defaults to empty, but DropdownMenu still requires its `menu_template` content
+    # hook (wired into the body), so omitting it raises.
     it 'raises NotImplementedError when menu_template is not implemented' do
       cls = Class.new(Proscenium::UI::DropdownMenu) do
         def trigger_template
-          'Open'
+          super { 'Open' }
         end
       end
 
       err = assert_raises(NotImplementedError) { view_context.render(cls.new) }
       assert_match(/menu_template/, err.message)
-    end
-
-    it 'raises NotImplementedError when trigger_template is not implemented' do
-      cls = Class.new(Proscenium::UI::DropdownMenu) do
-        def menu_template
-          item { 'X' }
-        end
-      end
-
-      err = assert_raises(NotImplementedError) { view_context.render(cls.new) }
-      assert_match(/trigger_template/, err.message)
     end
   end
 end

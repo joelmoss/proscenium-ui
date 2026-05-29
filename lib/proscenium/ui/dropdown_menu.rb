@@ -8,13 +8,11 @@ module Proscenium::UI
       Pathname(__FILE__).sub_ext('').join('index.rb')
     end
 
+    # DropdownMenu keeps a dedicated content hook for the menu body, so subclasses implement
+    # `menu_template` (using `item`/`hr`) rather than filling `body_template` directly.
     def menu_template
       raise NotImplementedError,
             "`#menu_template` must be implemented in subclasses of #{self.class}"
-    end
-
-    def dropdown_template
-      menu_template
     end
 
     def item(href: nil, disabled: false, **attrs, &)
@@ -30,8 +28,10 @@ module Proscenium::UI
 
     private
 
+      def trigger_template(**attributes, &) = super(aria_haspopup: 'menu', **attributes, &)
+      def container_template(**attributes, &) = super(role: 'menu', **attributes, &)
+      def body_template = super { menu_template }
+
       def host_element = :pui_dropdown_menu
-      def trigger_haspopup = 'menu'
-      def container_role = 'menu'
   end
 end

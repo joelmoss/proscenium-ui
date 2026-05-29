@@ -9,7 +9,7 @@ module Views
     def view_template
       cls = Class.new Proscenium::UI::DropdownMenu do
         def trigger_template
-          'Account'
+          super { 'Account' }
         end
 
         def menu_template

@@ -12,44 +12,51 @@ module Proscenium::UI
       (super || superclass.source_path) / '../dropdown/index.rb'
     end
 
-    def trigger_template
-      raise NotImplementedError,
-            "`#trigger_template` must be implemented in subclasses of #{self.class}"
+    # `view_template` is the host element, wrapping the whole dropdown. Each registered element
+    # below is rendered by its own `*_template` method, which emits the element with its default
+    # attributes and yields its content. Override one in a subclass and call `super`, passing
+    # attributes to adjust the element and/or a block to fill it:
+    #
+    #   def view_template     = super(class: :@menu)             # add a class to the host
+    #   def trigger_template  = super { img(src: avatar) }       # fill the trigger
+    #   def body_template     = super(class: :@body) { ul { } }  # adjust and fill the body
+    #
+    # `body_template` is the floating panel. The trigger and body are empty until a subclass fills
+    # them.
+    def view_template(**attributes)
+      send(host_element, **attributes) do
+        trigger_template
+        container_template do
+          body_template
+          arrow_template
+        end
+      end
     end
-
-    def dropdown_template
-      raise NotImplementedError,
-            "`#dropdown_template` must be implemented in subclasses of #{self.class}"
-    end
-
-    def view_template = base_template
 
     private
 
-      def host_element = :pui_dropdown
-      def trigger_haspopup = 'true'
-      def container_role = nil
-
-      def base_template
-        container_id = "pui-dd-#{object_id}"
-
-        send(host_element) do
-          pui_dropdown_trigger(
-            tabindex: 0,
-            role: 'button',
-            aria_haspopup: trigger_haspopup,
-            aria_expanded: 'false',
-            aria_controls: container_id,
-            on_click: :toggle,
-            on_keydown: :onTriggerKey,
-            &:trigger_template
-          )
-
-          pui_dropdown_container(id: container_id, role: container_role, popover: :auto) do
-            pui_dropdown_body(&:dropdown_template)
-            pui_dropdown_arrow
-          end
-        end
+      def trigger_template(**attributes, &)
+        pui_dropdown_trigger(
+          tabindex: 0,
+          role: 'button',
+          aria_haspopup: 'true',
+          aria_expanded: 'false',
+          aria_controls: container_id,
+          on_click: :toggle,
+          on_keydown: :onTriggerKey,
+          **attributes,
+          &
+        )
       end
+
+      def container_template(**attributes, &)
+        pui_dropdown_container(id: container_id, popover: :auto, **attributes, &)
+      end
+
+      def body_template(**attributes, &) = pui_dropdown_body(**attributes, &)
+      def arrow_template(**attributes) = pui_dropdown_arrow(**attributes)
+
+      def container_id = @container_id ||= "pui-dd-#{object_id}"
+      def host_element = :pui_dropdown
   end
 end

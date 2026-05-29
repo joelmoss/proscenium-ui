@@ -4,12 +4,12 @@ An action menu built on top of [Dropdown](../dropdown/), following the WAI-ARIA 
 
 ## Usage
 
-Subclass `DropdownMenu` and implement `trigger_template` and `menu_template`:
+Subclass `DropdownMenu`. Fill the trigger by overriding `trigger_template` and calling `super` with a block (see [Dropdown](../dropdown/)); render the menu items in `menu_template` using the `item` and `hr` helpers:
 
 ```ruby
 class AccountMenu < Proscenium::UI::DropdownMenu
   def trigger_template
-    'Account'
+    super { 'Account' }
   end
 
   def menu_template
@@ -29,7 +29,7 @@ Or inline:
 
 ```ruby
 cls = Class.new Proscenium::UI::DropdownMenu do
-  def trigger_template = 'Account'
+  def trigger_template = super { 'Account' }
   def menu_template
     item(href: '#') { 'Profile' }
     item            { 'Sign out' }
@@ -43,10 +43,10 @@ render cls.new
 
 | Method | Description |
 |--------|-------------|
-| `trigger_template` | Renders the contents of the trigger |
+| `trigger_template` | Override and call `super` with a block to fill the trigger |
 | `menu_template`    | Renders the contents of the menu (use `item` and `hr`) |
 
-`dropdown_template` is provided by `DropdownMenu` and forwards to `menu_template`, so you don't implement it directly.
+`menu_template` is `DropdownMenu`'s content hook for the menu body — it's wired into `body_template` for you, so you implement `menu_template` directly (no `super`).
 
 ## The `item` Helper
 

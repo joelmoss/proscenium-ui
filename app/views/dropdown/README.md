@@ -6,17 +6,19 @@ For a ready-made action menu with keyboard navigation, see [DropdownMenu](../dro
 
 ## Usage
 
-`Dropdown` is an abstract base — subclass it and implement `trigger_template` and `dropdown_template`:
+`Dropdown` is an abstract base. Each element is rendered by its own `*_template` method that emits the element with its default attributes and yields its content. Subclass it and override `trigger_template` and `body_template`, calling `super` with a block to fill them:
 
 ```ruby
 class AccountDropdown < Proscenium::UI::Dropdown
   def trigger_template
-    'Open'
+    super { 'Open' }
   end
 
-  def dropdown_template
-    h4 { 'Hello, World!' }
-    a(href: '#') { 'Click me!' }
+  def body_template
+    super do
+      h4 { 'Hello, World!' }
+      a(href: '#') { 'Click me!' }
+    end
   end
 end
 
@@ -27,23 +29,26 @@ You can also build an inline anonymous subclass when a one-off use is enough:
 
 ```ruby
 cls = Class.new Proscenium::UI::Dropdown do
-  def trigger_template = 'Open'
-  def dropdown_template
-    p { 'Anything you like in here.' }
-  end
+  def trigger_template = super { 'Open' }
+  def body_template = super { p { 'Anything you like in here.' } }
 end
 
 render cls.new
 ```
 
-## Required Methods
+## Template Methods
 
-| Method | Description |
-|--------|-------------|
-| `trigger_template` | Renders the contents of `<pui-dropdown-trigger>` (the clickable handle) |
-| `dropdown_template` | Renders the contents of `<pui-dropdown-body>` (the floating panel) |
+Each element has an overridable `*_template` method. Pass attributes to adjust the element and/or a block to fill it, e.g. `super(class: 'panel') { ... }`. Attributes you pass are merged over (and win against) the defaults.
 
-Both are Phlex methods, so you have the full Phlex DSL available inside them.
+| Method | Element | Default content |
+|--------|---------|-----------------|
+| `view_template` | `<pui-dropdown>` (the host) | the trigger + container structure |
+| `trigger_template` | `<pui-dropdown-trigger>` (the clickable handle) | empty |
+| `container_template` | `<pui-dropdown-container>` (the popover) | the body + arrow |
+| `body_template` | `<pui-dropdown-body>` (the floating panel) | empty |
+| `arrow_template` | `<pui-dropdown-arrow>` | — |
+
+To scope the whole dropdown with one CSS-module class, add it to the host: `def view_template = super(class: :@menu)`. They're all Phlex methods, so the full Phlex DSL is available inside the blocks.
 
 ## Behaviour
 
