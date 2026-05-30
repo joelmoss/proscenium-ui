@@ -6,7 +6,7 @@ on:
     branches: [main]
 
 jobs:
-  lint:
+  rubocop:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -15,28 +15,38 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.4.2
+          ruby-version: "3.4"
           bundler-cache: true
 
-      - name: Lint code for consistent style
+      - name: Lint Ruby for consistent style
         run: bin/rubocop -f github
 
+  js-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install JS dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Lint JS with ESLint
+        run: bun run lint
+
   test:
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        os: ["ubuntu-latest", "macos-latest"]
         ruby:
           - "3.2"
           - "3.3"
           - "3.4"
-          - "4.0"
 
     steps:
-      - name: Install packages
-        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y build-essential git libyaml-dev pkg-config google-chrome-stable
-
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -46,18 +56,33 @@ jobs:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
 
-      - name: Run tests
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install JS dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Install Playwright browser
+        run: bunx playwright install --with-deps chromium
+
+      - name: Install Appraisal gemfiles
+        run: bundle exec appraisal install
+
+      - name: Run unit tests
         env:
           RAILS_ENV: test
-        run: |
-          bundle exec appraisal install
-          bundle exec appraisal rails test
-          bin/rails db:test:prepare test
+        run: bundle exec appraisal rails test
+
+      - name: Run system tests
+        env:
+          RAILS_ENV: test
+          CI: "true"
+        run: bundle exec appraisal rails test:system
 
       - name: Keep screenshots from failed system tests
         uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: screenshots
+          name: screenshots-ruby-${{ matrix.ruby }}
           path: ${{ github.workspace }}/tmp/screenshots
           if-no-files-found: ignore

@@ -22,9 +22,11 @@
     "sourdough-toast": "github:mikker/sourdough-toast#016c3d8"
   },
   "devDependencies": {
+    "@eslint/css": "^1.3.0",
     "@eslint/js": "^10.0.1",
     "eslint": "^10.0.2",
     "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.6",
     "globals": "^17.3.0",
     "playwright": "1.59.0",
     "prettier": "^3.8.1"

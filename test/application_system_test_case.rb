@@ -19,7 +19,7 @@ Capybara.register_driver :my_playwright do |app|
     # -> failing with `ArgumentError: unknown keyword: :devtools`
     # devtools: ENV.key?('PLAYWRIGHT_DEVTOOLS'),
     # slowMo: 1000, # Uncomment to slow down Playwright operations for debugging
-    headless: ENV['CI'] || !ENV.fetch('PLAYWRIGHT_HEADED', nil)
+    headless: ENV['CI'].present? || ENV['PLAYWRIGHT_HEADED'].blank?
   )
 end
 

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-ActiveRecord::Schema[8.0].define(version: 20_250_419_165_127) do
+ActiveRecord::Schema[7.2].define(version: 20_250_419_165_127) do
   create_table 'events', force: :cascade do |t|
     t.string :name
     t.bigint 'user_id'

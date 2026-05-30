@@ -156,16 +156,14 @@ GEM
       net-smtp
     marcel (1.1.0)
     matrix (0.4.3)
-    maxitest (7.1.1)
-      minitest (>= 6.0.0, < 6.1.0)
+    maxitest (6.2.0)
+      minitest (>= 5.20.0, < 5.28.0)
     mime-types (3.7.0)
       logger
       mime-types-data (~> 3.2025, >= 3.2025.0507)
     mime-types-data (3.2026.0414)
     mini_mime (1.1.5)
-    minitest (6.0.6)
-      drb (~> 2.0)
-      prism (~> 1.5)
+    minitest (5.27.0)
     minitest-difftastic (0.2.1)
       difftastic (~> 0.6)
     minitest-focus (1.4.1)
@@ -361,11 +359,12 @@ DEPENDENCIES
   capybara-playwright-driver
   debug (>= 1.0.0)
   icons
-  maxitest
+  maxitest (< 7)
   minitest-difftastic
   minitest-focus
   minitest-spec-rails
   phlexible
+  playwright-ruby-client (~> 1.59.0)
   proscenium-ui!
   puma
   rails

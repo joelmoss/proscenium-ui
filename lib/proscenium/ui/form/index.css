@@ -1,17 +1,17 @@
-@import "@rubygems/proscenium-ui/config/props.css";
+@import '@rubygems/proscenium-ui/config/props.css';
 
 pui-field {
   display: block;
 
-  [part="error"] {
+  [part='error'] {
     &::before {
-      content: " ";
+      content: ' ';
     }
 
     color: red;
   }
 
-  [part="hint"] {
+  [part='hint'] {
     font-size: 0.9em;
     margin-top: 0.2em;
   }
@@ -33,7 +33,7 @@ pui-checkbox {
 }
 
 pui-radio-group {
-  [part="radio_group_inputs"] {
+  [part='radio_group_inputs'] {
     display: flex;
     gap: 1em;
 
