@@ -18,6 +18,9 @@ gem 'redcarpet'
 gem 'rouge'
 
 gem 'appraisal', require: false
+# parallel 2.x (a RuboCop dependency) requires Ruby >= 3.3; pin to 1.x so the gem's
+# supported Ruby floor (3.2, per the gemspec) still bundles and tests in CI.
+gem 'parallel', '< 2', require: false
 gem 'rubocop-capybara', require: false
 gem 'rubocop-disable_syntax', require: false
 gem 'rubocop-minitest', require: false

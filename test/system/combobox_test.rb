@@ -44,7 +44,7 @@ class ComboboxTest < ApplicationSystemTestCase
 
       # Clear the input using select-all + delete
       page.driver.with_playwright_page do |pw_page|
-        pw_page.keyboard.press('Meta+a')
+        pw_page.keyboard.press('ControlOrMeta+a')
         pw_page.keyboard.press('Backspace')
       end
       input.click # re-trigger focus to show all options
@@ -148,7 +148,7 @@ class ComboboxTest < ApplicationSystemTestCase
 
       # Clear the input to restore all options
       page.driver.with_playwright_page do |pw_page|
-        pw_page.keyboard.press('Meta+a')
+        pw_page.keyboard.press('ControlOrMeta+a')
         pw_page.keyboard.press('Backspace')
       end
       input.click
@@ -349,7 +349,7 @@ class ComboboxTest < ApplicationSystemTestCase
       end
 
       page.driver.with_playwright_page do |pw_page|
-        pw_page.keyboard.press('Meta+a')
+        pw_page.keyboard.press('ControlOrMeta+a')
         pw_page.keyboard.press('Backspace')
       end
 
