@@ -418,7 +418,6 @@ DEPENDENCIES
   minitest-difftastic
   minitest-focus
   minitest-spec-rails
-  parallel (< 2)
   phlexible
   playwright-ruby-client (~> 1.59.0)
   proscenium-ui!
