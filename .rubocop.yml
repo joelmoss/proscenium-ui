@@ -30,10 +30,12 @@ Lint/ItWithoutArgumentsInBlock:
   Enabled: false
 Lint/MissingSuper:
   Enabled: false
-
 Lint/NestedMethodDefinition:
   Exclude:
     - "test/**/*"
+
+Rails/StrongParametersExpect:
+  Enabled: false
 
 Metrics:
   Enabled: false
