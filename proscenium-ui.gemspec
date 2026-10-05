@@ -16,6 +16,8 @@ Gem::Specification.new do |spec|
   spec.metadata['source_code_uri'] = 'https://github.com/joelmoss/proscenium-ui'
   spec.metadata['changelog_uri'] = 'https://github.com/joelmoss/proscenium-ui/releases'
   spec.metadata['rubygems_mfa_required'] = 'true'
+  # Proscenium installs package.json's dependencies for this gem (`bundle exec proscenium install`).
+  spec.metadata['proscenium.dependencies'] = 'true'
 
   spec.files = Dir.chdir(File.expand_path(__dir__)) do
     Dir['{lib}/**/*', 'MIT-LICENSE', 'README.md', 'package.json']

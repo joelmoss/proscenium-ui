@@ -18,8 +18,23 @@
   },
   "dependencies": {
     "@floating-ui/dom": "^1.7.6",
+    "clsx": "^2.1.1",
     "dom-mutations": "^1.0.0",
+    "prop-types": "^15.8.1",
+    "prop-types-exact": "^1.2.7",
     "sourdough-toast": "github:mikker/sourdough-toast#016c3d8"
+  },
+  "peerDependencies": {
+    "react": "^18.3.1 || ^19.0.0",
+    "trix": "^2.1.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "trix": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@eslint/css": "^1.3.0",
